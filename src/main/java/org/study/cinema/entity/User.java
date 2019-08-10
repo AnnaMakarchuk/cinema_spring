@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.study.cinema.entity.enums.Gender;
@@ -24,6 +25,7 @@ import org.study.cinema.entity.enums.Gender;
 @Table(name = "user")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "role_id")
+@Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor

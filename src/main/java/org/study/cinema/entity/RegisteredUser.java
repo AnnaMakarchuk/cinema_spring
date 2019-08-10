@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.study.cinema.entity.enums.Gender;
 
 @Entity
 @DiscriminatorValue("2")
@@ -27,4 +28,11 @@ public class RegisteredUser extends User {
     @Column(name = "password")
     private String userPassword;
 
+    public RegisteredUser(int userId, String userName, String userSurname, Gender gender, UserRole userRole,
+                          String userLogin, String userEMailAddress, String userPassword) {
+        super(userId, userName, userSurname, gender, userRole);
+        this.userLogin = userLogin;
+        this.userEMailAddress = userEMailAddress;
+        this.userPassword = userPassword;
+    }
 }
