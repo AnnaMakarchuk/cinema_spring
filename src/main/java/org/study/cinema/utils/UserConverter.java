@@ -9,17 +9,17 @@ import org.study.cinema.entity.RegisteredUser;
 
 public class UserConverter {
 
-    public RegisteredUserDto convertUserInRegisteredUserDto(RegisteredUser registeredUser) {
+    public static RegisteredUserDto convertUserInRegisteredUserDto(RegisteredUser registeredUser) {
         return userConverter(registeredUser);
     }
 
-    public List<RegisteredUserDto> convertUserListInRegisteredUserDtoList(List<RegisteredUser> registeredUser) {
+    public static List<RegisteredUserDto> convertUserListInRegisteredUserDtoList(List<RegisteredUser> registeredUser) {
         return registeredUser.stream()
-                .map(this::userConverter)
+                .map(UserConverter::userConverter)
                 .collect(Collectors.toList());
     }
 
-    public AdministratorDto convertUserInAdministratorDto(Administrator administrator) {
+    public static AdministratorDto convertUserInAdministratorDto(Administrator administrator) {
         return AdministratorDto.builder()
                 .administratorId(administrator.getUserId())
                 .administratorName(administrator.getUserName())
@@ -32,7 +32,7 @@ public class UserConverter {
                 .build();
     }
 
-    private RegisteredUserDto userConverter(RegisteredUser user) {
+    private static RegisteredUserDto userConverter(RegisteredUser user) {
         return RegisteredUserDto.builder()
                 .userId(user.getUserId())
                 .userName(user.getUserName())
