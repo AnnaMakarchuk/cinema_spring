@@ -16,6 +16,7 @@ import org.study.cinema.entity.enums.Gender;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class AdministratorDto {
+
     private int administratorId;
     private String administratorName;
     private String administratorSurname;
