@@ -1,6 +1,7 @@
 package org.study.cinema.entity;
 
 import java.util.Collection;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

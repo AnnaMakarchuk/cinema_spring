@@ -10,27 +10,25 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "user_role")
-@Getter
+@Table(name = "movie_genre")
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class UserRole {
+public class MovieGenre {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "role")
-    private String userRole;
+    @Column(name = "genre")
+    private String movieGenre;
 
-    @OneToOne(mappedBy = "userRole")
-    private User user;
+    @OneToOne(mappedBy = "movieGenre")
+    private Movie movie;
 }
