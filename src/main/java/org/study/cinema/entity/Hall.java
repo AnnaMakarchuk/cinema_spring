@@ -1,7 +1,6 @@
 package org.study.cinema.entity;
 
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,7 +25,7 @@ public class Hall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int hallId;
+    private int id;
 
     @Column(name = "name")
     private String hallName;
@@ -37,9 +36,9 @@ public class Hall {
     @Column(name = "places_in_row")
     private int maxPlacesInRow;
 
-    @OneToMany(mappedBy = "hall", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<SessionSchedule> sessionSchedulesList;
+    @OneToMany(mappedBy = "hall", fetch = FetchType.LAZY)
+    private List<Schedule> schedules;
 
-    @OneToMany(mappedBy = "hall", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "hall", fetch = FetchType.LAZY)
     private List<Price> prices;
 }

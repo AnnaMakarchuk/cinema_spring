@@ -3,14 +3,19 @@ package org.study.cinema.entity;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "movie")
@@ -20,29 +25,33 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode
+@ToString
 public class Movie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private int movieId;
+    private int id;
 
     @Column(name = "name")
     private String movieName;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "genre_id", referencedColumnName = "id")
-    private MovieGenre movieGenre;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "genre_id")
+    private Genre genre;
 
     @Column(name = "duration")
     private int movieDuration;
 
-    @Column(name = "ageLimit")
+    @Column(name = "age_limit")
     private int ageLimit;
 
     @Column(name = "description")
     private String movieDescription;
 
-    @OneToOne(mappedBy = "movie")
-    private SessionSchedule sessionSchedule;
+    @Column(name = "is_active")
+    private boolean isActive;
+
+    @OneToMany (mappedBy = "movie",  fetch = FetchType.EAGER)
+    private List<Schedule> schedules;
 }
