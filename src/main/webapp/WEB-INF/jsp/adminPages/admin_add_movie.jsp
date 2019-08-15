@@ -47,7 +47,7 @@
                                         <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
                                     </div>
 
-                                    <form class="w3-container" method="POST" action="/adminaddmovie">
+                                    <form class="w3-container" method="POST" action="/admin/addmovie">
                                         <div class="w3-section w3-left-align">
                                             <label><b><fmt:message key="movie.name"/></b></label>
                                             <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.movie.name"/>" name="movie.name" required>

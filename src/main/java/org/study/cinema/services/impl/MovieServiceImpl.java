@@ -41,7 +41,7 @@ public class MovieServiceImpl implements MovieService {
     public void addNewMovie(MovieDto movieDto) {
         Genre genre = generateGenre(movieDto);
         Movie movie = MovieDtoConverter.convertMovieDtoInMovie(movieDto, genre);
-        LOGGER.info("Movie is prepared fro save in database");
+        LOGGER.info("Movie is prepared for saving to database");
         movieRepository.save(movie);
     }
 

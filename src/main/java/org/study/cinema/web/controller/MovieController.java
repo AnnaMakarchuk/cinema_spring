@@ -32,14 +32,14 @@ public class MovieController {
     }
 
 
-    @GetMapping("/adminmovielist")
+    @GetMapping("/admin/movies")
     public String getMovieListForAdmin(Model model) {
         createMovieDtoListForView(model);
         return "adminPages/admin_add_movie";
     }
 
     //TODO Check problem with forbidden
-    @PostMapping("/adminaddmovie")
+    @PostMapping("/admin/addmovie")
     public String getMovieListAddNewMovie(@RequestParam(name = AttributesNames.MOVIE_NAME) String movieName,
                                           @RequestParam(name = AttributesNames.MOVIE_GENRE) String genre,
                                           @RequestParam(name = AttributesNames.DURATION) String duration,
