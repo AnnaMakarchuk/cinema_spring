@@ -17,7 +17,7 @@ import java.util.Optional;
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
     private static final Logger LOGGER = LogManager.getLogger(ScheduleServiceImpl.class);
-
+    private boolean nonActive = false;
 
     @Autowired
     private ScheduleRepository scheduleRepository;
@@ -34,6 +34,18 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         LOGGER.info("ScheduleService return schedule list on " + weekDay);
 
-        return ScheduleDtoConverter.convertScheduleListInScheduleDtoList(scheduleListByWeekday);
+        return ScheduleDtoConverter.convertScheduleListInScheduleDtoWithTimeList(scheduleListByWeekday);
+    }
+
+    @Override
+    public List<ScheduleDto> viewNonActiveSchedule() {
+        List<Optional<Schedule>> unActiveScheduleList = scheduleRepository.findAllByIsActive(nonActive);
+
+        if (unActiveScheduleList.isEmpty()) {
+            return null;
+        }
+        LOGGER.info("ScheduleService return noActive schedule list");
+
+        return ScheduleDtoConverter.convertScheduleListInScheduleDto(unActiveScheduleList);
     }
 }

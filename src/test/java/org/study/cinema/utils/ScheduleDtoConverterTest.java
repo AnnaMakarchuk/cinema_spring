@@ -19,8 +19,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ScheduleDtoConverterTest {
 
+    private ScheduleDto firstScheduleDtoWithTimeList;
+    private ScheduleDto secondScheduleDtoWithTimeList;
+
     private ScheduleDto firstScheduleDto;
     private ScheduleDto secondScheduleDto;
+    private ScheduleDto thirdScheduleDto;
+
     private List<Optional<Schedule>> optionalsSchedules;
     private List<Optional<Schedule>> optionalsWithEmptySchedule;
 
@@ -66,18 +71,37 @@ public class ScheduleDtoConverterTest {
                 .time(LocalTime.of(15, 0))
                 .build();
 
-        firstScheduleDto = ScheduleDto.builder()
-                .id(1)
+        firstScheduleDtoWithTimeList = ScheduleDto.builder()
+                .scheduleId(1)
                 .weekDay(WeekDay.MONDAY)
                 .movieName(firstMovie.getMovieName())
                 .timeList(Arrays.asList(new TimeDto(1, LocalTime.of(7, 0)),
                         new TimeDto(3, LocalTime.of(13, 0))))
                 .build();
-        secondScheduleDto = ScheduleDto.builder()
-                .id(2)
+        secondScheduleDtoWithTimeList = ScheduleDto.builder()
+                .scheduleId(2)
                 .weekDay(WeekDay.MONDAY)
                 .movieName(secondMovie.getMovieName())
                 .timeList(Arrays.asList(new TimeDto(2, LocalTime.of(10, 0))))
+                .build();
+
+        firstScheduleDto = ScheduleDto.builder()
+                .scheduleId(1)
+                .weekDay(WeekDay.MONDAY)
+                .movieName(firstMovie.getMovieName())
+                .time(firstSchedule.getTime())
+                .build();
+        secondScheduleDto = ScheduleDto.builder()
+                .scheduleId(2)
+                .weekDay(WeekDay.MONDAY)
+                .movieName(secondMovie.getMovieName())
+                .time(secondSchedule.getTime())
+                .build();
+        thirdScheduleDto = ScheduleDto.builder()
+                .scheduleId(3)
+                .weekDay(WeekDay.MONDAY)
+                .movieName(firstMovie.getMovieName())
+                .time(thirdSchedule.getTime())
                 .build();
 
         optionalsSchedules = Arrays.asList(Optional.of(firstSchedule),
@@ -91,10 +115,11 @@ public class ScheduleDtoConverterTest {
     }
 
     @Test
-    public void shouldConvertScheduleListDto() {
-        List<ScheduleDto> expectedScheduleDtoList = Arrays.asList(firstScheduleDto, secondScheduleDto);
+    public void shouldConvertScheduleListDtoWithTimeList() {
+        List<ScheduleDto> expectedScheduleDtoList = Arrays
+                .asList(firstScheduleDtoWithTimeList, secondScheduleDtoWithTimeList);
 
-        List<ScheduleDto> resultScheduleDtoList = ScheduleDtoConverter.convertScheduleListInScheduleDtoList
+        List<ScheduleDto> resultScheduleDtoList = ScheduleDtoConverter.convertScheduleListInScheduleDtoWithTimeList
                 (optionalsSchedules);
 
         assertThat(resultScheduleDtoList, equalTo(expectedScheduleDtoList));
@@ -102,9 +127,21 @@ public class ScheduleDtoConverterTest {
 
     @Test
     public void shouldConvertScheduleDtoListWithOneEmptyOptional() {
-        List<ScheduleDto> expectedScheduleDtoList = Arrays.asList(firstScheduleDto, secondScheduleDto);
+        List<ScheduleDto> expectedScheduleDtoList = Arrays
+                .asList(firstScheduleDtoWithTimeList, secondScheduleDtoWithTimeList);
 
-        List<ScheduleDto> resultScheduleDtoList = ScheduleDtoConverter.convertScheduleListInScheduleDtoList
+        List<ScheduleDto> resultScheduleDtoList = ScheduleDtoConverter.convertScheduleListInScheduleDtoWithTimeList
+                (optionalsWithEmptySchedule);
+
+        assertThat(resultScheduleDtoList, equalTo(expectedScheduleDtoList));
+    }
+
+    @Test
+    public void shouldConvertDtoListWithTime() {
+        List<ScheduleDto> expectedScheduleDtoList = Arrays
+                .asList(firstScheduleDto, secondScheduleDto, thirdScheduleDto);
+
+        List<ScheduleDto> resultScheduleDtoList = ScheduleDtoConverter.convertScheduleListInScheduleDto
                 (optionalsWithEmptySchedule);
 
         assertThat(resultScheduleDtoList, equalTo(expectedScheduleDtoList));

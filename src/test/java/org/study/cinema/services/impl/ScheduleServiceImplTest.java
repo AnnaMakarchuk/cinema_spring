@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.study.cinema.dto.MovieDto;
 import org.study.cinema.dto.ScheduleDto;
 import org.study.cinema.dto.TimeDto;
 import org.study.cinema.entity.Genre;
@@ -16,7 +15,6 @@ import org.study.cinema.entity.enums.WeekDay;
 import org.study.cinema.repositories.ScheduleRepository;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -37,9 +35,14 @@ public class ScheduleServiceImplTest {
     @Mock
     private ScheduleRepository scheduleRepository;
 
+    private ScheduleDto firstScheduleDtoWithTimeList;
+    private ScheduleDto secondScheduleDtoWithTimeList;
+
     private ScheduleDto firstScheduleDto;
     private ScheduleDto secondScheduleDto;
-    private List<Optional<Schedule>> optionalsSchedules;
+    private ScheduleDto thirdScheduleDto;
+
+    private List<Optional<Schedule>> optionalsSchedulesWithTimeList;
 
     @Before
     public void setUp() {
@@ -83,48 +86,96 @@ public class ScheduleServiceImplTest {
                 .time(LocalTime.of(15, 0))
                 .build();
 
-        firstScheduleDto = ScheduleDto.builder()
-                .id(1)
+        firstScheduleDtoWithTimeList = ScheduleDto.builder()
+                .scheduleId(1)
                 .weekDay(WeekDay.MONDAY)
                 .movieName(firstMovie.getMovieName())
                 .timeList(Arrays.asList(new TimeDto(1, LocalTime.of(7, 0)),
                         new TimeDto(3, LocalTime.of(13, 0))))
                 .build();
-        secondScheduleDto = ScheduleDto.builder()
-                .id(2)
+        secondScheduleDtoWithTimeList = ScheduleDto.builder()
+                .scheduleId(2)
                 .weekDay(WeekDay.MONDAY)
                 .movieName(secondMovie.getMovieName())
                 .timeList(Arrays.asList(new TimeDto(2, LocalTime.of(10, 0))))
                 .build();
 
-        optionalsSchedules = Arrays.asList(Optional.of(firstSchedule),
+        firstScheduleDto = ScheduleDto.builder()
+                .scheduleId(1)
+                .weekDay(WeekDay.MONDAY)
+                .movieName(firstMovie.getMovieName())
+                .time(firstSchedule.getTime())
+                .build();
+        secondScheduleDto = ScheduleDto.builder()
+                .scheduleId(2)
+                .weekDay(WeekDay.MONDAY)
+                .movieName(secondMovie.getMovieName())
+                .time(secondSchedule.getTime())
+                .build();
+        thirdScheduleDto = ScheduleDto.builder()
+                .scheduleId(3)
+                .weekDay(WeekDay.MONDAY)
+                .movieName(firstMovie.getMovieName())
+                .time(thirdSchedule.getTime())
+                .build();
+
+        optionalsSchedulesWithTimeList = Arrays.asList(Optional.of(firstSchedule),
                 Optional.of(secondSchedule),
                 Optional.of(thirdSchedule));
     }
 
     @Test
-    public void shouldCallGetByDayServiceMethod() {
+    public void shouldCallGetByDayRepositoryMethod() {
         scheduleService.getAllScheduleByDay("MONDAY");
         verify(scheduleRepository).findAllByWeekDayOrderByTime(WeekDay.MONDAY);
     }
 
     @Test
     public void shouldReturnListOfSchedulesByDay() {
-        List<ScheduleDto> expectedScheduleDtoList = Arrays.asList(firstScheduleDto, secondScheduleDto);
+        List<ScheduleDto> expectedScheduleDtoList = Arrays
+                .asList(firstScheduleDtoWithTimeList, secondScheduleDtoWithTimeList);
 
         when(scheduleRepository.findAllByWeekDayOrderByTime(WeekDay.MONDAY))
-                .thenReturn(optionalsSchedules);
+                .thenReturn(optionalsSchedulesWithTimeList);
         List<ScheduleDto> resultScheduleDtoList = scheduleService.getAllScheduleByDay("MONDAY");
 
         assertThat(resultScheduleDtoList, equalTo(expectedScheduleDtoList));
     }
 
     @Test
-    public void shouldReturnNullIsListFromRepoIsNull() {
+    public void shouldReturnNullListByDayIsListFromRepoIsNull() {
         when(scheduleRepository.findAllByWeekDayOrderByTime(WeekDay.MONDAY))
                 .thenReturn(Collections.emptyList());
 
         List<ScheduleDto> resultScheduleDtoList = scheduleService.getAllScheduleByDay("MONDAY");
+
+        assertThat(resultScheduleDtoList, nullValue());
+    }
+
+    @Test
+    public void shouldCallGetNonActiveRepositoryMethod() {
+        scheduleService.viewNonActiveSchedule();
+        verify(scheduleRepository).findAllByIsActive(false);
+    }
+
+    @Test
+    public void shouldReturnNonActiveSchedules() {
+        List<ScheduleDto> expectedScheduleDtoList = Arrays.asList(firstScheduleDto, secondScheduleDto, thirdScheduleDto);
+
+        when(scheduleRepository.findAllByIsActive(false))
+                .thenReturn(optionalsSchedulesWithTimeList);
+
+        List<ScheduleDto> resultScheduleDtoList = scheduleService.viewNonActiveSchedule();
+
+        assertThat(resultScheduleDtoList, equalTo(expectedScheduleDtoList));
+    }
+
+    @Test
+    public void shouldReturnNullNonActiveListFromRepoIsNull() {
+        when(scheduleRepository.findAllByIsActive(false))
+                .thenReturn(Collections.emptyList());
+
+        List<ScheduleDto> resultScheduleDtoList = scheduleService.viewNonActiveSchedule();
 
         assertThat(resultScheduleDtoList, nullValue());
     }

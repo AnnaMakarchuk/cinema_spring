@@ -8,4 +8,5 @@ public interface ScheduleService {
 
     List<ScheduleDto> getAllScheduleByDay(String weekDay);
 
+    List<ScheduleDto> viewNonActiveSchedule();
 }

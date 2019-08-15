@@ -21,7 +21,7 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class ScheduleDto {
-    private int id;
+    private int scheduleId;
     private WeekDay weekDay;
     private LocalTime time;
     private List<TimeDto> timeList;

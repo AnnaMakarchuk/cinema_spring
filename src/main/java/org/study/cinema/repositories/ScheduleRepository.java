@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 
-    List<Optional<Schedule>> findAllByWeekDayOrderByTime (WeekDay weekDay);
+    List<Optional<Schedule>> findAllByWeekDayOrderByTime(WeekDay weekDay);
 
+    List<Optional<Schedule>> findAllByIsActive(boolean isActive);
 }

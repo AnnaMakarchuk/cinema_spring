@@ -52,4 +52,7 @@ public class Schedule {
 
     @OneToMany(mappedBy = "schedule",  fetch = FetchType.EAGER)
     private List<Ticket> ticketsList;
+
+    @Column(name = "is_active")
+    private boolean isActive;
 }
