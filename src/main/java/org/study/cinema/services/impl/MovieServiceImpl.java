@@ -19,7 +19,7 @@ import java.util.Optional;
 public class MovieServiceImpl implements MovieService {
 
     private static final Logger LOGGER = LogManager.getLogger(MovieServiceImpl.class);
-    private boolean isActive = true;
+    private boolean isActive;
 
     @Autowired
     private MovieRepository movieRepository;
@@ -29,6 +29,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<MovieDto> viewAllAvailableMovies() {
+        isActive = true;
         List<Optional<Movie>> activeMovies = movieRepository.findByIsActive(isActive);
         if (activeMovies.isEmpty()) {
             return null;
@@ -43,6 +44,17 @@ public class MovieServiceImpl implements MovieService {
         Movie movie = MovieDtoConverter.convertMovieDtoInMovie(movieDto, genre);
         LOGGER.info("Movie is prepared for saving to database");
         movieRepository.save(movie);
+    }
+
+    @Override
+    public List<MovieDto> viewAllUnAvailableMovies() {
+        isActive = false;
+        List<Optional<Movie>> activeMovies = movieRepository.findByIsActive(isActive);
+        if (activeMovies.isEmpty()) {
+            return null;
+        }
+        LOGGER.info("MovieService return list of active movies from database");
+        return MovieDtoConverter.convertMovieListInMovieDtoList(activeMovies);
     }
 
     private Genre generateGenre(MovieDto movieDto) {

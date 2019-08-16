@@ -16,5 +16,12 @@ public class AttributesNames {
     public static final String SCHEDULE_DAY = "day";
     public static final String SCHEDULE_WEEKDAY = "weekday";
 
+    public static final String HALL = "hall";
+    public static final String OCCUPIED_PLACES = "occupiedPlaces";
 
+    public static final String PAGE = "page";
+    public static final String PAGES = "pages";
+
+    public static final String TICKETS = "tickets";
+    public static final String TICKET_ID = "ticket_id";
 }

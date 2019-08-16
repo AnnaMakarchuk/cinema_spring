@@ -9,4 +9,6 @@ public interface MovieService {
     List<MovieDto> viewAllAvailableMovies();
 
     void addNewMovie(MovieDto movieDto);
+
+    List<MovieDto> viewAllUnAvailableMovies();
 }

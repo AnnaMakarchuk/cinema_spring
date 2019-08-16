@@ -6,12 +6,12 @@
 <fmt:setLocale value="${locale}" />
 <fmt:setBundle basename="textBundle"/>
 
-<html lang="${locale}">
+<html lang="${locale}>
 <head>
     <meta charset="UTF-8">
     <title>Cinema</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link type="text/css" href=" https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 
 <script src="/js/language.js"></script>
@@ -21,8 +21,8 @@
             <div class="w3-dropdown-hover w3-right ">
                 <button class="w3-button w3-teal"><fmt:message key="language"/></button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4" style="min-width:70px">
-                  <a class="w3-bar-item w3-button w3-teal" onclick="addUrlParameter('locale', 'en')"><fmt:message key="language.en" /></a>
-                  <a class="w3-bar-item w3-button  w3-teal" onclick="addUrlParameter('locale', 'ru')"><fmt:message key="language.ru" /></a>
+                  <a class="w3-bar-item w3-button w3-teal" onclick="languageChange('locale', 'en')"><fmt:message key="language.en" /></a>
+                  <a class="w3-bar-item w3-button  w3-teal" onclick="languageChange('locale', 'ru')"><fmt:message key="language.ru" /></a>
                 </div>
             </div>
             <div class="w3-container w3-center w3-padding ">
@@ -32,7 +32,11 @@
 
 <div class="w3-container w3-right-align">
     <p> <div class="w3-bar w3-padding-large w3-padding-24">
-           <c:choose>
+            <button class="w3-btn w3-border w3-teal w3-round-large w3-left" onclick="location.href='/schedule'">
+                <fmt:message key="schedule"/>
+            </button>
+
+            <c:choose>
                 <c:when test="${user == null}">
                         <button onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-teal w3-round-large w3-right-align">
                             <fmt:message key="login.button"/>
@@ -45,19 +49,15 @@
                         <button class="w3-btn w3-border w3-teal w3-round-large" onclick="submitTickets('boughttickets')">
                             <fmt:message key="buy.selected.tickets"/>
                         </button>
-
-                        <button class="w3-btn w3-border w3-teal w3-round-large w3-right-align" onclick="location.href='/cinema/cabinet'">
+                
+                        <button class="w3-btn w3-border w3-teal w3-round-large w3-right-align" onclick="location.href='/cabinet'">
                             <fmt:message key="back.cabinet"/>
                         </button>
-                        <button class="w3-btn w3-border w3-teal w3-round-large w3-right-align w3-border-red" onclick="location.href='/cinema/logout'">
+                        <button class="w3-btn w3-border w3-teal w3-round-large w3-right-align w3-border-red" onclick="location.href='/logout'">
                             <fmt:message key="logout.button"/>
                         </button>
                 </c:otherwise>
             </c:choose>
-
-
-
-
                  <div id="id02" class="w3-modal">
                     <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
                         <div class="w3-center"><br>
@@ -115,56 +115,106 @@
     </p>
 </div>
 
-<div class="w3-container w3-center">
-    <footer class="w3-container w3-teal w3-round-large" style="width:100% ">
-        <h4><b><fmt:message key="hall.name"/></b></h4>
-    </footer>
+<div class="w3-container w3-center w3-text-teal">
+    <p class="w3-left"><h1><b><c:out value="${schedule.movieName}"/></b></h1></p>
+    <i class="fa fa-calendar" style="font-size:24px"><c:out value="${schedule.weekDay}"/> </i>
+    <i class="fa fa-clock-o" style="font-size:24px"><c:out value="${schedule.time}"/> </i>
 </div>
-<br>
 
-<div class="w3-container">
-  <div id="day_panel" class="w3-bar w3-teal w3-text-white">
-    <a href="?day=monday" class="w3-bar-item w3-button" onclick="submitButtonStyle(this, 'monday')"><fmt:message key="monday"/></a>
-    <a href="?day=tuesday" class="w3-bar-item w3-button " onclick="submitButtonStyle(this)"><fmt:message key="tuesday"/></a>
-    <a href="?day=wednesday" class="w3-bar-item w3-button " onclick="submitButtonStyle(this)"><fmt:message key="wednesday"/></a>
-    <a href="?day=thursday" class="w3-bar-item w3-button" onclick="submitButtonStyle(this)"><fmt:message key="thursday"/></a>
-    <a href="?day=friday" class="w3-bar-item w3-button " onclick="submitButtonStyle(this)"><fmt:message key="friday"/></a>
-    <a href="?day=saturday" class="w3-bar-item w3-button " onclick="submitButtonStyle(this)"><fmt:message key="saturday"/></a>
-    <a href="?day=sunday" class="w3-bar-item w3-button " onclick="submitButtonStyle(this)"><fmt:message key="sunday"/></a>
-  </div>
+<div><br></div>
 
-<div class="w3-container w3-text-teal">
-    <p class="w3-left"><fmt:message key="session"/><c:out value="${weekday}" /><fmt:message key="click.message"/></p>
-    <table class="w3-table w3-bordered">
-        <tr>
-            <th><fmt:message key="movie.name"/></th>
-            <th><fmt:message key="movie.time"/></th>
-        </tr>
-        <tr>
-            <c:forEach var="schedule" items="${schedules}">
-                <td><br><c:out value="${schedule.movieName}"/></td>
-                <c:forEach var="time" items="${schedule.timeList}">
-                    <td class="w3-left"><button class="w3-button w3-border w3-round-large w3-section w3-padding" button onclick="location.href='/hallscheme?schedule_id=${time.scheduleId}'">
-                        <c:out value="${time.time}"/></button></td>
-                   </td>
-            </c:forEach>
-            </tr>
+<div class="w3-bar w3-center">
+        <c:forEach var = "r" begin = "1" end = "${hall.maxRow}">
+                ${r}
+                <c:forEach var = "c" begin = "1" end = "${hall.maxPlacesInRow}">
+                        <button id="${r}-${c}" class="w3-btn w3-center w3-border w3-border-teal w3-round-large chair" onclick="submitButtonStyle(this, ${r}, ${c})" >
+                                <div class="button_text">
+                                        ${c}
+                                </div>
+                                <div class="button_price"> <c:out value="${hall.prices[r].price}" /> </div>
+                        </button>
+                </c:forEach>
+            </p>
         </c:forEach>
-    </table>
 </div>
 
+<style>
+    .chair {
+        height: 50px;
+        width: 50px;
+    }
+
+    .chair:hover .button_text {
+        color: coral;
+        opacity: 1;
+    }
+
+    .button_price {
+        opacity: 0;
+        text-align: center;
+    }
+    .chair:hover .button_price {
+        opacity: 1;
+    }
+</style>
 
 <script>
-    function submitButtonStyle(_this, day) {
-        if ("${weekday}" == day) {
-            _this.style.background = "#800000";
+
+    var occupied = JSON.parse('${occupiedPlaces}');
+
+    document.addEventListener('DOMContentLoaded', changePlaces());
+
+    function changePlaces() {
+        Object.keys(occupied).forEach(function(key) {
+            var tmp = occupied[key];
+            var btn = document.getElementById(tmp.row+"-"+tmp.place);
+            if (btn != NaN) {
+                btn.disabled = true;
+            }
+        });
+
+    }
+
+    places = [];
+
+    function submitButtonStyle(_this, row, place) {
+        var color_one = "#009688";
+        var bgcolor = _this.style.backgroundColor;
+        _this.style.backgroundColor = color_one;
+        console.log(places);
+        if(bgcolor == _this.style.backgroundColor) {
+            _this.style.backgroundColor = "#f1f1f1";
+            places = places.filter(place => (place["row"] != row && place["place"] != place));
+        } else {
+            places.push({"row": row, "place": place});
+        }
+        console.log(places);
+    }
+
+    function submitTickets(url) {
+        console.log(places);
+        if (places.length > 0) {
+            console.log("sending post");
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", url);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            var body = new Object();
+            body["scheduleId"]="${schedule.scheduleId}";
+            body["places"]=Object.values(places);
+
+            xhr.send(JSON.stringify(body));
+            xhr.onload = function() {
+                confirm("Ticket was bought");
+                window.location.reload();
+            };
         }
     }
 
-
-
-
-
+    function addUrlParameter(name, value) {
+      var searchParams = new URLSearchParams(window.location.search)
+      searchParams.set(name, value)
+      window.location.search = searchParams.toString()
+    }
 </script>
 
 </body>

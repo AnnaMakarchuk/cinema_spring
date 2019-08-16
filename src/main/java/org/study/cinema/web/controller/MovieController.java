@@ -38,6 +38,14 @@ public class MovieController {
         return "adminPages/admin_add_movie";
     }
 
+    @GetMapping("/admin/unactivemovies")
+    public String getUnActiveMovies(Model model) {
+        List<MovieDto> unActiveMovieDtoList = movieService.viewAllUnAvailableMovies();
+        LOGGER.info("List of unActive MovieDTO for main page was obtained");
+        model.addAttribute(AttributesNames.MOVIES, unActiveMovieDtoList);
+        return "adminPages/admin_nonactive_movies";
+    }
+
     //TODO Check problem with forbidden
     @PostMapping("/admin/addmovie")
     public String getMovieListAddNewMovie(@RequestParam(name = AttributesNames.MOVIE_NAME) String movieName,

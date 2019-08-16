@@ -4,13 +4,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.study.cinema.dto.HallDto;
 import org.study.cinema.dto.ScheduleDto;
 import org.study.cinema.entity.Schedule;
 import org.study.cinema.entity.enums.WeekDay;
 import org.study.cinema.repositories.ScheduleRepository;
 import org.study.cinema.services.ScheduleService;
+import org.study.cinema.utils.HallDtoConverter;
 import org.study.cinema.utils.ScheduleDtoConverter;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,4 +51,25 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         return ScheduleDtoConverter.convertScheduleListInScheduleDto(unActiveScheduleList);
     }
+
+    @Override
+    public ScheduleDto getScheduleById(int id) {
+        Optional<Schedule> scheduleOptional = scheduleRepository.findById(id);
+        LOGGER.info("ScheduleService return schedule by id " + id);
+        return scheduleOptional.map(ScheduleDtoConverter::scheduleConverter).orElse(null);
+    }
+
+    @Override
+    public HallDto getHallWithPriceAndOccupiedPlacesBySchedule(int scheduleId) {
+        Optional<Schedule> scheduleOptional = scheduleRepository.findById(scheduleId);
+        if (scheduleOptional.isEmpty()) {
+            LOGGER.info("No such schedule for id " + scheduleId);
+            return null;
+        }
+        Schedule schedule = scheduleOptional.get();
+        LOGGER.info("ScheduleService return schedule by id " + scheduleId);
+
+        return HallDtoConverter.convertHallDtoWithOccupiedPlacesAndPriceFromSchedule(schedule);
+    }
+
 }

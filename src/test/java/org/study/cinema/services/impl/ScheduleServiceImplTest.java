@@ -6,11 +6,16 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.study.cinema.dto.HallDto;
+import org.study.cinema.dto.PlaceDto;
 import org.study.cinema.dto.ScheduleDto;
 import org.study.cinema.dto.TimeDto;
 import org.study.cinema.entity.Genre;
+import org.study.cinema.entity.Hall;
 import org.study.cinema.entity.Movie;
+import org.study.cinema.entity.Price;
 import org.study.cinema.entity.Schedule;
+import org.study.cinema.entity.Ticket;
 import org.study.cinema.entity.enums.WeekDay;
 import org.study.cinema.repositories.ScheduleRepository;
 
@@ -35,12 +40,16 @@ public class ScheduleServiceImplTest {
     @Mock
     private ScheduleRepository scheduleRepository;
 
+    private Schedule firstSchedule;
+
     private ScheduleDto firstScheduleDtoWithTimeList;
     private ScheduleDto secondScheduleDtoWithTimeList;
 
     private ScheduleDto firstScheduleDto;
     private ScheduleDto secondScheduleDto;
     private ScheduleDto thirdScheduleDto;
+
+    private HallDto hallDto;
 
     private List<Optional<Schedule>> optionalsSchedulesWithTimeList;
 
@@ -58,16 +67,15 @@ public class ScheduleServiceImplTest {
                 .ageLimit(16)
                 .movieDescription("no")
                 .build();
-        Movie secondMovie =
-                Movie.builder()
-                        .id(1)
-                        .movieName("Dark")
-                        .genre(genre)
-                        .movieDuration(100)
-                        .ageLimit(16)
-                        .movieDescription("no")
-                        .build();
-        Schedule firstSchedule = Schedule.builder()
+        Movie secondMovie = Movie.builder()
+                .id(1)
+                .movieName("Dark")
+                .genre(genre)
+                .movieDuration(100)
+                .ageLimit(16)
+                .movieDescription("no")
+                .build();
+        firstSchedule = Schedule.builder()
                 .id(1)
                 .weekDay(WeekDay.MONDAY)
                 .movie(firstMovie)
@@ -122,6 +130,21 @@ public class ScheduleServiceImplTest {
         optionalsSchedulesWithTimeList = Arrays.asList(Optional.of(firstSchedule),
                 Optional.of(secondSchedule),
                 Optional.of(thirdSchedule));
+
+        Price price = Price.builder()
+                .id(1)
+                .row(2)
+                .price(50.00)
+                .build();
+
+        hallDto = HallDto.builder()
+                .hallId(1)
+                .maxRow(3)
+                .maxPlacesInRow(4)
+                .hallName("Gold")
+                .occupiedPlaces(Arrays.asList(new PlaceDto(2, 1), new PlaceDto(2, 2)))
+                .prices(Collections.singletonList(price))
+                .build();
     }
 
     @Test
@@ -178,5 +201,57 @@ public class ScheduleServiceImplTest {
         List<ScheduleDto> resultScheduleDtoList = scheduleService.viewNonActiveSchedule();
 
         assertThat(resultScheduleDtoList, nullValue());
+    }
+
+    @Test
+    public void shouldGetScheduleById() {
+        ScheduleDto expectedScheduleDto = firstScheduleDto;
+
+        when(scheduleRepository.findById(1))
+                .thenReturn(Optional.of(firstSchedule));
+
+        ScheduleDto resultScheduleDto = scheduleService.getScheduleById(1);
+
+        assertThat(resultScheduleDto, equalTo(expectedScheduleDto));
+    }
+
+    @Test
+    public void shouldReturnNullIfScheduleNotExistInDatabase() {
+        when(scheduleRepository.findById(1)).thenReturn(Optional.empty());
+        assertThat(scheduleService.getScheduleById(1), nullValue());
+        assertThat(scheduleService.getHallWithPriceAndOccupiedPlacesBySchedule(1), nullValue());
+    }
+
+    @Test
+    public void shouldConvertHallDtoFromSchedule() {
+        HallDto expectedHallDto = hallDto;
+
+        when(scheduleRepository.findById(1))
+                .thenReturn(Optional.of(firstSchedule));
+        Ticket firstTicket = Ticket.builder()
+                .placeNumber(1)
+                .placeRow(2)
+                .build();
+        Ticket secondTicket = Ticket.builder()
+                .placeNumber(2)
+                .placeRow(2)
+                .build();
+        List<Ticket> tickets = Arrays.asList(firstTicket, secondTicket);
+        Hall hall = Hall.builder()
+                .id(1)
+                .maxRow(3)
+                .maxPlacesInRow(4)
+                .hallName("Gold")
+                .prices(Collections.singletonList(Price.builder()
+                        .id(1)
+                        .row(2)
+                        .price(50.00)
+                        .build()))
+                .build();
+        firstSchedule.setTicketsList(tickets);
+        firstSchedule.setHall(hall);
+        HallDto resultHallDto = scheduleService.getHallWithPriceAndOccupiedPlacesBySchedule(1);
+
+        assertThat(resultHallDto, equalTo(expectedHallDto));
     }
 }

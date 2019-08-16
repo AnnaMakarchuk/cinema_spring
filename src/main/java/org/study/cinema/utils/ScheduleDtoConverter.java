@@ -33,7 +33,7 @@ public class ScheduleDtoConverter {
         return createScheduleDtoListWithRepeatedMoviesDuringDay(schedules);
     }
 
-    private static ScheduleDto scheduleConverter(Schedule schedule) {
+    public static ScheduleDto scheduleConverter(Schedule schedule) {
         ScheduleDto scheduleDto = ScheduleDto.builder()
                 .scheduleId(schedule.getId())
                 .movieName(schedule.getMovie().getMovieName())
@@ -59,7 +59,7 @@ public class ScheduleDtoConverter {
             int id = schedules.get(i).getId();
             WeekDay weekday = schedules.get(i).getWeekDay();
             String movieName = schedules.get(i).getMovie().getMovieName();
-            LocalTime time = schedules.get(i).getTime().minusHours(2);
+            LocalTime time = schedules.get(i).getTime();
 
             if (i == 0) {
                 scheduleDtoList.add(addElementToScheduleDTOListWithTimeList(id, weekday, movieName, time));
@@ -101,4 +101,6 @@ public class ScheduleDtoConverter {
         timeList.add(new TimeDto(scheduleId, time));
         return timeList;
     }
+
+
 }

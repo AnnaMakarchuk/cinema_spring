@@ -22,6 +22,8 @@ public class ScheduleDtoConverterTest {
     private ScheduleDto firstScheduleDtoWithTimeList;
     private ScheduleDto secondScheduleDtoWithTimeList;
 
+    private Schedule firstSchedule;
+
     private ScheduleDto firstScheduleDto;
     private ScheduleDto secondScheduleDto;
     private ScheduleDto thirdScheduleDto;
@@ -52,7 +54,7 @@ public class ScheduleDtoConverterTest {
                         .ageLimit(16)
                         .movieDescription("no")
                         .build();
-        Schedule firstSchedule = Schedule.builder()
+        firstSchedule = Schedule.builder()
                 .id(1)
                 .weekDay(WeekDay.MONDAY)
                 .movie(firstMovie)
@@ -145,5 +147,14 @@ public class ScheduleDtoConverterTest {
                 (optionalsWithEmptySchedule);
 
         assertThat(resultScheduleDtoList, equalTo(expectedScheduleDtoList));
+    }
+
+    @Test
+    public void shouldConvertScheduleInScheduleDto(){
+        ScheduleDto expectedScheduleDto = firstScheduleDto;
+
+        ScheduleDto resultScheduleDto = ScheduleDtoConverter.scheduleConverter(firstSchedule);
+
+        assertThat(resultScheduleDto, equalTo(expectedScheduleDto));
     }
 }

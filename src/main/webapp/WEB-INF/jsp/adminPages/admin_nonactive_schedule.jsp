@@ -15,13 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<script>
-    function addUrlParameter(name, value) {
-      var searchParams = new URLSearchParams(window.location.search)
-      searchParams.set(name, value)
-      window.location.search = searchParams.toString()
-    }
-</script>
+<script src="/js/language.js"></script>
 
 <body class="w3-light-grey">
 <div class="w3-container w3-teal w3-opacity w3-left-align front-size:20px">
