@@ -21,19 +21,19 @@ import lombok.*;
 import org.study.cinema.entity.enums.WeekDay;
 
 @Entity
-@Table(name = "session_schedule")
+@Table(name = "schedule")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode
-public class SessionSchedule {
+public class Schedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int scheduleId;
+    private int id;
 
     @Column(name = "day_of_week", nullable = false, unique = true)
     @Enumerated(EnumType.STRING)
@@ -42,14 +42,17 @@ public class SessionSchedule {
     @Column(name = "time")
     private LocalTime time;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hall_id")
     private Hall hall;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "movie_id", referencedColumnName = "id")
+    @ManyToOne (fetch = FetchType.EAGER)
+    @JoinColumn(name = "movie_id")
     private Movie movie;
 
-    @OneToMany(mappedBy = "sessionSchedule", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "schedule",  fetch = FetchType.EAGER)
     private List<Ticket> ticketsList;
+
+    @Column(name = "is_active")
+    private boolean isActive;
 }

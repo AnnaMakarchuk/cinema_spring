@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.study.cinema.entity.Ticket;
 import org.study.cinema.entity.enums.WeekDay;
 
@@ -18,7 +19,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class SessionScheduleDto {
+@ToString
+public class ScheduleDto {
     private int scheduleId;
     private WeekDay weekDay;
     private LocalTime time;

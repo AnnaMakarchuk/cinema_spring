@@ -30,7 +30,7 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int ticketId;
+    private int id;
 
     @Column(name = "price")
     private double ticketPrice;
@@ -41,12 +41,12 @@ public class Ticket {
     @Column(name = "place_number")
     private int placeNumber;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private RegisteredUser registeredUser;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "session_schedule_id")
-    private SessionSchedule sessionSchedule;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "schedule_id")
+    private Schedule schedule;
 }
 

@@ -7,7 +7,7 @@ import org.study.cinema.dto.RegisteredUserDto;
 import org.study.cinema.entity.Administrator;
 import org.study.cinema.entity.RegisteredUser;
 
-public class UserConverter {
+public class UserDtoConverter {
 
     public static RegisteredUserDto convertUserInRegisteredUserDto(RegisteredUser registeredUser) {
         return userConverter(registeredUser);
@@ -15,7 +15,7 @@ public class UserConverter {
 
     public static List<RegisteredUserDto> convertUserListInRegisteredUserDtoList(List<RegisteredUser> registeredUser) {
         return registeredUser.stream()
-                .map(UserConverter::userConverter)
+                .map(UserDtoConverter::userConverter)
                 .collect(Collectors.toList());
     }
 

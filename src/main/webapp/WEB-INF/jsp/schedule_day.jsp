@@ -159,7 +159,12 @@
         if ("${weekday}" == day) {
             _this.style.background = "#800000";
         }
-}
+    }
+
+
+
+
+
 </script>
 
 </body>

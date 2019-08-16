@@ -15,7 +15,7 @@ import org.study.cinema.entity.enums.Gender;
 
 public class UserConverterTest {
 
-    private UserConverter userConverter;
+    private UserDtoConverter userConverter;
 
     private RegisteredUser firstUser;
     private RegisteredUser secondUser;
@@ -27,7 +27,7 @@ public class UserConverterTest {
 
     @Before
     public void setUp() {
-        userConverter = new UserConverter();
+        userConverter = new UserDtoConverter();
 
         UserRole userRole = new UserRole();
         userRole.setUserRole("user");

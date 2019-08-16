@@ -7,7 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import org.study.cinema.entity.MovieGenre;
+import lombok.ToString;
+import org.study.cinema.entity.Genre;
 
 @Getter
 @Setter
@@ -15,11 +16,12 @@ import org.study.cinema.entity.MovieGenre;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class MovieDto {
 
     private int movieId;
     private String movieName;
-    private MovieGenre movieGenre;
+    private String movieGenre;
     private int movieDuration;
     private int ageLimit;
     private String movieDescription;

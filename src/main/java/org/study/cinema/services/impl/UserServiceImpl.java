@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.study.cinema.entity.RegisteredUser;
 import org.study.cinema.entity.SecurityUser;
-import org.study.cinema.repo.UserRepository;
+import org.study.cinema.repositories.UserRepository;
 import org.study.cinema.services.UserService;
 
 @Service

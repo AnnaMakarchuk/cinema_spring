@@ -8,11 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class MainController {
 
-    @RequestMapping("/")
-    public String getMainPage(Model model) {
-        return "homepage";
-    }
-
     @RequestMapping("/login")
     public String getLogin(@RequestParam(value = "error", required = false) String error,
                            @RequestParam(value = "logout", required = false) String logout,
@@ -22,8 +17,4 @@ public class MainController {
         return "login";
     }
 
-    @RequestMapping("/schedule")
-    public String getSchedulePage(Model model) {
-        return "schedule_day";
-    }
 }
