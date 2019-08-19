@@ -34,7 +34,7 @@
 <div class="w3-container w3-right-align">
     <div class="w3-bar w3-padding-large w3-padding-24">
 
-            <button class="w3-btn w3-white w3-border w3-border-teal w3-round-large w3-left" onclick="location.href='/admincabinet'">
+            <button class="w3-btn w3-white w3-border w3-border-teal w3-round-large w3-left" onclick="location.href='/cabinet'">
                             <fmt:message key="back.cabinet"/>
             </button>
 
@@ -47,19 +47,24 @@
                                         <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
                                     </div>
 
-                                    <form class="w3-container" method="POST" action="/admin/addmovie">
+                                    <form class="w3-container" method="POST" >
                                         <div class="w3-section w3-left-align">
+
                                             <label><b><fmt:message key="movie.name"/></b></label>
-                                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.movie.name"/>" name="movie.name" required>
+                                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.movie.name"/>"
+                                            value="${movie.movieName}" required/>
 
                                             <label><b><fmt:message key="duration"/></b></label>
-                                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.movie.duration"/>" name="duration" required>
+                                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.movie.duration"/>"
+                                            value="${movie.movieDuration}" required/>
 
                                             <label><b><fmt:message key="movie.age"/></b></label>
-                                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.age"/>" name="age" required>
+                                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.age"/>"
+                                            value="${movie.ageLimit}" required/>
 
                                             <label><b><fmt:message key="movie.description"/></b></label>
-                                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.description"/>" name="description" required>
+                                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.description"/>"
+                                            value="${movie.movieDescription}" required/>
 
                                             <form action="">
                                                <input type="radio" name="movie.genre" value="comedy"><fmt:message key="comedy"/><br>
@@ -70,7 +75,8 @@
                                                <input type="radio" name="movie.genre" value="cartoon"><fmt:message key="cartoon"/><br>
                                             </form>
 
-                                            <button class="w3-button w3-block w3-teal w3-round-large w3-section w3-padding" type="submit">
+                                            <button class="w3-button w3-block w3-teal w3-round-large w3-section w3-padding"
+                                             onclick="submitMovie()" >
                                                 <fmt:message key="adminadd.movie"/></button>
                                         </div>
                                     </form>
@@ -108,5 +114,28 @@
 </form>
 
 </div>
+
+<script>
+function submitMovie() {
+
+            console.log("sending post");
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", url);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            var body = new Object();
+            body["movieName"]="${movie.movieName}";
+            body["movieGenre"]="${movie.movieGenre}";
+            body["movieDuration"]="${movie.movieDuration}";
+            body["ageLimit"]="${movie.ageLimit}";
+            body["movieDescription"]="${movie.movieDescription}";
+
+            xhr.send(JSON.stringify(body));
+            xhr.onload = function() {
+                confirm("Movie was bought");
+                window.location.reload();
+        }
+    }
+</script>
+
 </body>
 </html>

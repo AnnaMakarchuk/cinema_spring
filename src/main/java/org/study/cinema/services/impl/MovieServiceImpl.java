@@ -58,6 +58,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     private Genre generateGenre(MovieDto movieDto) {
+        //TODO one request to database
         String genreName = movieDto.getMovieGenre().toLowerCase();
         int genreId = genreRepository.findByGenre(genreName);
         return Genre.builder().

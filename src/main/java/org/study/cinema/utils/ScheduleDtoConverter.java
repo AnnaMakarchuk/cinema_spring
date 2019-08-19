@@ -19,29 +19,28 @@ public class ScheduleDtoConverter {
     private static boolean uniqueMovie;
 
     public static List<ScheduleDto> convertScheduleListInScheduleDto(List<Optional<Schedule>> scheduleOptionalList) {
-        return scheduleOptionalList.stream()
+        List<ScheduleDto> scheduleDtoList = scheduleOptionalList.stream()
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .map(ScheduleDtoConverter::scheduleConverter)
                 .collect(Collectors.toList());
+        LOGGER.info("Schedule list was converted in ScheduleDto list");
+        return scheduleDtoList;
     }
 
     public static List<ScheduleDto> convertScheduleListInScheduleDtoWithTimeList
             (List<Optional<Schedule>> scheduleOptionalList) {
         List<Schedule> schedules = convertScheduleListFromOptional(scheduleOptionalList);
-
         return createScheduleDtoListWithRepeatedMoviesDuringDay(schedules);
     }
 
     public static ScheduleDto scheduleConverter(Schedule schedule) {
-        ScheduleDto scheduleDto = ScheduleDto.builder()
+        return ScheduleDto.builder()
                 .scheduleId(schedule.getId())
                 .movieName(schedule.getMovie().getMovieName())
                 .weekDay(schedule.getWeekDay())
                 .time(schedule.getTime())
                 .build();
-        LOGGER.info("Schedule was converted in ScheduleDto " + scheduleDto.toString());
-        return scheduleDto;
     }
 
     private static List<Schedule> convertScheduleListFromOptional(List<Optional<Schedule>> scheduleOptionalList) {
@@ -101,6 +100,4 @@ public class ScheduleDtoConverter {
         timeList.add(new TimeDto(scheduleId, time));
         return timeList;
     }
-
-
 }

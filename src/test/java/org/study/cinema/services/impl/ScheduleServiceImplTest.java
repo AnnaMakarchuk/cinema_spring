@@ -216,14 +216,14 @@ public class ScheduleServiceImplTest {
     }
 
     @Test
-    public void shouldReturnNullIfScheduleNotExistInDatabase() {
+    public void shouldReturnNullIfScheduleNotExistInDatabase() throws Exception {
         when(scheduleRepository.findById(1)).thenReturn(Optional.empty());
         assertThat(scheduleService.getScheduleById(1), nullValue());
         assertThat(scheduleService.getHallWithPriceAndOccupiedPlacesBySchedule(1), nullValue());
     }
 
     @Test
-    public void shouldConvertHallDtoFromSchedule() {
+    public void shouldConvertHallDtoFromSchedule() throws Exception {
         HallDto expectedHallDto = hallDto;
 
         when(scheduleRepository.findById(1))

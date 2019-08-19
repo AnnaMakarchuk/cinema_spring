@@ -60,13 +60,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public HallDto getHallWithPriceAndOccupiedPlacesBySchedule(int scheduleId) {
-        Optional<Schedule> scheduleOptional = scheduleRepository.findById(scheduleId);
-        if (scheduleOptional.isEmpty()) {
-            LOGGER.info("No such schedule for id " + scheduleId);
-            return null;
-        }
-        Schedule schedule = scheduleOptional.get();
+    public HallDto getHallWithPriceAndOccupiedPlacesBySchedule(int scheduleId) throws Exception {
+        Schedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(()->new Exception("Schedule with such id not found"));
+
         LOGGER.info("ScheduleService return schedule by id " + scheduleId);
 
         return HallDtoConverter.convertHallDtoWithOccupiedPlacesAndPriceFromSchedule(schedule);

@@ -3,6 +3,7 @@ package org.study.cinema.utils;
 public class AttributesNames {
 
     public static final String MOVIES = "movies";
+    public static final String MOVIE = "movie";
     public static final String MOVIE_ID = "movie_id";
     public static final String MOVIE_NAME = "movie.name";
     public static final String MOVIE_GENRE = "movie.genre";
@@ -24,4 +25,5 @@ public class AttributesNames {
 
     public static final String TICKETS = "tickets";
     public static final String TICKET_ID = "ticket_id";
+
 }

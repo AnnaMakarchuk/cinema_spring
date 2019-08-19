@@ -15,15 +15,17 @@ public class MovieDtoConverter {
     private static final Logger LOGGER = LogManager.getLogger(MovieDtoConverter.class);
 
     public static List<MovieDto> convertMovieListInMovieDtoList(List<Optional<Movie>> movieList) {
-        return movieList.stream()
+        List<MovieDto> movieDtos = movieList.stream()
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .map(MovieDtoConverter::movieConverter)
                 .collect(Collectors.toList());
+        LOGGER.info("Movie list was converted in MovieDto list ");
+        return movieDtos;
     }
 
     private static MovieDto movieConverter(Movie movie) {
-        MovieDto movieDto = MovieDto.builder()
+        return MovieDto.builder()
                 .movieId(movie.getId())
                 .movieName(movie.getMovieName())
                 .movieGenre(movie.getGenre().getGenre().toUpperCase())
@@ -31,8 +33,6 @@ public class MovieDtoConverter {
                 .ageLimit(movie.getAgeLimit())
                 .movieDescription(movie.getMovieDescription())
                 .build();
-        LOGGER.info("Movie was converted in MovieDto " + movieDto.toString());
-        return movieDto;
     }
 
     public static Movie convertMovieDtoInMovie(MovieDto movieDto, Genre genre) {

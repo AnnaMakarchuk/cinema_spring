@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.study.cinema.dto.TicketDto;
 import org.study.cinema.entity.Ticket;
@@ -13,7 +14,9 @@ import org.study.cinema.repositories.TicketRepository;
 import org.study.cinema.services.TicketService;
 import org.study.cinema.utils.TicketDtoConverter;
 
-import java.util.Objects;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -26,19 +29,25 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public int countPagesQuantity() {
-        long ticketCount = ticketRepository.count();
-        if (Objects.isNull(ticketCount)) {
-            return (int) 0L;
-        }
-        return (int) (ticketCount / ROW_ON_PAGE);
+        return (int) Math.ceil(ticketRepository.count() / (double) ROW_ON_PAGE);
     }
 
     @Override
-    public Page<TicketDto> allTicketsWithPagination(int page) {
-        Pageable pageable = PageRequest.of(page, ROW_ON_PAGE);
+    public List<TicketDto> allTicketsWithPagination(int page) {
+        Pageable pageable = PageRequest.of(page - 1, ROW_ON_PAGE, Sort.by(
+                Sort.Order.asc("id")));
         Page<Ticket> ticketsOnPage = ticketRepository.findAll(pageable);
         LOGGER.info("Page with tickets is selected ");
-
         return TicketDtoConverter.convertTicketsPageInTicketsDto(ticketsOnPage);
+    }
+
+    @Override
+    public List<TicketDto> getAllTicketsByUser(int userId) {
+        List<Optional<TicketDto>> optionalTicketsList = ticketRepository.findAllByUserId(userId);
+        LOGGER.info("TicketService get all tickets by user with id " + userId);
+        return optionalTicketsList.stream()
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
     }
 }

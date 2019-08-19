@@ -29,9 +29,6 @@ public class HallDtoConverter {
     }
 
     private static List<PlaceDto> getOccupiedPlaceDtoList(Schedule schedule) {
-        if (Objects.isNull(schedule.getTicketsList())) {
-            return Collections.emptyList();
-        }
         return schedule.getTicketsList().stream()
                 .map(ticket -> PlaceDto.builder()
                         .row(ticket.getPlaceRow())

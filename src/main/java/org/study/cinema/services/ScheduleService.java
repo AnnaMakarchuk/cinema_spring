@@ -13,5 +13,5 @@ public interface ScheduleService {
 
     ScheduleDto getScheduleById(int id);
 
-    HallDto getHallWithPriceAndOccupiedPlacesBySchedule(int scheduleId);
+    HallDto getHallWithPriceAndOccupiedPlacesBySchedule(int scheduleId) throws Exception;
 }

@@ -32,7 +32,7 @@
 
 <div class="w3-container w3-right-align">
     <p> <div class="w3-bar w3-padding-large w3-padding-24">
-            <button class="w3-btn w3-border w3-teal w3-round-large w3-left" button onclick="location.href='/schedule?day=monday'">
+            <button class="w3-btn w3-border w3-teal w3-round-large w3-left" button onclick="location.href='/schedule'">
                 <fmt:message key="schedule"/>
             </button>
 

@@ -30,8 +30,8 @@ public class ScheduleController {
     @Autowired
     private MovieService movieService;
 
-    @GetMapping("/schedule")
-    public String getSchedulePage(@RequestParam(name = AttributesNames.SCHEDULE_DAY) String day,
+    @GetMapping(value = {"/schedule", "/schedule/{day}"})
+    public String getSchedulePage(@RequestParam(name = AttributesNames.SCHEDULE_DAY, defaultValue = "MONDAY") String day,
                                   Model model) {
         List<ScheduleDto> scheduleByDay = scheduleService.getAllScheduleByDay(day.toUpperCase());
         LOGGER.info("Schedule list for " + day + " was obtained");
@@ -46,7 +46,7 @@ public class ScheduleController {
     public String getHallScheme(@RequestParam(name = AttributesNames.SCHEDULE_ID) String id,
                                 Model model) {
         if (Objects.isNull(id)) {
-            return "404.jsp";
+            return "404";
         }
         int scheduleId = Integer.parseInt(id);
         ScheduleDto scheduleDto = scheduleService.getScheduleById(scheduleId);
@@ -54,7 +54,14 @@ public class ScheduleController {
 
         model.addAttribute(AttributesNames.SCHEDULE, scheduleDto);
 
-        HallDto hallDto = scheduleService.getHallWithPriceAndOccupiedPlacesBySchedule(scheduleId);
+        HallDto hallDto = null;
+        try {
+            hallDto = scheduleService.getHallWithPriceAndOccupiedPlacesBySchedule(scheduleId);
+        } catch (Exception e) {
+            LOGGER.error("Schedule with id " + id + " not found ", e);
+            return "404";
+        }
+
         LOGGER.info("Hall scheme for schedule id " + scheduleId + "was get");
         model.addAttribute(AttributesNames.HALL, hallDto);
 
