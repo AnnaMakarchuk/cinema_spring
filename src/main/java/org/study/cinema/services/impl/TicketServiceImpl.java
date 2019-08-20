@@ -15,8 +15,6 @@ import org.study.cinema.services.TicketService;
 import org.study.cinema.utils.TicketDtoConverter;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class TicketServiceImpl implements TicketService {
@@ -43,11 +41,8 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public List<TicketDto> getAllTicketsByUser(int userId) {
-        List<Optional<TicketDto>> optionalTicketsList = ticketRepository.findAllByUserId(userId);
+        List<TicketDto> ticketDtoList = ticketRepository.findAllByUserId(userId);
         LOGGER.info("TicketService get all tickets by user with id " + userId);
-        return optionalTicketsList.stream()
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList());
+        return ticketDtoList;
     }
 }

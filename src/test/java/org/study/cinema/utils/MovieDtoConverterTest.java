@@ -64,18 +64,7 @@ public class MovieDtoConverterTest {
         List<MovieDto> expectedMoviesDtoList = Arrays.asList(firstMovieDto, secondMovieDto);
 
         List<MovieDto> resultMoviesDtoList = MovieDtoConverter
-                .convertMovieListInMovieDtoList(Arrays.asList(firstMovie, secondMovie));
-
-        assertThat(resultMoviesDtoList, equalTo(expectedMoviesDtoList));
-    }
-
-    @Test
-    public void shouldConvertMovieListDtoWithOneEmptyMovie() {
-        List<MovieDto> expectedMoviesDtoList = Arrays.asList(firstMovieDto, secondMovieDto);
-
-        Optional<Movie> emptyMovie = Optional.empty();
-        List<MovieDto> resultMoviesDtoList = MovieDtoConverter
-                .convertMovieListInMovieDtoList(Arrays.asList(firstMovie, emptyMovie, secondMovie));
+                .convertMovieListInMovieDtoList(Arrays.asList(firstMovie.get(), secondMovie.get()));
 
         assertThat(resultMoviesDtoList, equalTo(expectedMoviesDtoList));
     }

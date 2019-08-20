@@ -12,7 +12,6 @@ import org.study.cinema.entity.enums.WeekDay;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -23,13 +22,12 @@ public class ScheduleDtoConverterTest {
     private ScheduleDto secondScheduleDtoWithTimeList;
 
     private Schedule firstSchedule;
+    private Schedule secondSchedule;
+    private Schedule thirdSchedule;
 
     private ScheduleDto firstScheduleDto;
     private ScheduleDto secondScheduleDto;
     private ScheduleDto thirdScheduleDto;
-
-    private List<Optional<Schedule>> optionalsSchedules;
-    private List<Optional<Schedule>> optionalsWithEmptySchedule;
 
     @Before
     public void setUp() {
@@ -60,13 +58,13 @@ public class ScheduleDtoConverterTest {
                 .movie(firstMovie)
                 .time(LocalTime.of(9, 0))
                 .build();
-        Schedule secondSchedule = Schedule.builder()
+        secondSchedule = Schedule.builder()
                 .id(2)
                 .weekDay(WeekDay.MONDAY)
                 .movie(secondMovie)
                 .time(LocalTime.of(12, 0))
                 .build();
-        Schedule thirdSchedule = Schedule.builder()
+        thirdSchedule = Schedule.builder()
                 .id(3)
                 .weekDay(WeekDay.MONDAY)
                 .movie(firstMovie)
@@ -105,15 +103,6 @@ public class ScheduleDtoConverterTest {
                 .movieName(firstMovie.getMovieName())
                 .time(thirdSchedule.getTime())
                 .build();
-
-        optionalsSchedules = Arrays.asList(Optional.of(firstSchedule),
-                Optional.of(secondSchedule),
-                Optional.of(thirdSchedule));
-
-        optionalsWithEmptySchedule = Arrays.asList(Optional.of(firstSchedule),
-                Optional.empty(),
-                Optional.of(secondSchedule),
-                Optional.of(thirdSchedule));
     }
 
     @Test
@@ -122,18 +111,7 @@ public class ScheduleDtoConverterTest {
                 .asList(firstScheduleDtoWithTimeList, secondScheduleDtoWithTimeList);
 
         List<ScheduleDto> resultScheduleDtoList = ScheduleDtoConverter.convertScheduleListInScheduleDtoWithTimeList
-                (optionalsSchedules);
-
-        assertThat(resultScheduleDtoList, equalTo(expectedScheduleDtoList));
-    }
-
-    @Test
-    public void shouldConvertScheduleDtoListWithOneEmptyOptional() {
-        List<ScheduleDto> expectedScheduleDtoList = Arrays
-                .asList(firstScheduleDtoWithTimeList, secondScheduleDtoWithTimeList);
-
-        List<ScheduleDto> resultScheduleDtoList = ScheduleDtoConverter.convertScheduleListInScheduleDtoWithTimeList
-                (optionalsWithEmptySchedule);
+                (Arrays.asList(firstSchedule, secondSchedule, thirdSchedule));
 
         assertThat(resultScheduleDtoList, equalTo(expectedScheduleDtoList));
     }
@@ -144,13 +122,13 @@ public class ScheduleDtoConverterTest {
                 .asList(firstScheduleDto, secondScheduleDto, thirdScheduleDto);
 
         List<ScheduleDto> resultScheduleDtoList = ScheduleDtoConverter.convertScheduleListInScheduleDto
-                (optionalsWithEmptySchedule);
+                (Arrays.asList(firstSchedule, secondSchedule, thirdSchedule));
 
         assertThat(resultScheduleDtoList, equalTo(expectedScheduleDtoList));
     }
 
     @Test
-    public void shouldConvertScheduleInScheduleDto(){
+    public void shouldConvertScheduleInScheduleDto() {
         ScheduleDto expectedScheduleDto = firstScheduleDto;
 
         ScheduleDto resultScheduleDto = ScheduleDtoConverter.scheduleConverter(firstSchedule);

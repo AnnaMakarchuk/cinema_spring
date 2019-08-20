@@ -10,7 +10,6 @@ import org.study.cinema.entity.enums.WeekDay;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ScheduleDtoConverter {
@@ -18,10 +17,8 @@ public class ScheduleDtoConverter {
     private static final Logger LOGGER = LogManager.getLogger(ScheduleDtoConverter.class);
     private static boolean uniqueMovie;
 
-    public static List<ScheduleDto> convertScheduleListInScheduleDto(List<Optional<Schedule>> scheduleOptionalList) {
-        List<ScheduleDto> scheduleDtoList = scheduleOptionalList.stream()
-                .filter(Optional::isPresent)
-                .map(Optional::get)
+    public static List<ScheduleDto> convertScheduleListInScheduleDto(List<Schedule> scheduleList) {
+        List<ScheduleDto> scheduleDtoList = scheduleList.stream()
                 .map(ScheduleDtoConverter::scheduleConverter)
                 .collect(Collectors.toList());
         LOGGER.info("Schedule list was converted in ScheduleDto list");
@@ -29,9 +26,8 @@ public class ScheduleDtoConverter {
     }
 
     public static List<ScheduleDto> convertScheduleListInScheduleDtoWithTimeList
-            (List<Optional<Schedule>> scheduleOptionalList) {
-        List<Schedule> schedules = convertScheduleListFromOptional(scheduleOptionalList);
-        return createScheduleDtoListWithRepeatedMoviesDuringDay(schedules);
+            (List<Schedule> scheduleList) {
+        return createScheduleDtoListWithRepeatedMoviesDuringDay(scheduleList);
     }
 
     public static ScheduleDto scheduleConverter(Schedule schedule) {
@@ -41,13 +37,6 @@ public class ScheduleDtoConverter {
                 .weekDay(schedule.getWeekDay())
                 .time(schedule.getTime())
                 .build();
-    }
-
-    private static List<Schedule> convertScheduleListFromOptional(List<Optional<Schedule>> scheduleOptionalList) {
-        return scheduleOptionalList.stream()
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList());
     }
 
     private static List<ScheduleDto> createScheduleDtoListWithRepeatedMoviesDuringDay(List<Schedule> schedules) {

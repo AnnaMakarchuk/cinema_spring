@@ -7,17 +7,14 @@ import org.study.cinema.entity.Genre;
 import org.study.cinema.entity.Movie;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MovieDtoConverter {
 
     private static final Logger LOGGER = LogManager.getLogger(MovieDtoConverter.class);
 
-    public static List<MovieDto> convertMovieListInMovieDtoList(List<Optional<Movie>> movieList) {
+    public static List<MovieDto> convertMovieListInMovieDtoList(List<Movie> movieList) {
         List<MovieDto> movieDtos = movieList.stream()
-                .filter(Optional::isPresent)
-                .map(Optional::get)
                 .map(MovieDtoConverter::movieConverter)
                 .collect(Collectors.toList());
         LOGGER.info("Movie list was converted in MovieDto list ");

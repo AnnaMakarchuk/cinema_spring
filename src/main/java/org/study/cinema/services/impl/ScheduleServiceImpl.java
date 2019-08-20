@@ -13,7 +13,6 @@ import org.study.cinema.services.ScheduleService;
 import org.study.cinema.utils.HallDtoConverter;
 import org.study.cinema.utils.ScheduleDtoConverter;
 
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +27,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<ScheduleDto> getAllScheduleByDay(String weekDay) {
         WeekDay day = WeekDay.valueOf(weekDay);
-        List<Optional<Schedule>> scheduleListByWeekday = scheduleRepository
+        List<Schedule> scheduleListByWeekday = scheduleRepository
                 .findAllByWeekDayOrderByTime(day);
 
         if (scheduleListByWeekday.isEmpty()) {
@@ -42,7 +41,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public List<ScheduleDto> viewNonActiveSchedule() {
-        List<Optional<Schedule>> unActiveScheduleList = scheduleRepository.findAllByIsActive(nonActive);
+        List<Schedule> unActiveScheduleList = scheduleRepository.findAllByIsActive(nonActive);
 
         if (unActiveScheduleList.isEmpty()) {
             return null;
