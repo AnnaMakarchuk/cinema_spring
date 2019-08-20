@@ -13,10 +13,10 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
 
     @Query ("SELECT new org.study.cinema.dto.TicketDto (t.id, t.placeRow, t.placeNumber, t.ticketPrice, u.id, " +
             "s.weekDay, s.time, h.hallName, m.movieName) FROM Ticket t " +
-            "JOIN FETCH t.user u " +
-            "JOIN FETCH t.schedule s " +
-            "JOIN FETCH s.hall h " +
-            "JOIN FETCH s.movie m " +
+            "JOIN t.registeredUser u " +
+            "JOIN t.schedule s " +
+            "JOIN s.hall h " +
+            "JOIN s.movie m " +
             "WHERE u.id = :userId")
     List<Optional<TicketDto>> findAllByUserId(@Param("userId") int userId);
 }

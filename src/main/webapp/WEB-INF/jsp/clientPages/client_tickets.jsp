@@ -15,17 +15,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<script src="/js/language.js"></script>
+<script type="text/javascript" src="/js/language.js"></script>
 
 <body class="w3-light-grey">
 <div class="w3-container w3-teal w3-opacity w3-left-align front-size:20px">
             <div class="w3-dropdown-hover w3-right ">
                 <button class="w3-button w3-teal"><fmt:message key="language"/></button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4" style="min-width:70px">
-                  <a class="w3-bar-item w3-button w3-teal"
-                        onclick="addUrlParameter('locale', 'en')"><fmt:message key="language.en" /></a>
-                  <a class="w3-bar-item w3-button  w3-teal"
-                        onclick="addUrlParameter('locale', 'ru')"><fmt:message key="language.ru" /></a>
+                  <a class="w3-bar-item w3-button w3-teal" onclick="languageChange('locale', 'en')"><fmt:message key="language.en" /></a>
+                  <a class="w3-bar-item w3-button  w3-teal" onclick="languageChange('locale', 'ru')"><fmt:message key="language.ru" /></a>
                 </div>
             </div>
             <div class="w3-container w3-center w3-padding ">
@@ -35,12 +33,11 @@
 
 <div class="w3-container w3-left-align">
     <div class="w3-bar w3-padding-large w3-padding-24">
-
-            <button class="w3-btn w3-teal w3-round-large w3-left" onclick="location.href='/cinema/cabinet'">
+            <button class="w3-btn w3-teal w3-round-large w3-left" onclick="location.href='/cabinet'">
                             <fmt:message key="back.cabinet"/>
             </button>
             <button class="w3-btn  w3-teal w3-border w3-border-redl w3-round-large w3-right"
-                onclick="location.href='/cinema/logout'">
+                onclick="location.href='/logout'">
                 <fmt:message key="logout.button"/>
             </button>
      </div>
@@ -62,7 +59,6 @@
             <th><fmt:message key="hall.row"/></th>
             <th><fmt:message key="hall.place"/></th>
             <th><fmt:message key="price"/></th>
-            <th><fmt:message key="action"/></th>
         </tr>
         <tr>
             <c:forEach var="ticket" items="${tickets}" varStatus = "loopStatus">
@@ -74,11 +70,6 @@
                 <td><br><c:out value="${ticket.placeRow}"/></td>
                 <td><br><c:out value="${ticket.placeNumber}"/></td>
                 <td><br><c:out value="${ticket.ticketPrice}"/></td>
-                <td class="w3-left">
-                <button class="w3-button w3-border w3-padding-small"
-                     onclick="location.href='/client/deleteticket?ticket_id=${ticket.ticketId}'">
-                     <fmt:message key="delete"/>
-                </button>
             </tr>
             </c:forEach>
         </tr>

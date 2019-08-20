@@ -30,6 +30,7 @@ public class ScheduleController {
     @Autowired
     private MovieService movieService;
 
+//    TODO check page and js.
     @GetMapping(value = {"/schedule", "/schedule/{day}"})
     public String getSchedulePage(@RequestParam(name = AttributesNames.SCHEDULE_DAY, defaultValue = "MONDAY") String day,
                                   Model model) {

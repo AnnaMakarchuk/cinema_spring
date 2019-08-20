@@ -32,6 +32,7 @@ public class TicketController {
         return "clientPages/client_tickets";
     }
 
+//    TODO button background in jsp
     @GetMapping(value = {"/admin/tickets", "/admin/tickets/{page}"})
     public String viewAllAvailableTickets(@RequestParam(name = AttributesNames.PAGE, defaultValue = "1") String page,
                                           Model model) {
