@@ -24,4 +24,5 @@ public class RegisteredUserDto {
     private UserRole userRole;
     private String userLogin;
     private String userEMailAddress;
+
 }

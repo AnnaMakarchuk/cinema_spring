@@ -15,15 +15,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<script src="/js/language.js"></script>
+<script type="text/javascript" src="/js/language.js"></script>
 
 <body class="w3-light-grey">
 <div class="w3-container w3-teal w3-opacity w3-left-align front-size:20px">
             <div class="w3-dropdown-hover w3-right ">
                 <button class="w3-button w3-teal"><fmt:message key="language"/></button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4" style="min-width:70px">
-                  <a class="w3-bar-item w3-button w3-teal" onclick="addUrlParameter('locale', 'en')"><fmt:message key="language.en" /></a>
-                  <a class="w3-bar-item w3-button  w3-teal" onclick="addUrlParameter('locale', 'ru')"><fmt:message key="language.ru" /></a>
+                  <a class="w3-bar-item w3-button w3-teal" onclick="languageChange('locale', 'en')"><fmt:message key="language.en" /></a>
+                  <a class="w3-bar-item w3-button  w3-teal" onclick="languageChange('locale', 'ru')"><fmt:message key="language.ru" /></a>
                 </div>
             </div>
             <div class="w3-container w3-center w3-padding ">
@@ -44,7 +44,8 @@
                              <div id="id01" class="w3-modal">
                                 <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
                                     <div class="w3-center"><br>
-                                        <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+                                        <span onclick="document.getElementById('id01').style.display='none'"
+                                        class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
                                     </div>
 
                                     <form class="w3-container" method="POST" >
@@ -91,33 +92,36 @@
 </div>
 <div><p></p></div>
 <div class="w3-container w3-text-teal">
-<form class="w3-container w3-padding">
     <table class="w3-table w3-small w3-bordered w3-centered">
-        <tr>
-            <th><fmt:message key="movie.name"/></th>
-            <th><fmt:message key="movie.genre"/></th>
-            <th><fmt:message key="duration"/></th>
-            <th><fmt:message key="movie.age"/></th>
-            <th><fmt:message key="movie.description"/></th>
-        </tr>
-        <tr>
-            <c:forEach var="movie" items="${movies}" varStatus = "loopStatus">
-                <td><br><c:out value="${movie.movieName}"/></td>
-                <td><br><c:out value="${movie.movieGenre}"/></td>
-                <td><br><c:out value="${movie.movieDuration}"/></td>
-                <td><br><c:out value="${movie.ageLimit}"/></td>
-                <td><br><c:out value="${movie.movieDescription}"/></td>
+            <tr>
+                <th><fmt:message key="movie.name"/></th>
+                <th><fmt:message key="movie.genre"/></th>
+                <th><fmt:message key="duration"/></th>
+                <th><fmt:message key="movie.age"/></th>
+                <th><fmt:message key="movie.description"/></th>
+                <th><fmt:message key="action"/></th>
             </tr>
-            </c:forEach>
-        </tr>
-    </table>
-</form>
+            <tr>
+                <c:forEach var="movie" items="${movies}" varStatus = "loopStatus">
+                    <td><br><c:out value="${movie.movieName}"/></td>
+                    <td><br><c:out value="${movie.movieGenre}"/></td>
+                    <td><br><c:out value="${movie.movieDuration}"/></td>
+                    <td><br><c:out value="${movie.ageLimit}"/></td>
+                    <td><br><c:out value="${movie.movieDescription}"/></td>
+                    <td class="w3-left">
+                    <button class="w3-button w3-border w3-padding-small"
+                                              onclick="location.href='/admin/cancelmovie?movie_id=${movie.movieId}'">
+                                                      <fmt:message key="cancel.movie"/>
+                                  </button>
+                </tr>
+                </c:forEach>
+            </tr>
 
+        </table>
 </div>
 
 <script>
 function submitMovie() {
-
             console.log("sending post");
             var xhr = new XMLHttpRequest();
             xhr.open("POST", url);
@@ -131,10 +135,15 @@ function submitMovie() {
 
             xhr.send(JSON.stringify(body));
             xhr.onload = function() {
-                confirm("Movie was bought");
+                confirm("Movie was added");
                 window.location.reload();
         }
     }
+
+function deleteMovie() {
+
+}
+
 </script>
 
 </body>

@@ -9,8 +9,11 @@ import lombok.Setter;
 
 import lombok.ToString;
 import org.study.cinema.entity.Genre;
+import org.study.cinema.entity.RegisteredUser;
+import org.study.cinema.entity.Schedule;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,11 +33,7 @@ public class MovieDto {
     private int ageLimit;
     private String movieDescription;
 
-    public MovieDto(String movieName, String movieGenre, int movieDuration, int ageLimit, String movieDescription) {
-        this.movieName = movieName;
-        this.movieGenre = movieGenre;
-        this.movieDuration = movieDuration;
-        this.ageLimit = ageLimit;
-        this.movieDescription = movieDescription;
-    }
+    private List<Schedule> scheduleList;
+    private List<RegisteredUser> registeredUsers;
+
 }

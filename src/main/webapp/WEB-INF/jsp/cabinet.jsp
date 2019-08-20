@@ -119,7 +119,7 @@
                     </c:when>
                     <c:when test="${user.role == administrator}">
                              <button class="w3-button w3-teal w3-round-large w3-padding-large" style="width:50%" onclick="location.href='/admin/movies'">
-                                         <fmt:message key="adminadd.movie"/>
+                                         <fmt:message key="change.movie"/>
                              </button>
 
                              <button class="w3-button w3-teal w3-round-large w3-padding-large" style="width:50%" onclick="location.href='/admin/tickets'">

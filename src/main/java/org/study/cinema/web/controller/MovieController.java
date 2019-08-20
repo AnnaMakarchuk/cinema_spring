@@ -5,22 +5,16 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.study.cinema.dto.MovieDto;
 import org.study.cinema.services.MovieService;
 import org.study.cinema.utils.AttributesNames;
 import org.study.cinema.utils.StringParser;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,11 +32,10 @@ public class MovieController {
         return "homepage";
     }
 
-
     @GetMapping("/admin/movies")
     public String getMovieListForAdmin(Model model) {
         createMovieDtoListForView(model);
-        return "adminPages/admin_add_movie";
+        return "adminPages/admin_change_movie";
     }
 
     @GetMapping("/admin/unactivemovies")
@@ -55,7 +48,7 @@ public class MovieController {
 
     //TODO problem with attribute model, change to Rest
 //    @RequestMapping(value = "/admin/addmovie", method = RequestMethod.POST)
-    public String getMovieListAddNewMovie(@ModelAttribute (name = AttributesNames.MOVIE) MovieDto movieDto) {
+    public String getMovieListAddNewMovie(@ModelAttribute(name = AttributesNames.MOVIE) MovieDto movieDto) {
 
         if (wrongInputParameters(movieDto)) {
             LOGGER.info("Movie parameters is incorrect");
@@ -65,6 +58,22 @@ public class MovieController {
         movieService.addNewMovie(movieDto);
         LOGGER.info("Movie with define parameters was added");
         return "adminPages/admin_movieadded";
+    }
+
+    @RequestMapping(value = "/admin/cancelmovie")
+    public String cancelMovie(@RequestParam(name = AttributesNames.MOVIE_ID) String id,
+                              Model model) {
+        LOGGER.error ("hi darling" + id);
+        if (Objects.isNull(id)) {
+            return "404";
+        }
+
+        MovieDto cancelMovie = movieService.cancelMovieById(Integer.parseInt(id));
+        LOGGER.info("Cancelled Movie Dto was created added");
+
+        model.addAttribute(AttributesNames.SCHEDULES, cancelMovie.getScheduleList());
+        model.addAttribute(AttributesNames.CLIENTS, cancelMovie.getRegisteredUsers());
+        return "adminPages/admin_cancel_movie";
     }
 
     private void createMovieDtoListForView(Model model) {
