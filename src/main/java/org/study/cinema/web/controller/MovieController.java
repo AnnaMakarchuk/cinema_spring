@@ -46,24 +46,9 @@ public class MovieController {
         return "adminPages/admin_nonactive_movies";
     }
 
-    //TODO problem with attribute model, change to Rest
-//    @RequestMapping(value = "/admin/addmovie", method = RequestMethod.POST)
-    public String getMovieListAddNewMovie(@ModelAttribute(name = AttributesNames.MOVIE) MovieDto movieDto) {
-
-        if (wrongInputParameters(movieDto)) {
-            LOGGER.info("Movie parameters is incorrect");
-            return "401";
-        }
-        LOGGER.info("Movie" + movieDto.toString());
-        movieService.addNewMovie(movieDto);
-        LOGGER.info("Movie with define parameters was added");
-        return "adminPages/admin_movieadded";
-    }
-
-    @RequestMapping(value = "/admin/cancelmovie")
+    @RequestMapping(value = "/admin/cancelmovie", method = RequestMethod.POST)
     public String cancelMovie(@RequestParam(name = AttributesNames.MOVIE_ID) String id,
                               Model model) {
-        LOGGER.error ("hi darling" + id);
         if (Objects.isNull(id)) {
             return "404";
         }

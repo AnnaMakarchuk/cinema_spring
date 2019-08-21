@@ -35,10 +35,11 @@ public class MovieDtoConverter {
     public static Movie convertMovieDtoInMovie(MovieDto movieDto, Genre genre) {
         return Movie.builder()
                 .movieName(movieDto.getMovieName())
-                .genre(genre)
                 .movieDuration(movieDto.getMovieDuration())
-                .ageLimit(movieDto.getAgeLimit())
                 .movieDescription(movieDto.getMovieDescription())
+                .genre(genre)
+                .ageLimit(movieDto.getAgeLimit())
+                .isActive(true)
                 .build();
     }
 }

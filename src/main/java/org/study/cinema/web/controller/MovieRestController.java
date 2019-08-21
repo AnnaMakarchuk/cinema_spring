@@ -3,14 +3,15 @@ package org.study.cinema.web.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.study.cinema.dto.MovieDto;
 import org.study.cinema.services.MovieService;
 import org.study.cinema.utils.StringParser;
+
 
 @RestController
 public class MovieRestController {
@@ -21,15 +22,15 @@ public class MovieRestController {
     private MovieService movieService;
 
     //TODO check work
-    @RequestMapping(method = RequestMethod.POST,
+    @RequestMapping(value = "/admin/addmovie", method = RequestMethod.POST,
             headers = "Accept=application/x-www-form-urlencoded")
-    @ResponseBody
-    public void getAddNewMovie(MovieDto movieDto) {
-
+    @ResponseStatus(HttpStatus.OK)
+    public void getAddNewMovie(MovieDto movieDto) throws Exception {
         if (wrongInputParameters(movieDto)) {
             LOGGER.info("Movie parameters is incorrect");
+            throw new Exception("Incorrect input parameters");
         }
-        LOGGER.info("Movie" + movieDto.toString());
+        LOGGER.info("New movie is " + movieDto.toString());
         movieService.addNewMovie(movieDto);
         LOGGER.info("Movie with define parameters was added");
     }
@@ -40,6 +41,6 @@ public class MovieRestController {
         boolean duration = StringParser.checkMovieDuration(String.valueOf(movieDto.getMovieDuration()));
         boolean age = StringParser.checkMovieAge(String.valueOf(movieDto.getAgeLimit()));
 
-        return name && description && duration && age;
+        return !(name && description && duration && age);
     }
 }

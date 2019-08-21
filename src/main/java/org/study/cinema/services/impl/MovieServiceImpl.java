@@ -61,7 +61,7 @@ public class MovieServiceImpl implements MovieService {
     public void addNewMovie(MovieDto movieDto) {
         Genre genre = generateGenre(movieDto);
         Movie movie = MovieDtoConverter.convertMovieDtoInMovie(movieDto, genre);
-        LOGGER.info("Movie is prepared for saving to database");
+        LOGGER.info("Movie is prepared for saving to database" + movieDto.toString());
         movieRepository.save(movie);
     }
 
@@ -118,7 +118,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     private Genre generateGenre(MovieDto movieDto) {
-        String genreName = movieDto.getMovieGenre().toLowerCase();
+        String genreName = movieDto.getMovieGenre().toUpperCase();
+        LOGGER.info("genre is " + genreName) ;
         int genreId = genreRepository.findByGenre(genreName);
         return Genre.builder().
                 id(genreId)
