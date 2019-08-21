@@ -50,36 +50,12 @@
         <tr>
             <th><fmt:message key="week.day"/></th>
             <th><fmt:message key="movie.time"/></th>
-            <th><fmt:message key="action"/></th>
-
         </tr>
         <tr>
             <c:forEach var="schedule" items="${schedules}" varStatus = "loopStatus">
                 <td><br><c:out value="${schedule.weekDay}"/></td>
                 <td><br><c:out value="${schedule.time}"/></td>
-                <td>
-                <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-border w3-padding-small w3-center" data-modal="form-primary">
-                    <fmt:message key="update.schedule.button"/>
-                </button>
-                    <div id="id01" class="w3-modal">
-                         <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
-                            <div class="w3-center"><br>
-                                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
-                            </div>
-                            <form class="w3-container" method="POST" action="/cinema/changeschedule">
-                                <div class="w3-section w3-left-align">
-                                        <c:forEach var="movie" items="${movies}" varStatus = "loopStatus">
-                                            <input type="radio" name="movie_id" value="${movie.movieId}"><c:out value="${movie.movieName}"/><br>
-                                        </c:forEach>
-                                <p></p>
-                                <input type="hidden" name="schedule_id" value="${schedule.scheduleId}"/>
-                                <button class="w3-button w3-block w3-teal w3-round-large w3-section w3-padding">
-                                    <fmt:message key="update.schedule.button"/></button>
-                            </div>
-                        </form>
-                    </div>
-                 </div>
-            </tr>
+        </tr>
             </c:forEach>
         </tr>
     </table>

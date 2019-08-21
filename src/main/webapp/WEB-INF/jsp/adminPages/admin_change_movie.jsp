@@ -70,7 +70,7 @@
                                                <input type="radio" name="movieGenre" value="cartoon"><fmt:message key="cartoon"/><br>
                                             </form>
 
-                                            <button class="w3-button w3-block w3-teal w3-round-large w3-section w3-padding" onclick="myFunction()" type="submit">
+                                            <button class="w3-button w3-block w3-teal w3-round-large w3-section w3-padding" type="submit">
                                                 <fmt:message key="adminadd.movie"/></button>
                                         </div>
                                     </form>
@@ -85,7 +85,7 @@
 </div>
 <div><p></p></div>
 <div class="w3-container w3-text-teal">
-    <table class="w3-table w3-small w3-bordered w3-centered">
+        <table class="w3-table w3-small w3-bordered w3-centered">
             <tr>
                 <th><fmt:message key="movie.name"/></th>
                 <th><fmt:message key="movie.genre"/></th>
@@ -102,10 +102,12 @@
                     <td><br><c:out value="${movie.ageLimit}"/></td>
                     <td><br><c:out value="${movie.movieDescription}"/></td>
                     <td class="w3-left">
-                    <button class="w3-button w3-border w3-padding-small"
-                                              onclick="location.href='/admin/cancelmovie?movie_id=${movie.movieId}'">
-                                                      <fmt:message key="cancel.movie"/>
-                                  </button>
+                        <form action="/admin/cancelmovie?movie_id=${movie.movieId}" method="post">
+                            <button class="w3-button w3-border w3-padding-small" type = "submit">
+                                 <fmt:message key="cancel.movie"/>
+                            </button>
+                        </form>
+
                 </tr>
                 </c:forEach>
             </tr>

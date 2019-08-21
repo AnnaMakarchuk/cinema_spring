@@ -1,46 +1,35 @@
 package org.study.cinema.utils;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import org.study.cinema.dto.AdministratorDto;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.study.cinema.dto.RegisteredUserDto;
-import org.study.cinema.entity.Administrator;
 import org.study.cinema.entity.RegisteredUser;
 
 public class UserDtoConverter {
+    private static final Logger LOGGER = LogManager.getLogger(UserDtoConverter.class);
 
     public static RegisteredUserDto convertUserInRegisteredUserDto(RegisteredUser registeredUser) {
-        return userConverter(registeredUser);
-    }
-
-    public static List<RegisteredUserDto> convertUserListInRegisteredUserDtoList(List<RegisteredUser> registeredUser) {
-        return registeredUser.stream()
-                .map(UserDtoConverter::userConverter)
-                .collect(Collectors.toList());
-    }
-
-    public static AdministratorDto convertUserInAdministratorDto(Administrator administrator) {
-        return AdministratorDto.builder()
-                .administratorId(administrator.getUserId())
-                .administratorName(administrator.getUserName())
-                .administratorSurname(administrator.getUserSurname())
-                .gender(administrator.getGender())
-                .userRole(administrator.getUserRole())
-                .administratorLogin(administrator.getUserLogin())
-                .administratorEMailAddress(administrator.getUserEMailAddress())
-                .administratorWorkingHoursPerWeek(administrator.getWorkingHoursWeek())
+        RegisteredUserDto registeredUserDto = RegisteredUserDto.builder()
+                .userId(registeredUser.getUserId())
+                .userName(registeredUser.getUserName())
+                .userSurname(registeredUser.getUserSurname())
+                .gender(registeredUser.getGender())
+                .userRole(registeredUser.getUserRole())
+                .userLogin(registeredUser.getUserLogin())
+                .userEMailAddress(registeredUser.getUserEMailAddress())
                 .build();
+        LOGGER.info("RegisteredUserDto was converted " + registeredUserDto.toString());
+        return registeredUserDto;
     }
 
-    private static RegisteredUserDto userConverter(RegisteredUser user) {
-        return RegisteredUserDto.builder()
-                .userId(user.getUserId())
-                .userName(user.getUserName())
-                .userSurname(user.getUserSurname())
-                .gender(user.getGender())
-                .userRole(user.getUserRole())
-                .userLogin(user.getUserLogin())
-                .userEMailAddress(user.getUserEMailAddress())
-                .build();
+    public static RegisteredUser convertUserDtoInRegisteredUser(RegisteredUserDto registeredUserDto) {
+        RegisteredUser registeredUser = new RegisteredUser(registeredUserDto.getUserName(),
+                registeredUserDto.getUserSurname(),
+                registeredUserDto.getGender(),
+                registeredUserDto.getUserLogin(),
+                registeredUserDto.getUserEMailAddress(),
+                registeredUserDto.getUserPassword());
+        LOGGER.info("RegisteredUser was converted " + registeredUser.toString());
+        return registeredUser;
     }
 }

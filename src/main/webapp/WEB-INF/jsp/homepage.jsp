@@ -92,22 +92,23 @@
                             <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
                         </div>
 
-                        <form class="w3-container" method="POST" action="/cinema/register">
+                        <form class="w3-container" method="post" action="/register">
+
                             <div class="w3-section w3-left-align">
                                 <label><b><fmt:message key="name"/></b></label>
-                                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.name"/>" name="name" required>
+                                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.name"/>" name="userName" required>
 
                                 <label><b><fmt:message key="surname"/></b></label>
-                                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.surname"/>" name="surname" required>
+                                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.surname"/>" name="userSurname" required>
 
                                 <label><b><fmt:message key="login"/></b></label>
-                                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.login"/>" name="login" required>
+                                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.login"/>" name="userLogin" required>
 
                                 <label><b><fmt:message key="email"/></b></label>
-                                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.email"/>" name="email" required>
+                                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.email"/>" name="userEMailAddress" required>
 
                                 <label><b><fmt:message key="password"/></b></label>
-                                <input class="w3-input w3-border w3-margin-bottom" type="password" placeholder="<fmt:message key="enter.password"/>" name="password" required>
+                                <input class="w3-input w3-border w3-margin-bottom" type="password" placeholder="<fmt:message key="enter.password"/>" name="userPassword" required>
 
                                 <form action="">
                                     <input type="radio" name="gender" value="male"><fmt:message key="male"/><br>

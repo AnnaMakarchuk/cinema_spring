@@ -1,25 +1,53 @@
 package org.study.cinema.services.impl;
 
-import java.util.Objects;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.study.cinema.dto.RegisteredUserDto;
 import org.study.cinema.entity.RegisteredUser;
-import org.study.cinema.entity.SecurityUser;
+import org.study.cinema.entity.UserRole;
 import org.study.cinema.repositories.UserRepository;
+import org.study.cinema.repositories.UserRoleRepository;
 import org.study.cinema.services.UserService;
+import org.study.cinema.utils.UserDtoConverter;
 
 //TODO add spring Security in the end
 @Service
-public class UserServiceImpl
-//        implements UserService
-{
+public class UserServiceImpl implements UserService {
 
-//    @Autowired
-//    private UserRepository userRepository;
-//
-//    @Override
+    private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
+    private static final String NEW_USER_ROLE = "client";
+
+    UserRepository userRepository;
+    UserRoleRepository userRoleRepository;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, UserRoleRepository userRoleRepository) {
+        this.userRepository = userRepository;
+        this.userRoleRepository = userRoleRepository;
+    }
+
+    @Override
+    public void updateUser(RegisteredUserDto registeredUserDto) {
+        userRepository.updateUser(registeredUserDto.getUserLogin(), registeredUserDto.getUserPassword());
+        LOGGER.info("User was updated in database");
+    }
+
+    @Override
+    public void createNewUser(RegisteredUserDto registeredUserDto) throws Exception {
+        RegisteredUser newRegisteredUser = UserDtoConverter.convertUserDtoInRegisteredUser(registeredUserDto);
+        LOGGER.info("User was prepared for saving in database");
+        UserRole userRole = userRoleRepository.findByUserRole(NEW_USER_ROLE)
+                .orElseThrow(() -> new Exception("Role not found in database"));
+        newRegisteredUser.setUserRole(userRole);
+        userRepository.save(newRegisteredUser);
+        LOGGER.info("User was saved in database");
+    }
+
+    //    @Override
 //    public UserDetails loadUserByUsername(String userLogin) throws UsernameNotFoundException {
 //
 //        RegisteredUser registeredUser = userRepository
