@@ -13,7 +13,6 @@ import org.study.cinema.services.ScheduleService;
 import org.study.cinema.utils.HallDtoConverter;
 import org.study.cinema.utils.ScheduleDtoConverter;
 
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +27,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<ScheduleDto> getAllScheduleByDay(String weekDay) {
         WeekDay day = WeekDay.valueOf(weekDay);
-        List<Optional<Schedule>> scheduleListByWeekday = scheduleRepository
+        List<Schedule> scheduleListByWeekday = scheduleRepository
                 .findAllByWeekDayOrderByTime(day);
 
         if (scheduleListByWeekday.isEmpty()) {
@@ -42,7 +41,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public List<ScheduleDto> viewNonActiveSchedule() {
-        List<Optional<Schedule>> unActiveScheduleList = scheduleRepository.findAllByIsActive(nonActive);
+        List<Schedule> unActiveScheduleList = scheduleRepository.findAllByIsActive(nonActive);
 
         if (unActiveScheduleList.isEmpty()) {
             return null;
@@ -60,13 +59,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public HallDto getHallWithPriceAndOccupiedPlacesBySchedule(int scheduleId) {
-        Optional<Schedule> scheduleOptional = scheduleRepository.findById(scheduleId);
-        if (scheduleOptional.isEmpty()) {
-            LOGGER.info("No such schedule for id " + scheduleId);
-            return null;
-        }
-        Schedule schedule = scheduleOptional.get();
+    public HallDto getHallWithPriceAndOccupiedPlacesBySchedule(int scheduleId) throws Exception {
+        Schedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(()->new Exception("Schedule with such id not found"));
+
         LOGGER.info("ScheduleService return schedule by id " + scheduleId);
 
         return HallDtoConverter.convertHallDtoWithOccupiedPlacesAndPriceFromSchedule(schedule);

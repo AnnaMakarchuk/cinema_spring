@@ -6,20 +6,33 @@ import org.springframework.data.domain.Page;
 import org.study.cinema.dto.TicketDto;
 import org.study.cinema.entity.Ticket;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class TicketDtoConverter {
     private static final Logger LOGGER = LogManager.getLogger(TicketDtoConverter.class);
 
-    public static Page<TicketDto> convertTicketsPageInTicketsDto(Page<Ticket> ticketsOnPage) {
-        return (Page<TicketDto>) ticketsOnPage.stream()
+    public static List<TicketDto> convertTicketsPageInTicketsDto(Page<Ticket> ticketsOnPage) {
+        List<TicketDto> ticketDtoList = ticketsOnPage.stream()
                 .map(TicketDtoConverter::ticketConverter)
                 .collect(Collectors.toList());
+        LOGGER.info("Pages with tickets was converted in TicketDto List");
+        return ticketDtoList;
+    }
+
+    public static List<TicketDto> convertTicketsListInTicketsDto(List<Optional<Ticket>> optionalTicketsList) {
+        List<TicketDto> ticketDtoList = optionalTicketsList.stream()
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .map(TicketDtoConverter::ticketConverter)
+                .collect(Collectors.toList());
+        LOGGER.info("List with tickets by userId was converted in TicketDto List");
+        return ticketDtoList;
     }
 
     private static TicketDto ticketConverter(Ticket ticket) {
-        TicketDto ticketDto = TicketDto.builder()
+        return TicketDto.builder()
                 .ticketId(ticket.getId())
                 .hallName(ticket.getSchedule().getHall().getHallName())
                 .movieName(ticket.getSchedule().getMovie().getMovieName())
@@ -29,10 +42,5 @@ public class TicketDtoConverter {
                 .weekDay(ticket.getSchedule().getWeekDay())
                 .ticketPrice(ticket.getTicketPrice())
                 .build();
-        LOGGER.info("Ticket was converted in TicketDto ");
-        return ticketDto;
     }
 }
-
-
-

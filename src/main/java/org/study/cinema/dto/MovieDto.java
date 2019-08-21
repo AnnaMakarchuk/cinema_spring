@@ -9,6 +9,11 @@ import lombok.Setter;
 
 import lombok.ToString;
 import org.study.cinema.entity.Genre;
+import org.study.cinema.entity.RegisteredUser;
+import org.study.cinema.entity.Schedule;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,6 +22,8 @@ import org.study.cinema.entity.Genre;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@XmlRootElement
+
 public class MovieDto {
 
     private int movieId;
@@ -25,4 +32,8 @@ public class MovieDto {
     private int movieDuration;
     private int ageLimit;
     private String movieDescription;
+
+    private List<Schedule> scheduleList;
+    private List<RegisteredUser> registeredUsers;
+
 }

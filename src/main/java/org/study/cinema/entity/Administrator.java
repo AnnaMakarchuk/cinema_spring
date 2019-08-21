@@ -24,11 +24,4 @@ public class Administrator extends RegisteredUser {
     @Column(name = "working_hours_week")
     private int workingHoursWeek;
 
-    public Administrator(int userId, String userName, String userSurname, Gender gender, UserRole userRole,
-                         String userLogin, String userEMailAddress, String userPassword,
-                         double monthSalary, int workingHoursWeek) {
-        super(userId, userName, userSurname, gender, userRole, userLogin, userEMailAddress, userPassword);
-        this.monthSalary = monthSalary;
-        this.workingHoursWeek = workingHoursWeek;
-    }
 }

@@ -11,4 +11,6 @@ public interface MovieService {
     void addNewMovie(MovieDto movieDto);
 
     List<MovieDto> viewAllUnAvailableMovies();
+
+    MovieDto cancelMovieById(int movieId);
 }

@@ -14,7 +14,6 @@
     <link type="text/css" href=" https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
 </head>
 
-<script src="/js/language.js"></script>
 
 <body class="w3-light-grey">
 <div class="w3-container w3-teal w3-opacity w3-left-align front-size:20px">
@@ -124,13 +123,13 @@
 
 <div class="w3-container">
   <div id="day_panel" class="w3-bar w3-teal w3-text-white">
-    <a href="?day=monday" class="w3-bar-item w3-button" onclick="submitButtonStyle(this, 'monday')"><fmt:message key="monday"/></a>
-    <a href="?day=tuesday" class="w3-bar-item w3-button " onclick="submitButtonStyle(this)"><fmt:message key="tuesday"/></a>
-    <a href="?day=wednesday" class="w3-bar-item w3-button " onclick="submitButtonStyle(this)"><fmt:message key="wednesday"/></a>
-    <a href="?day=thursday" class="w3-bar-item w3-button" onclick="submitButtonStyle(this)"><fmt:message key="thursday"/></a>
-    <a href="?day=friday" class="w3-bar-item w3-button " onclick="submitButtonStyle(this)"><fmt:message key="friday"/></a>
-    <a href="?day=saturday" class="w3-bar-item w3-button " onclick="submitButtonStyle(this)"><fmt:message key="saturday"/></a>
-    <a href="?day=sunday" class="w3-bar-item w3-button " onclick="submitButtonStyle(this)"><fmt:message key="sunday"/></a>
+    <a id="monday" href="?day=monday" class="w3-bar-item w3-button myButton" onclick="submitButtonStyle('monday')" ><fmt:message key="monday"/></a>
+    <a id="tuesday" href="?day=tuesday" class="w3-bar-item w3-button " onclick="submitButtonStyle('tuesday')"><fmt:message key="tuesday"/></a>
+    <a id="wednesday" href="?day=wednesday" class="w3-bar-item w3-button " onclick="submitButtonStyle('wednesday')"><fmt:message key="wednesday"/></a>
+    <a id="thursday" href="?day=thursday" class="w3-bar-item w3-button" onclick="submitButtonStyle('thursday')"><fmt:message key="thursday"/></a>
+    <a id="friday" href="?day=friday" class="w3-bar-item w3-button " onclick="submitButtonStyle('friday')"><fmt:message key="friday"/></a>
+    <a id="saturday" href="?day=saturday" class="w3-bar-item w3-button " onclick="submitButtonStyle('saturday')"><fmt:message key="saturday"/></a>
+    <a id="sunday" href="?day=sunday" class="w3-bar-item w3-button " onclick="submitButtonStyle('sunday')"><fmt:message key="sunday"/></a>
   </div>
 
 <div class="w3-container w3-text-teal">
@@ -153,18 +152,12 @@
     </table>
 </div>
 
-
 <script>
-    function submitButtonStyle(_this, day) {
-        if ("${weekday}" == day) {
-            _this.style.background = "#800000";
-        }
+
+    function submitButtonStyle(day) {
+    console.log(day);
+    document.getElementById(day).style.background='grey';
     }
-
-
-
-
-
 </script>
 
 </body>

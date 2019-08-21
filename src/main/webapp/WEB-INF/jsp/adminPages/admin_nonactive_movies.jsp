@@ -15,15 +15,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<script src="/js/language.js"></script>
+<script type="text/javascript" src="/js/language.js"></script>
 
 <body class="w3-light-grey">
 <div class="w3-container w3-teal w3-opacity w3-left-align front-size:20px">
             <div class="w3-dropdown-hover w3-right ">
                 <button class="w3-button w3-teal"><fmt:message key="language"/></button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4" style="min-width:70px">
-                  <a class="w3-bar-item w3-button w3-teal" onclick="addUrlParameter('locale', 'en')"><fmt:message key="language.en" /></a>
-                  <a class="w3-bar-item w3-button  w3-teal" onclick="addUrlParameter('locale', 'ru')"><fmt:message key="language.ru" /></a>
+                  <a class="w3-bar-item w3-button w3-teal" onclick="languageChange('locale', 'en')"><fmt:message key="language.en" /></a>
+                  <a class="w3-bar-item w3-button  w3-teal" onclick="languageChange('locale', 'ru')"><fmt:message key="language.ru" /></a>
                 </div>
             </div>
             <div class="w3-container w3-center w3-padding ">

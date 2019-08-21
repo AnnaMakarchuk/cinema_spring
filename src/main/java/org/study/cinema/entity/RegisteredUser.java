@@ -3,6 +3,7 @@ package org.study.cinema.entity;
 import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,9 +33,9 @@ public class RegisteredUser extends User {
     @OneToMany(mappedBy = "registeredUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Ticket> ticketList;
 
-    public RegisteredUser(int userId, String userName, String userSurname, Gender gender, UserRole userRole,
+    public RegisteredUser(String userName, String userSurname, Gender gender,
                           String userLogin, String userEMailAddress, String userPassword) {
-        super(userId, userName, userSurname, gender, userRole);
+        super(userName, userSurname, gender);
         this.userLogin = userLogin;
         this.userEMailAddress = userEMailAddress;
         this.userPassword = userPassword;

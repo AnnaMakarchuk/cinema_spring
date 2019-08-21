@@ -95,14 +95,14 @@ public class MovieServiceImplTest {
     public void shouldReturnAllAvailableMovies() {
         List<MovieDto> expectedMoviesDtoList = Arrays.asList(firstMovieDto, secondMovieDto);
 
-        when(movieRepository.findByIsActive(true)).thenReturn(Arrays.asList(firstMovie, secondMovie));
+        when(movieRepository.findByIsActive(true)).thenReturn(Arrays.asList(firstMovie.get(), secondMovie.get()));
         List<MovieDto> resultMoviesDtoList = movieServiceImpl.viewAllAvailableMovies();
 
         assertThat(resultMoviesDtoList, equalTo(expectedMoviesDtoList));
     }
 
     @Test
-    public void shouldReturnNullIsMoviesNotAvailable() {
+    public void shouldReturnNullIfMoviesNotAvailable() {
         when(movieRepository.findByIsActive(true)).thenReturn(Collections.emptyList());
         List<MovieDto> resultMoviesDtoList = movieServiceImpl.viewAllAvailableMovies();
 

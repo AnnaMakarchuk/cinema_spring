@@ -41,6 +41,8 @@ public class ScheduleServiceImplTest {
     private ScheduleRepository scheduleRepository;
 
     private Schedule firstSchedule;
+    private Schedule secondSchedule;
+    private Schedule thirdSchedule;
 
     private ScheduleDto firstScheduleDtoWithTimeList;
     private ScheduleDto secondScheduleDtoWithTimeList;
@@ -50,8 +52,6 @@ public class ScheduleServiceImplTest {
     private ScheduleDto thirdScheduleDto;
 
     private HallDto hallDto;
-
-    private List<Optional<Schedule>> optionalsSchedulesWithTimeList;
 
     @Before
     public void setUp() {
@@ -81,13 +81,13 @@ public class ScheduleServiceImplTest {
                 .movie(firstMovie)
                 .time(LocalTime.of(9, 0))
                 .build();
-        Schedule secondSchedule = Schedule.builder()
+        secondSchedule = Schedule.builder()
                 .id(2)
                 .weekDay(WeekDay.MONDAY)
                 .movie(secondMovie)
                 .time(LocalTime.of(12, 0))
                 .build();
-        Schedule thirdSchedule = Schedule.builder()
+        thirdSchedule = Schedule.builder()
                 .id(3)
                 .weekDay(WeekDay.MONDAY)
                 .movie(firstMovie)
@@ -127,10 +127,6 @@ public class ScheduleServiceImplTest {
                 .time(thirdSchedule.getTime())
                 .build();
 
-        optionalsSchedulesWithTimeList = Arrays.asList(Optional.of(firstSchedule),
-                Optional.of(secondSchedule),
-                Optional.of(thirdSchedule));
-
         Price price = Price.builder()
                 .id(1)
                 .row(2)
@@ -159,7 +155,7 @@ public class ScheduleServiceImplTest {
                 .asList(firstScheduleDtoWithTimeList, secondScheduleDtoWithTimeList);
 
         when(scheduleRepository.findAllByWeekDayOrderByTime(WeekDay.MONDAY))
-                .thenReturn(optionalsSchedulesWithTimeList);
+                .thenReturn(Arrays.asList(firstSchedule, secondSchedule, thirdSchedule));
         List<ScheduleDto> resultScheduleDtoList = scheduleService.getAllScheduleByDay("MONDAY");
 
         assertThat(resultScheduleDtoList, equalTo(expectedScheduleDtoList));
@@ -186,7 +182,7 @@ public class ScheduleServiceImplTest {
         List<ScheduleDto> expectedScheduleDtoList = Arrays.asList(firstScheduleDto, secondScheduleDto, thirdScheduleDto);
 
         when(scheduleRepository.findAllByIsActive(false))
-                .thenReturn(optionalsSchedulesWithTimeList);
+                .thenReturn(Arrays.asList(firstSchedule, secondSchedule, thirdSchedule));
 
         List<ScheduleDto> resultScheduleDtoList = scheduleService.viewNonActiveSchedule();
 
@@ -216,14 +212,14 @@ public class ScheduleServiceImplTest {
     }
 
     @Test
-    public void shouldReturnNullIfScheduleNotExistInDatabase() {
+    public void shouldReturnNullIfScheduleNotExistInDatabase() throws Exception {
         when(scheduleRepository.findById(1)).thenReturn(Optional.empty());
         assertThat(scheduleService.getScheduleById(1), nullValue());
         assertThat(scheduleService.getHallWithPriceAndOccupiedPlacesBySchedule(1), nullValue());
     }
 
     @Test
-    public void shouldConvertHallDtoFromSchedule() {
+    public void shouldConvertHallDtoFromSchedule() throws Exception {
         HallDto expectedHallDto = hallDto;
 
         when(scheduleRepository.findById(1))

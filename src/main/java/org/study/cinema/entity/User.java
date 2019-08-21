@@ -40,4 +40,10 @@ public class User {
     @JoinColumn(name = "user_role", referencedColumnName = "id")
     private UserRole userRole;
 
+    public User(String userName, String userSurname, Gender gender) {
+        this.userName = userName;
+        this.userSurname = userSurname;
+        this.gender = gender;
+    }
 }
+

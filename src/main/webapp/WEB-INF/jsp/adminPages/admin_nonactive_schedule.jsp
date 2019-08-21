@@ -15,15 +15,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<script src="/js/language.js"></script>
+<script type="text/javascript" src="/js/language.js"></script>
 
 <body class="w3-light-grey">
 <div class="w3-container w3-teal w3-opacity w3-left-align front-size:20px">
             <div class="w3-dropdown-hover w3-right ">
                 <button class="w3-button w3-teal"><fmt:message key="language"/></button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4" style="min-width:70px">
-                  <a class="w3-bar-item w3-button w3-teal" onclick="addUrlParameter('locale', 'en')"><fmt:message key="language.en" /></a>
-                  <a class="w3-bar-item w3-button  w3-teal" onclick="addUrlParameter('locale', 'ru')"><fmt:message key="language.ru" /></a>
+                  <a class="w3-bar-item w3-button w3-teal" onclick="languageChange('locale', 'en')"><fmt:message key="language.en" /></a>
+                  <a class="w3-bar-item w3-button  w3-teal" onclick="languageChange('locale', 'ru')"><fmt:message key="language.ru" /></a>
                 </div>
             </div>
             <div class="w3-container w3-center w3-padding ">
@@ -34,7 +34,7 @@
 <div class="w3-container w3-right-align">
     <div class="w3-bar w3-padding-large w3-padding-24">
 
-            <button class="w3-btn w3-white w3-border w3-border-teal w3-round-large w3-left" onclick="location.href='/cinema/admincabinet'">
+            <button class="w3-btn w3-white w3-border w3-border-teal w3-round-large w3-left" onclick="location.href='/cabinet'">
                             <fmt:message key="back.cabinet"/>
             </button>
      </div>
@@ -50,36 +50,12 @@
         <tr>
             <th><fmt:message key="week.day"/></th>
             <th><fmt:message key="movie.time"/></th>
-            <th><fmt:message key="action"/></th>
-
         </tr>
         <tr>
             <c:forEach var="schedule" items="${schedules}" varStatus = "loopStatus">
                 <td><br><c:out value="${schedule.weekDay}"/></td>
                 <td><br><c:out value="${schedule.time}"/></td>
-                <td>
-                <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-border w3-padding-small w3-center" data-modal="form-primary">
-                    <fmt:message key="update.schedule.button"/>
-                </button>
-                    <div id="id01" class="w3-modal">
-                         <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
-                            <div class="w3-center"><br>
-                                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
-                            </div>
-                            <form class="w3-container" method="POST" action="/cinema/changeschedule">
-                                <div class="w3-section w3-left-align">
-                                        <c:forEach var="movie" items="${movies}" varStatus = "loopStatus">
-                                            <input type="radio" name="movie_id" value="${movie.movieId}"><c:out value="${movie.movieName}"/><br>
-                                        </c:forEach>
-                                <p></p>
-                                <input type="hidden" name="schedule_id" value="${schedule.scheduleId}"/>
-                                <button class="w3-button w3-block w3-teal w3-round-large w3-section w3-padding">
-                                    <fmt:message key="update.schedule.button"/></button>
-                            </div>
-                        </form>
-                    </div>
-                 </div>
-            </tr>
+        </tr>
             </c:forEach>
         </tr>
     </table>
