@@ -14,7 +14,6 @@ import org.study.cinema.repositories.GenreRepository;
 import org.study.cinema.repositories.MovieRepository;
 import org.study.cinema.repositories.ScheduleRepository;
 import org.study.cinema.repositories.TicketRepository;
-import org.study.cinema.repositories.UserRepository;
 import org.study.cinema.services.MovieService;
 import org.study.cinema.utils.MovieDtoConverter;
 
@@ -33,17 +32,14 @@ public class MovieServiceImpl implements MovieService {
     private GenreRepository genreRepository;
     private ScheduleRepository scheduleRepository;
     private TicketRepository ticketRepository;
-    private UserRepository userRepository;
 
     @Autowired
     public MovieServiceImpl(MovieRepository movieRepository, GenreRepository genreRepository,
-                            ScheduleRepository scheduleRepository, TicketRepository ticketRepository,
-                            UserRepository userRepository) {
+                            ScheduleRepository scheduleRepository, TicketRepository ticketRepository) {
         this.movieRepository = movieRepository;
         this.genreRepository = genreRepository;
         this.scheduleRepository = scheduleRepository;
         this.ticketRepository = ticketRepository;
-        this.userRepository = userRepository;
     }
 
     @Override
@@ -118,7 +114,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     private Genre generateGenre(MovieDto movieDto) {
-        String genreName = movieDto.getMovieGenre().toUpperCase();
+        String genreName = movieDto.getMovieGenre();
         LOGGER.info("genre is " + genreName) ;
         int genreId = genreRepository.findByGenre(genreName);
         return Genre.builder().

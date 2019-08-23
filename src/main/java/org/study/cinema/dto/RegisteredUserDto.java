@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.study.cinema.entity.UserRole;
 import org.study.cinema.entity.enums.Gender;
 
@@ -15,6 +16,7 @@ import org.study.cinema.entity.enums.Gender;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class RegisteredUserDto {
 
     private int userId;

@@ -7,7 +7,6 @@ import org.study.cinema.dto.TicketDto;
 import org.study.cinema.entity.Ticket;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class TicketDtoConverter {
@@ -18,16 +17,6 @@ public class TicketDtoConverter {
                 .map(TicketDtoConverter::ticketConverter)
                 .collect(Collectors.toList());
         LOGGER.info("Pages with tickets was converted in TicketDto List");
-        return ticketDtoList;
-    }
-
-    public static List<TicketDto> convertTicketsListInTicketsDto(List<Optional<Ticket>> optionalTicketsList) {
-        List<TicketDto> ticketDtoList = optionalTicketsList.stream()
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .map(TicketDtoConverter::ticketConverter)
-                .collect(Collectors.toList());
-        LOGGER.info("List with tickets by userId was converted in TicketDto List");
         return ticketDtoList;
     }
 

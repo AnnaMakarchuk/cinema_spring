@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.study.cinema.entity.RegisteredUser;
 import org.study.cinema.entity.enums.WeekDay;
 
@@ -17,6 +18,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class TicketDto {
 
     private int ticketId;

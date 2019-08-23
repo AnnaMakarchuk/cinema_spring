@@ -21,17 +21,6 @@ public class MovieDtoConverter {
         return movieDtos;
     }
 
-    private static MovieDto movieConverter(Movie movie) {
-        return MovieDto.builder()
-                .movieId(movie.getId())
-                .movieName(movie.getMovieName())
-                .movieGenre(movie.getGenre().getGenre().toUpperCase())
-                .movieDuration(movie.getMovieDuration())
-                .ageLimit(movie.getAgeLimit())
-                .movieDescription(movie.getMovieDescription())
-                .build();
-    }
-
     public static Movie convertMovieDtoInMovie(MovieDto movieDto, Genre genre) {
         return Movie.builder()
                 .movieName(movieDto.getMovieName())
@@ -40,6 +29,17 @@ public class MovieDtoConverter {
                 .genre(genre)
                 .ageLimit(movieDto.getAgeLimit())
                 .isActive(true)
+                .build();
+    }
+
+    private static MovieDto movieConverter(Movie movie) {
+        return MovieDto.builder()
+                .movieId(movie.getId())
+                .movieName(movie.getMovieName())
+                .movieGenre(movie.getGenre().getGenre())
+                .movieDuration(movie.getMovieDuration())
+                .ageLimit(movie.getAgeLimit())
+                .movieDescription(movie.getMovieDescription())
                 .build();
     }
 }

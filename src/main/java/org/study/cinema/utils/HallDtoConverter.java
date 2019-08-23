@@ -8,7 +8,6 @@ import org.study.cinema.entity.Schedule;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class HallDtoConverter {
@@ -29,6 +28,9 @@ public class HallDtoConverter {
     }
 
     private static List<PlaceDto> getOccupiedPlaceDtoList(Schedule schedule) {
+        if (schedule.getTicketsList().isEmpty()) {
+            return Collections.emptyList();
+        }
         return schedule.getTicketsList().stream()
                 .map(ticket -> PlaceDto.builder()
                         .row(ticket.getPlaceRow())
