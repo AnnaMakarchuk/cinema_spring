@@ -35,11 +35,15 @@ public class RegisteredUserRestController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void createNewUser(String userName, String userSurname, String gender, String userLogin,
-                              String userEMailAddress, String userPassword) throws Exception {
+                              String userEMailAddress, String userPassword) {
         if (wrongInputParametersForNewUser(userName, userSurname, userLogin,
                 userEMailAddress, userPassword)) {
             LOGGER.info("User parameters is incorrect");
-            throw new Exception("Incorrect input parameters");
+            try {
+                throw new Exception("Incorrect input parameters");
+            } catch (Exception e) {
+                LOGGER.error("Incorrect input parameters", e);
+            }
         }
         RegisteredUserDto newRegisteredUser = RegisteredUserDto.builder()
                 .userName(userName)
@@ -49,7 +53,11 @@ public class RegisteredUserRestController {
                 .userEMailAddress(userEMailAddress)
                 .userPassword(userPassword)
                 .build();
-        userService.createNewUser(newRegisteredUser);
+        try {
+            userService.createNewUser(newRegisteredUser);
+        } catch (Exception e) {
+            LOGGER.error("UserRole not found in database", e);
+        }
         LOGGER.info("User with define parameters was created" + newRegisteredUser);
     }
 

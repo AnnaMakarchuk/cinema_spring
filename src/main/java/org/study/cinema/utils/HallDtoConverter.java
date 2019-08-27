@@ -21,6 +21,7 @@ public class HallDtoConverter {
                 .maxPlacesInRow(schedule.getHall().getMaxPlacesInRow())
                 .maxRow(schedule.getHall().getMaxRow())
                 .prices(schedule.getHall().getPrices())
+                .schedule(schedule)
                 .occupiedPlaces(getOccupiedPlaceDtoList(schedule))
                 .build();
         LOGGER.info("Hall Dto was converted from schedule with id " + schedule.getId());

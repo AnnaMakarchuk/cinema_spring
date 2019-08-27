@@ -107,6 +107,7 @@ public class HallDtoConverterTest {
                 .maxRow(3)
                 .maxPlacesInRow(4)
                 .hallName("Gold")
+                .schedule(createTestScheduleWithoutTickets())
                 .occupiedPlaces(Collections.emptyList())
                 .prices(Collections.singletonList(createTestPrice()))
                 .build();
@@ -118,6 +119,7 @@ public class HallDtoConverterTest {
                 .maxRow(3)
                 .maxPlacesInRow(4)
                 .hallName("Gold")
+                .schedule(createTestScheduleWithTickets())
                 .occupiedPlaces(Arrays.asList(new PlaceDto(2, 1), new PlaceDto(2, 2)))
                 .prices(Collections.singletonList(createTestPrice()))
                 .build();

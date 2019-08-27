@@ -14,7 +14,6 @@ import org.study.cinema.utils.HallDtoConverter;
 import org.study.cinema.utils.ScheduleDtoConverter;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -52,20 +51,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public ScheduleDto getScheduleById(int id) {
-        Optional<Schedule> scheduleOptional = scheduleRepository.findById(id);
-        LOGGER.info("ScheduleService return schedule by id " + id);
-        return scheduleOptional.map(ScheduleDtoConverter::scheduleConverter).orElse(null);
-    }
-
-    @Override
     public HallDto getHallWithPriceAndOccupiedPlacesBySchedule(int scheduleId) throws Exception {
         Schedule schedule = scheduleRepository.findById(scheduleId)
-                .orElseThrow(()->new Exception("Schedule with such id not found"));
+                    .orElseThrow(() -> new Exception("Schedule not found in database"));
 
         LOGGER.info("ScheduleService return schedule by id " + scheduleId);
-
         return HallDtoConverter.convertHallDtoWithOccupiedPlacesAndPriceFromSchedule(schedule);
     }
-
 }

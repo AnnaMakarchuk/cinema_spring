@@ -25,10 +25,14 @@ public class MovieRestController {
     @RequestMapping(value = "/admin/addmovie", method = RequestMethod.POST,
             headers = "Accept=application/x-www-form-urlencoded")
     @ResponseStatus(HttpStatus.OK)
-    public void getAddNewMovie(MovieDto movieDto) throws Exception {
+    public void getAddNewMovie(MovieDto movieDto) {
         if (wrongInputParameters(movieDto)) {
             LOGGER.info("Movie parameters is incorrect");
-            throw new Exception("Incorrect input parameters");
+            try {
+                throw new Exception("Incorrect input parameters");
+            } catch (Exception e) {
+                LOGGER.error("Incorrect input parameters", e);
+            }
         }
         LOGGER.info("New movie is " + movieDto.toString());
         movieService.addNewMovie(movieDto);

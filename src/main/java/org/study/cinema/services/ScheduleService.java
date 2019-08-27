@@ -11,7 +11,5 @@ public interface ScheduleService {
 
     List<ScheduleDto> viewNonActiveSchedule();
 
-    ScheduleDto getScheduleById(int id);
-
     HallDto getHallWithPriceAndOccupiedPlacesBySchedule(int scheduleId) throws Exception;
 }

@@ -64,12 +64,12 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<MovieDto> viewAllUnAvailableMovies() {
         isActive = false;
-        List<Movie> activeMovies = movieRepository.findByIsActive(isActive);
-        if (activeMovies.isEmpty()) {
+        List<Movie> unActiveMovies = movieRepository.findByIsActive(isActive);
+        if (unActiveMovies.isEmpty()) {
             return null;
         }
         LOGGER.info("MovieService return list of active movies from database");
-        return MovieDtoConverter.convertMovieListInMovieDtoList(activeMovies);
+        return MovieDtoConverter.convertMovieListInMovieDtoList(unActiveMovies);
     }
 
     @Override
