@@ -43,7 +43,7 @@ public class UserServiceImplTest {
         verify(userRepository).save(createTestRegisteredUser());
     }
 
-    @Test (expected = Exception.class)
+    @Test(expected = Exception.class)
     public void shouldThrowExceptionIfRoleNotFound() throws Exception {
         when(userRoleRepository.findByUserRole("client")).thenReturn(Optional.empty());
         userService.createNewUser(createTestRegisteredUserDto());

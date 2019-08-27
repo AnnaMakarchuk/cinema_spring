@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
         RegisteredUser newRegisteredUser = UserDtoConverter.convertUserDtoInRegisteredUser(registeredUserDto);
         LOGGER.info("User was prepared for saving in database");
         UserRole userRole = userRoleRepository.findByUserRole(NEW_USER_ROLE)
-                    .orElseThrow(() -> new Exception("UserRole not found in database"));
+                .orElseThrow(() -> new Exception("UserRole not found in database"));
         newRegisteredUser.setUserRole(userRole);
         userRepository.save(newRegisteredUser);
         LOGGER.info("User was saved in database");

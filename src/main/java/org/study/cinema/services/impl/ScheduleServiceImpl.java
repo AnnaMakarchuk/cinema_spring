@@ -53,7 +53,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public HallDto getHallWithPriceAndOccupiedPlacesBySchedule(int scheduleId) throws Exception {
         Schedule schedule = scheduleRepository.findById(scheduleId)
-                    .orElseThrow(() -> new Exception("Schedule not found in database"));
+                .orElseThrow(() -> new Exception("Schedule not found in database"));
 
         LOGGER.info("ScheduleService return schedule by id " + scheduleId);
         return HallDtoConverter.convertHallDtoWithOccupiedPlacesAndPriceFromSchedule(schedule);
