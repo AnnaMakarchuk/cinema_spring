@@ -1,5 +1,7 @@
 package org.study.cinema.integration.test.repository;
 
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,10 +15,9 @@ import org.study.cinema.repositories.MovieRepository;
 
 import java.util.List;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
-//@TestPropertySource(locations = "classpath:application-test.properties")
+@TestPropertySource(locations = "classpath:application-test.properties")
 public class MovieRepositoryIntegrationTest {
 
     @Autowired
@@ -25,9 +26,7 @@ public class MovieRepositoryIntegrationTest {
     @Test
     public void shouldReturnActiveMoviesFromDatabase() {
         List<Movie> movies = movieRepository.findByIsActive(true);
-        System.out.println(movies.get(0).getMovieName());
-        System.out.println(movies.get(0).getId());
-
+        assertThat(movies, hasSize(0));
     }
 
 }
