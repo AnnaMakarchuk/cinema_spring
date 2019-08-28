@@ -32,7 +32,7 @@ public class UserServiceImplTest {
     @Test
     public void shouldUpdateUserInDatabase() {
         userService.updateUser(createTestRegisteredUserDto());
-        verify(userRepository).updateUser("alisa", "111");
+        verify(userRepository).updateUser("alisa", "111", 0);
     }
 
     @Test

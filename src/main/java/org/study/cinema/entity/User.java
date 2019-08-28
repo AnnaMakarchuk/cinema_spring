@@ -36,8 +36,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_role", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_role")
     private UserRole userRole;
 
     public User(String userName, String userSurname, Gender gender) {

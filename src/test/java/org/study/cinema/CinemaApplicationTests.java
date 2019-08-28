@@ -12,7 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-//@ContextConfiguration(locations = "classpath:application-test.properties")
 @TestPropertySource(locations = "classpath:application-test.properties")
 public class CinemaApplicationTests {
 

@@ -19,7 +19,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString
 public class RegisteredUser extends User {
 
@@ -32,7 +32,7 @@ public class RegisteredUser extends User {
     @Column(name = "password")
     private String userPassword;
 
-    @OneToMany(mappedBy = "registeredUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "registeredUser", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Ticket> ticketList;
 
     public RegisteredUser(String userName, String userSurname, Gender gender,
@@ -41,5 +41,12 @@ public class RegisteredUser extends User {
         this.userLogin = userLogin;
         this.userEMailAddress = userEMailAddress;
         this.userPassword = userPassword;
+    }
+
+    public RegisteredUser(String userName, String userSurname, Gender gender,
+                          String userLogin, String userEMailAddress) {
+        super(userName, userSurname, gender);
+        this.userLogin = userLogin;
+        this.userEMailAddress = userEMailAddress;
     }
 }

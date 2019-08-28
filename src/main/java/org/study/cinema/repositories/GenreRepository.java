@@ -10,5 +10,5 @@ import org.study.cinema.entity.Genre;
 public interface GenreRepository extends JpaRepository<Genre, Integer> {
 
     @Query("Select id from Genre Where genre = :genre")
-    int findByGenre (@Param("genre") String genre);
+    int findByGenre(@Param("genre") String genre);
 }

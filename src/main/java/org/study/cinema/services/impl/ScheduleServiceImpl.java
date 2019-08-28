@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
     private static final Logger LOGGER = LogManager.getLogger(ScheduleServiceImpl.class);
-    private boolean nonActive = false;
+    private boolean isActive = true;
 
     @Autowired
     private ScheduleRepository scheduleRepository;
@@ -26,8 +26,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<ScheduleDto> getAllScheduleByDay(String weekDay) {
         WeekDay day = WeekDay.valueOf(weekDay);
+        isActive = true;
+
         List<Schedule> scheduleListByWeekday = scheduleRepository
-                .findAllByWeekDayOrderByTime(day);
+                .findAllByWeekDayAndIsActiveOrderByTime(day, isActive);
 
         if (scheduleListByWeekday.isEmpty()) {
             return null;
@@ -40,7 +42,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public List<ScheduleDto> viewNonActiveSchedule() {
-        List<Schedule> unActiveScheduleList = scheduleRepository.findAllByIsActive(nonActive);
+        isActive = false;
+        List<Schedule> unActiveScheduleList = scheduleRepository.findAllByIsActive(isActive);
 
         if (unActiveScheduleList.isEmpty()) {
             return null;

@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 
-    List<Schedule> findAllByWeekDayOrderByTime(WeekDay weekDay);
+    List<Schedule> findAllByWeekDayAndIsActiveOrderByTime(WeekDay weekDay, boolean isActive);
 
     List<Schedule> findAllByIsActive(boolean nonActive);
 

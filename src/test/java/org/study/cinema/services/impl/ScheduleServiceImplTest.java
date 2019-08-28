@@ -1,8 +1,6 @@
 package org.study.cinema.services.impl;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -45,14 +43,14 @@ public class ScheduleServiceImplTest {
     @Test
     public void shouldCallGetByDayRepositoryMethod() {
         scheduleService.getAllScheduleByDay("MONDAY");
-        verify(scheduleRepository).findAllByWeekDayOrderByTime(WeekDay.MONDAY);
+        verify(scheduleRepository).findAllByWeekDayAndIsActiveOrderByTime(WeekDay.MONDAY, true);
     }
 
     @Test
     public void shouldReturnListOfSchedulesByDay() {
         List<ScheduleDto> expectedScheduleDtoList = createTestScheduleDtoListWithTimeList();
 
-        when(scheduleRepository.findAllByWeekDayOrderByTime(WeekDay.MONDAY))
+        when(scheduleRepository.findAllByWeekDayAndIsActiveOrderByTime(WeekDay.MONDAY, true))
                 .thenReturn(createTestScheduleList());
         List<ScheduleDto> resultScheduleDtoList = scheduleService.getAllScheduleByDay("MONDAY");
 
@@ -61,7 +59,7 @@ public class ScheduleServiceImplTest {
 
     @Test
     public void shouldReturnNullListByDayIfListFromRepoIsNull() {
-        when(scheduleRepository.findAllByWeekDayOrderByTime(WeekDay.MONDAY))
+        when(scheduleRepository.findAllByWeekDayAndIsActiveOrderByTime(WeekDay.MONDAY, true))
                 .thenReturn(Collections.emptyList());
 
         List<ScheduleDto> resultScheduleDtoList = scheduleService.getAllScheduleByDay("MONDAY");

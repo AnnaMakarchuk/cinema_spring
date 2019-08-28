@@ -32,7 +32,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(RegisteredUserDto registeredUserDto) {
-        userRepository.updateUser(registeredUserDto.getUserLogin(), registeredUserDto.getUserPassword());
+        userRepository.updateUser(
+                registeredUserDto.getUserLogin(), registeredUserDto.getUserPassword(), registeredUserDto.getUserId());
         LOGGER.info("User was updated in database");
     }
 
