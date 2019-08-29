@@ -2,6 +2,7 @@ package org.study.cinema.repositories;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.study.cinema.CinemaApplicationTests;
 import org.study.cinema.dto.TicketDto;
 import org.study.cinema.entity.Ticket;
@@ -11,6 +12,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 
+@Transactional
 public class TicketRepositoryIntegrationTest extends CinemaApplicationTests {
 
     @Autowired

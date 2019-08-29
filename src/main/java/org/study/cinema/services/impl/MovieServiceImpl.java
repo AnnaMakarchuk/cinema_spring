@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.study.cinema.dto.MovieDto;
 import org.study.cinema.entity.Genre;
 import org.study.cinema.entity.Movie;
@@ -17,7 +18,6 @@ import org.study.cinema.repositories.TicketRepository;
 import org.study.cinema.services.MovieService;
 import org.study.cinema.utils.MovieDtoConverter;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -107,15 +107,15 @@ public class MovieServiceImpl implements MovieService {
 
     private List<Ticket> getTicketsForCancelledSchedule(List<Schedule> cancelledScheduleList) {
         List<Ticket> deletedTickets = new ArrayList<>();
-        for (Schedule schedule : cancelledScheduleList) {
-            deletedTickets.addAll(ticketRepository.findAllByScheduleId(schedule.getId()));
-        }
+        cancelledScheduleList.stream()
+                .map(Schedule::getId)
+                .forEach(i -> deletedTickets.addAll(ticketRepository.findAllByScheduleId(i)));
         return deletedTickets;
     }
 
     private Genre generateGenre(MovieDto movieDto) {
         String genreName = movieDto.getMovieGenre();
-        LOGGER.info("genre is " + genreName) ;
+        LOGGER.info("genre is " + genreName);
         int genreId = genreRepository.findByGenre(genreName);
         return Genre.builder().
                 id(genreId)
