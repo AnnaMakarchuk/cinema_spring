@@ -1,4 +1,4 @@
-package org.study.cinema.services.impl;
+package org.study.cinema.unit.services.impl;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,12 +18,14 @@ import org.study.cinema.repositories.GenreRepository;
 import org.study.cinema.repositories.MovieRepository;
 import org.study.cinema.repositories.ScheduleRepository;
 import org.study.cinema.repositories.TicketRepository;
+import org.study.cinema.services.impl.MovieServiceImpl;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -114,7 +116,8 @@ public class MovieServiceImplTest {
     @Test
     public void shouldCancelMovieById() {
         MovieDto expectedMovieDto = MovieDto.builder()
-                .registeredUsers(createTestRegisteredUserList())
+
+                .registeredUsers(createTestRegisteredUserSet())
                 .scheduleList(createTestScheduleList())
                 .build();
 
@@ -124,7 +127,6 @@ public class MovieServiceImplTest {
                 .thenReturn(createTestScheduleList());
         when(ticketRepository.findAllByScheduleId(1)).thenReturn(createTestTicketList());
         MovieDto resultMovieDto = movieServiceImpl.cancelMovieById(movieId);
-
         verify(movieRepository).updateByMovieId(movieId);
         verify(scheduleRepository).updateScheduleByMovieId(movieId);
         verify(ticketRepository).findAllByScheduleId(1);
@@ -216,14 +218,14 @@ public class MovieServiceImplTest {
         List<Ticket> ticketList = new ArrayList<>();
         ticketList.add(Ticket.builder()
                 .id(1)
-                .registeredUser(createTestRegisteredUserList().get(0))
+                .registeredUser(createTestFirstRegisteredUser())
                 .placeNumber(1)
                 .placeRow(2)
                 .ticketPrice(50.00)
                 .build());
         ticketList.add(Ticket.builder()
                 .id(2)
-                .registeredUser(createTestRegisteredUserList().get(1))
+                .registeredUser(createTestSecondRegisteredUser())
                 .placeNumber(2)
                 .placeRow(2)
                 .ticketPrice(50.00)
@@ -267,15 +269,29 @@ public class MovieServiceImplTest {
         return userRoles;
     }
 
-    private List<RegisteredUser> createTestRegisteredUserList() {
+
+    private RegisteredUser createTestFirstRegisteredUser() {
         RegisteredUser firstRegisteredUser = new RegisteredUser("Alisa", "Test",
                 Gender.FEMALE, "alisa", "a@i.ua", "111");
         firstRegisteredUser.setUserRole(createTestUserRole().get(0));
+        firstRegisteredUser.setUserId(1);
 
-        RegisteredUser secondRegisteredUser = new RegisteredUser("Anna", "Test",
+        return firstRegisteredUser;
+    }
+
+    private RegisteredUser createTestSecondRegisteredUser() {
+        RegisteredUser secondRegisteredUser = new RegisteredUser("Vika", "Test",
                 Gender.FEMALE, "alisa", "a@i.ua", "111");
         secondRegisteredUser.setUserRole(createTestUserRole().get(0));
+        secondRegisteredUser.setUserId(2);
+        return secondRegisteredUser;
 
-        return Arrays.asList(firstRegisteredUser, secondRegisteredUser);
+    }
+
+    private Set<RegisteredUser> createTestRegisteredUserSet() {
+        Set<RegisteredUser> uniqueUsers = new HashSet<>();
+        uniqueUsers.add(createTestFirstRegisteredUser());
+        uniqueUsers.add(createTestSecondRegisteredUser());
+        return uniqueUsers;
     }
 }

@@ -1,4 +1,4 @@
-package org.study.cinema.utils;
+package org.study.cinema.unit.utils;
 
 import org.junit.Test;
 import org.study.cinema.dto.ScheduleDto;
@@ -7,6 +7,7 @@ import org.study.cinema.entity.Genre;
 import org.study.cinema.entity.Movie;
 import org.study.cinema.entity.Schedule;
 import org.study.cinema.entity.enums.WeekDay;
+import org.study.cinema.utils.ScheduleDtoConverter;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

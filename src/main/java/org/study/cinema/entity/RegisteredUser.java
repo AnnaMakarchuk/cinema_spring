@@ -20,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString
+@ToString(callSuper = true)
 public class RegisteredUser extends User {
 
     @Column(name = "login")

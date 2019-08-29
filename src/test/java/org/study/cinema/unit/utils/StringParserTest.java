@@ -1,6 +1,7 @@
-package org.study.cinema.utils;
+package org.study.cinema.unit.utils;
 
 import org.junit.Test;
+import org.study.cinema.utils.StringParser;
 
 import static org.junit.Assert.*;
 

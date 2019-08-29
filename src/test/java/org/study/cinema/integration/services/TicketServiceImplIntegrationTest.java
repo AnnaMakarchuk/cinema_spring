@@ -1,9 +1,10 @@
-package org.study.cinema.services.impl;
+package org.study.cinema.integration.services;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.study.cinema.CinemaApplicationTests;
 import org.study.cinema.dto.TicketDto;
+import org.study.cinema.services.impl.TicketServiceImpl;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package org.study.cinema.services.impl;
+package org.study.cinema.unit.services.impl;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +11,7 @@ import org.study.cinema.entity.UserRole;
 import org.study.cinema.entity.enums.Gender;
 import org.study.cinema.repositories.UserRepository;
 import org.study.cinema.repositories.UserRoleRepository;
+import org.study.cinema.services.impl.UserServiceImpl;
 
 import java.util.Optional;
 

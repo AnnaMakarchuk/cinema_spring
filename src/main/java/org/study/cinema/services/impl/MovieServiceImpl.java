@@ -11,6 +11,7 @@ import org.study.cinema.entity.Movie;
 import org.study.cinema.entity.RegisteredUser;
 import org.study.cinema.entity.Schedule;
 import org.study.cinema.entity.Ticket;
+import org.study.cinema.entity.User;
 import org.study.cinema.repositories.GenreRepository;
 import org.study.cinema.repositories.MovieRepository;
 import org.study.cinema.repositories.ScheduleRepository;
@@ -19,6 +20,7 @@ import org.study.cinema.services.MovieService;
 import org.study.cinema.utils.MovieDtoConverter;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -93,7 +95,7 @@ public class MovieServiceImpl implements MovieService {
         LOGGER.info("Tickets was deleted");
 
         return MovieDto.builder()
-                .registeredUsers(registeredUsers)
+                .registeredUsers(new HashSet<>(registeredUsers))
                 .scheduleList(cancelledScheduleList)
                 .build();
     }
@@ -101,7 +103,6 @@ public class MovieServiceImpl implements MovieService {
     private List<RegisteredUser> getUsersWithCancelledTickets(List<Ticket> deletedTickets) {
         return deletedTickets.stream()
                 .map(Ticket::getRegisteredUser)
-                .distinct()
                 .collect(Collectors.toList());
     }
 

@@ -1,8 +1,9 @@
-package org.study.cinema.repositories;
+package org.study.cinema.integration.repositories;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.study.cinema.CinemaApplicationTests;
+import org.study.cinema.repositories.GenreRepository;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;

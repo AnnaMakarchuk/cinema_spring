@@ -1,4 +1,4 @@
-package org.study.cinema.services.impl;
+package org.study.cinema.unit.services.impl;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +17,7 @@ import org.study.cinema.entity.Schedule;
 import org.study.cinema.entity.Ticket;
 import org.study.cinema.entity.enums.WeekDay;
 import org.study.cinema.repositories.ScheduleRepository;
+import org.study.cinema.services.impl.ScheduleServiceImpl;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

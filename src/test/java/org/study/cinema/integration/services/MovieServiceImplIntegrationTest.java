@@ -1,4 +1,4 @@
-package org.study.cinema.services.impl;
+package org.study.cinema.integration.services;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +9,10 @@ import org.study.cinema.entity.Movie;
 import org.study.cinema.entity.RegisteredUser;
 import org.study.cinema.entity.Schedule;
 import org.study.cinema.repositories.MovieRepository;
+import org.study.cinema.services.impl.MovieServiceImpl;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -58,12 +60,11 @@ public class MovieServiceImplIntegrationTest extends CinemaApplicationTests {
         int movieId = 4;
         MovieDto resultMovieDto = movieService.cancelMovieById(movieId);
         List<Schedule> resultCancelledScheduleList = resultMovieDto.getScheduleList();
-        List<RegisteredUser> resultRegisteredUsersList = resultMovieDto.getRegisteredUsers();
+        Set<RegisteredUser> resultRegisteredUsersList = resultMovieDto.getRegisteredUsers();
 
         assertThat("Non Active ScheduleLIst size should be 9", resultCancelledScheduleList, hasSize(9));
         assertThat(resultCancelledScheduleList.get(0).isActive(), equalTo(false));
         assertThat("notification send for 1 user", resultRegisteredUsersList, hasSize(1));
-        assertThat(resultRegisteredUsersList.get(0).getUserId(), equalTo(9));
 
         Movie resultMovie = movieRepository.getOne(movieId);
         assertThat(resultMovie.isActive(), equalTo(false));

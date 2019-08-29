@@ -1,10 +1,11 @@
-package org.study.cinema.utils;
+package org.study.cinema.unit.utils;
 
 import org.junit.Test;
 import org.study.cinema.dto.RegisteredUserDto;
 import org.study.cinema.entity.RegisteredUser;
 import org.study.cinema.entity.UserRole;
 import org.study.cinema.entity.enums.Gender;
+import org.study.cinema.utils.UserDtoConverter;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,10 @@
-package org.study.cinema.utils;
+package org.study.cinema.unit.utils;
 
 import org.junit.Test;
 import org.study.cinema.dto.MovieDto;
 import org.study.cinema.entity.Genre;
 import org.study.cinema.entity.Movie;
+import org.study.cinema.utils.MovieDtoConverter;
 
 import java.util.ArrayList;
 import java.util.List;

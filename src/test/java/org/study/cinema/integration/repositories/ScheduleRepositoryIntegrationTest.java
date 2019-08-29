@@ -1,4 +1,4 @@
-package org.study.cinema.repositories;
+package org.study.cinema.integration.repositories;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;
@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.study.cinema.CinemaApplicationTests;
 import org.study.cinema.entity.Schedule;
 import org.study.cinema.entity.enums.WeekDay;
+import org.study.cinema.repositories.ScheduleRepository;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

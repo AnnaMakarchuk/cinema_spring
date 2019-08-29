@@ -1,4 +1,4 @@
-package org.study.cinema.repositories;
+package org.study.cinema.integration.repositories;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +7,7 @@ import org.study.cinema.CinemaApplicationTests;
 import org.study.cinema.entity.RegisteredUser;
 import org.study.cinema.entity.UserRole;
 import org.study.cinema.entity.enums.Gender;
+import org.study.cinema.repositories.UserRepository;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;

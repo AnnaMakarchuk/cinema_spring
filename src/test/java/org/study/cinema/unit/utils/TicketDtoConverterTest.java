@@ -1,4 +1,4 @@
-package org.study.cinema.utils;
+package org.study.cinema.unit.utils;
 
 import org.junit.Test;
 import org.springframework.data.domain.Page;
@@ -10,6 +10,7 @@ import org.study.cinema.entity.Price;
 import org.study.cinema.entity.Schedule;
 import org.study.cinema.entity.Ticket;
 import org.study.cinema.entity.enums.WeekDay;
+import org.study.cinema.utils.TicketDtoConverter;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

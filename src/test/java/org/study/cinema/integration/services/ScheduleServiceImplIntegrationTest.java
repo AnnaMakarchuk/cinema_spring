@@ -1,10 +1,11 @@
-package org.study.cinema.services.impl;
+package org.study.cinema.integration.services;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.study.cinema.CinemaApplicationTests;
 import org.study.cinema.dto.HallDto;
 import org.study.cinema.dto.ScheduleDto;
+import org.study.cinema.services.impl.ScheduleServiceImpl;
 
 import java.util.List;
 

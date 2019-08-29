@@ -1,4 +1,4 @@
-package org.study.cinema.repositories;
+package org.study.cinema.integration.repositories;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.study.cinema.CinemaApplicationTests;
 import org.study.cinema.dto.TicketDto;
 import org.study.cinema.entity.Ticket;
+import org.study.cinema.repositories.TicketRepository;
 
 import java.util.List;
 
