@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
 import org.study.cinema.CinemaApplicationTests;
 import org.study.cinema.dto.MovieDto;
 import org.study.cinema.services.impl.MovieServiceImpl;
@@ -56,7 +55,7 @@ public class MovieControllerIntegrationTest extends CinemaApplicationTests {
     public void shouldCancelMovieByAdmin() throws Exception {
         int cancelMovieId = 3;
         mockMvc.perform(post("/admin/cancelmovie")
-                        .param(AttributesNames.MOVIE_ID, String.valueOf(cancelMovieId)))
+                .param(AttributesNames.MOVIE_ID, String.valueOf(cancelMovieId)))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeHasNoErrors())
                 .andExpect(model().attribute(AttributesNames.SCHEDULES, hasSize(7)))
@@ -69,9 +68,5 @@ public class MovieControllerIntegrationTest extends CinemaApplicationTests {
 
     private List<MovieDto> createTestNonActiveMoviesDtoList() {
         return movieService.viewAllUnAvailableMovies();
-    }
-
-    private MovieDto createTestCancelMovieDto(int movieId) {
-        return movieService.cancelMovieById(movieId);
     }
 }

@@ -35,7 +35,7 @@ public class TicketDto {
     private RegisteredUser registeredUser;
 
     public TicketDto(int ticketId, int placeRow, int placeNumber, double ticketPrice, int userId, WeekDay weekDay,
-                     LocalTime scheduleTime, String movieName, String hallName) {
+                     LocalTime scheduleTime, String hallName, String movieName) {
         this.ticketId = ticketId;
         this.placeRow = placeRow;
         this.placeNumber = placeNumber;
@@ -43,7 +43,7 @@ public class TicketDto {
         this.userId = userId;
         this.weekDay = weekDay;
         this.scheduleTime = scheduleTime;
-        this.movieName = movieName;
         this.hallName = hallName;
+        this.movieName = movieName;
     }
 }
