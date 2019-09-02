@@ -32,6 +32,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyIterable;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -130,7 +131,7 @@ public class MovieServiceImplTest {
         verify(movieRepository).updateByMovieId(movieId);
         verify(scheduleRepository).updateScheduleByMovieId(movieId);
         verify(ticketRepository).findAllByScheduleId(1);
-        verify(ticketRepository, times(2)).deleteById(anyInt());
+        verify(ticketRepository).deleteAll(anyIterable());
         assertThat(resultMovieDto, equalTo(expectedMovieDto));
     }
 
