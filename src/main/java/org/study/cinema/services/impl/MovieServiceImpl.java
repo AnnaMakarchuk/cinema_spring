@@ -11,7 +11,6 @@ import org.study.cinema.entity.Movie;
 import org.study.cinema.entity.RegisteredUser;
 import org.study.cinema.entity.Schedule;
 import org.study.cinema.entity.Ticket;
-import org.study.cinema.entity.User;
 import org.study.cinema.repositories.GenreRepository;
 import org.study.cinema.repositories.MovieRepository;
 import org.study.cinema.repositories.ScheduleRepository;
@@ -91,7 +90,7 @@ public class MovieServiceImpl implements MovieService {
         List<RegisteredUser> registeredUsers = getUsersWithCancelledTickets(deletedTickets);
         LOGGER.info("List of users for notification is created " + registeredUsers.toString());
 
-        deletedTickets.forEach(t -> ticketRepository.deleteById(t.getId()));
+        ticketRepository.deleteAll(deletedTickets);
         LOGGER.info("Tickets was deleted");
 
         return MovieDto.builder()

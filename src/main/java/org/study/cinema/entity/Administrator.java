@@ -8,7 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.study.cinema.entity.enums.Gender;
 
 @Entity
 @DiscriminatorValue("1")
@@ -23,5 +22,4 @@ public class Administrator extends RegisteredUser {
 
     @Column(name = "working_hours_week")
     private int workingHoursWeek;
-
 }
