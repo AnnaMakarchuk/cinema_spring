@@ -30,7 +30,7 @@ public class ScheduleController {
     @Autowired
     private MovieService movieService;
 
-//    TODO check page and js.
+    //    TODO check page and js.
     @GetMapping(value = {"/schedule", "/schedule/{day}"})
     public String getSchedulePage(@RequestParam(name = AttributesNames.SCHEDULE_DAY, defaultValue = "MONDAY") String day,
                                   Model model) {
@@ -42,7 +42,6 @@ public class ScheduleController {
         return "schedule_day";
     }
 
-    //TODO return object Schedule from jsp.page
     @GetMapping("/hallscheme")
     public String getHallScheme(@RequestParam(name = AttributesNames.SCHEDULE_ID) String id,
                                 Model model) {
@@ -50,10 +49,6 @@ public class ScheduleController {
             return "404";
         }
         int scheduleId = Integer.parseInt(id);
-        ScheduleDto scheduleDto = scheduleService.getScheduleById(scheduleId);
-        LOGGER.info("Schedule for scheme was get " + scheduleDto.toString());
-
-        model.addAttribute(AttributesNames.SCHEDULE, scheduleDto);
 
         HallDto hallDto = null;
         try {
@@ -62,9 +57,10 @@ public class ScheduleController {
             LOGGER.error("Schedule with id " + id + " not found ", e);
             return "404";
         }
-
         LOGGER.info("Hall scheme for schedule id " + scheduleId + "was get");
         model.addAttribute(AttributesNames.HALL, hallDto);
+        model.addAttribute(AttributesNames.SCHEDULE, hallDto.getSchedule());
+
 
         ObjectMapper mapper = new ObjectMapper();
         try {

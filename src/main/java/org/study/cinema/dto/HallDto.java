@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.study.cinema.entity.Price;
+import org.study.cinema.entity.Schedule;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class HallDto {
     private String hallName;
     private int maxRow;
     private int maxPlacesInRow;
+    private Schedule schedule;
     private List<Price> prices;
     private List<PlaceDto> occupiedPlaces;
 }

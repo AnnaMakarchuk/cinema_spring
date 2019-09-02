@@ -26,6 +26,8 @@ public class RegisteredUserController {
                 .userLogin("ali")
                 .userEMailAddress("a@i.ua")
                 .build();
+
+
         model.addAttribute("user", user);
         return "cabinet";
     }

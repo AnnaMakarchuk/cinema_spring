@@ -4,22 +4,23 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.study.cinema.dto.MovieDto;
 import org.study.cinema.entity.Genre;
 import org.study.cinema.entity.Movie;
 import org.study.cinema.entity.RegisteredUser;
 import org.study.cinema.entity.Schedule;
 import org.study.cinema.entity.Ticket;
+import org.study.cinema.entity.User;
 import org.study.cinema.repositories.GenreRepository;
 import org.study.cinema.repositories.MovieRepository;
 import org.study.cinema.repositories.ScheduleRepository;
 import org.study.cinema.repositories.TicketRepository;
-import org.study.cinema.repositories.UserRepository;
 import org.study.cinema.services.MovieService;
 import org.study.cinema.utils.MovieDtoConverter;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,17 +34,14 @@ public class MovieServiceImpl implements MovieService {
     private GenreRepository genreRepository;
     private ScheduleRepository scheduleRepository;
     private TicketRepository ticketRepository;
-    private UserRepository userRepository;
 
     @Autowired
     public MovieServiceImpl(MovieRepository movieRepository, GenreRepository genreRepository,
-                            ScheduleRepository scheduleRepository, TicketRepository ticketRepository,
-                            UserRepository userRepository) {
+                            ScheduleRepository scheduleRepository, TicketRepository ticketRepository) {
         this.movieRepository = movieRepository;
         this.genreRepository = genreRepository;
         this.scheduleRepository = scheduleRepository;
         this.ticketRepository = ticketRepository;
-        this.userRepository = userRepository;
     }
 
     @Override
@@ -68,12 +66,12 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<MovieDto> viewAllUnAvailableMovies() {
         isActive = false;
-        List<Movie> activeMovies = movieRepository.findByIsActive(isActive);
-        if (activeMovies.isEmpty()) {
+        List<Movie> unActiveMovies = movieRepository.findByIsActive(isActive);
+        if (unActiveMovies.isEmpty()) {
             return null;
         }
         LOGGER.info("MovieService return list of active movies from database");
-        return MovieDtoConverter.convertMovieListInMovieDtoList(activeMovies);
+        return MovieDtoConverter.convertMovieListInMovieDtoList(unActiveMovies);
     }
 
     @Override
@@ -97,7 +95,7 @@ public class MovieServiceImpl implements MovieService {
         LOGGER.info("Tickets was deleted");
 
         return MovieDto.builder()
-                .registeredUsers(registeredUsers)
+                .registeredUsers(new HashSet<>(registeredUsers))
                 .scheduleList(cancelledScheduleList)
                 .build();
     }
@@ -105,21 +103,20 @@ public class MovieServiceImpl implements MovieService {
     private List<RegisteredUser> getUsersWithCancelledTickets(List<Ticket> deletedTickets) {
         return deletedTickets.stream()
                 .map(Ticket::getRegisteredUser)
-                .distinct()
                 .collect(Collectors.toList());
     }
 
     private List<Ticket> getTicketsForCancelledSchedule(List<Schedule> cancelledScheduleList) {
         List<Ticket> deletedTickets = new ArrayList<>();
-        for (Schedule schedule : cancelledScheduleList) {
-            deletedTickets.addAll(ticketRepository.findAllByScheduleId(schedule.getId()));
-        }
+        cancelledScheduleList.stream()
+                .map(Schedule::getId)
+                .forEach(i -> deletedTickets.addAll(ticketRepository.findAllByScheduleId(i)));
         return deletedTickets;
     }
 
     private Genre generateGenre(MovieDto movieDto) {
-        String genreName = movieDto.getMovieGenre().toUpperCase();
-        LOGGER.info("genre is " + genreName) ;
+        String genreName = movieDto.getMovieGenre();
+        LOGGER.info("genre is " + genreName);
         int genreId = genreRepository.findByGenre(genreName);
         return Genre.builder().
                 id(genreId)

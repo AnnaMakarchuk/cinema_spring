@@ -10,6 +10,6 @@ public interface UserRepository extends JpaRepository<RegisteredUser, Integer> {
     RegisteredUser findByUserLogin(String userLogin);
 
     @Modifying
-    @Query("Update RegisteredUser u SET u.userLogin = ?1, u.userPassword = ?2")
-    void updateUser(String userLogin, String userPassword);
+    @Query("Update RegisteredUser u SET u.userLogin = ?1, u.userPassword = ?2 Where u.id = ?3")
+    void updateUser(String userLogin, String userPassword, int userId);
 }

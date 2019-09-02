@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.study.cinema.entity.enums.Gender;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class RegisteredUser extends User {
 
     @Column(name = "login")
@@ -30,7 +32,7 @@ public class RegisteredUser extends User {
     @Column(name = "password")
     private String userPassword;
 
-    @OneToMany(mappedBy = "registeredUser", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "registeredUser", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Ticket> ticketList;
 
     public RegisteredUser(String userName, String userSurname, Gender gender,
@@ -39,5 +41,12 @@ public class RegisteredUser extends User {
         this.userLogin = userLogin;
         this.userEMailAddress = userEMailAddress;
         this.userPassword = userPassword;
+    }
+
+    public RegisteredUser(String userName, String userSurname, Gender gender,
+                          String userLogin, String userEMailAddress) {
+        super(userName, userSurname, gender);
+        this.userLogin = userLogin;
+        this.userEMailAddress = userEMailAddress;
     }
 }

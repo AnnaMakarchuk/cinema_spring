@@ -14,12 +14,11 @@ import org.study.cinema.utils.HallDtoConverter;
 import org.study.cinema.utils.ScheduleDtoConverter;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
     private static final Logger LOGGER = LogManager.getLogger(ScheduleServiceImpl.class);
-    private boolean nonActive = false;
+    private boolean isActive = true;
 
     @Autowired
     private ScheduleRepository scheduleRepository;
@@ -27,8 +26,10 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<ScheduleDto> getAllScheduleByDay(String weekDay) {
         WeekDay day = WeekDay.valueOf(weekDay);
+        isActive = true;
+
         List<Schedule> scheduleListByWeekday = scheduleRepository
-                .findAllByWeekDayOrderByTime(day);
+                .findAllByWeekDayAndIsActiveOrderByTime(day, isActive);
 
         if (scheduleListByWeekday.isEmpty()) {
             return null;
@@ -41,7 +42,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public List<ScheduleDto> viewNonActiveSchedule() {
-        List<Schedule> unActiveScheduleList = scheduleRepository.findAllByIsActive(nonActive);
+        isActive = false;
+        List<Schedule> unActiveScheduleList = scheduleRepository.findAllByIsActive(isActive);
 
         if (unActiveScheduleList.isEmpty()) {
             return null;
@@ -52,20 +54,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public ScheduleDto getScheduleById(int id) {
-        Optional<Schedule> scheduleOptional = scheduleRepository.findById(id);
-        LOGGER.info("ScheduleService return schedule by id " + id);
-        return scheduleOptional.map(ScheduleDtoConverter::scheduleConverter).orElse(null);
-    }
-
-    @Override
     public HallDto getHallWithPriceAndOccupiedPlacesBySchedule(int scheduleId) throws Exception {
         Schedule schedule = scheduleRepository.findById(scheduleId)
-                .orElseThrow(()->new Exception("Schedule with such id not found"));
+                .orElseThrow(() -> new Exception("Schedule not found in database"));
 
         LOGGER.info("ScheduleService return schedule by id " + scheduleId);
-
         return HallDtoConverter.convertHallDtoWithOccupiedPlacesAndPriceFromSchedule(schedule);
     }
-
 }

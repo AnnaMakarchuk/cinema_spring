@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.study.cinema.entity.RegisteredUser;
 import org.study.cinema.entity.enums.WeekDay;
 
@@ -17,6 +18,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class TicketDto {
 
     private int ticketId;
@@ -33,7 +35,7 @@ public class TicketDto {
     private RegisteredUser registeredUser;
 
     public TicketDto(int ticketId, int placeRow, int placeNumber, double ticketPrice, int userId, WeekDay weekDay,
-                     LocalTime scheduleTime, String movieName, String hallName) {
+                     LocalTime scheduleTime, String hallName, String movieName) {
         this.ticketId = ticketId;
         this.placeRow = placeRow;
         this.placeNumber = placeNumber;
@@ -41,7 +43,7 @@ public class TicketDto {
         this.userId = userId;
         this.weekDay = weekDay;
         this.scheduleTime = scheduleTime;
-        this.movieName = movieName;
         this.hallName = hallName;
+        this.movieName = movieName;
     }
 }

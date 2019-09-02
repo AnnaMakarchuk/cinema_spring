@@ -35,7 +35,7 @@ public class Ticket {
     @Column(name = "price")
     private double ticketPrice;
 
-    @Column(name = "row")
+    @Column(name = "place_row")
     private int placeRow;
 
     @Column(name = "place_number")
