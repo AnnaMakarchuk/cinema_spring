@@ -37,13 +37,13 @@
     <div class="w3-container w3-center">
         <div class="w3-bar w3-padding-large w3-padding-24 w3-center front-size:50px">
             <h1>404  </h1>
-            <p> <fmt:message key="error.404"/> </p>
+            <p> <spring:message code="error.404"/> </p>
         </div>
     </div>
     <div class="w3-container w3-right">
         <div class="w3-bar w3-padding-medium w3-padding-24">
-            <button class="w3-btn w3-white w3-border w3-border-teal w3-round-large" onclick="location.href='/cinema'">
-            <fmt:message key="on.main.page"/>
+            <button class="w3-btn w3-white w3-border w3-border-teal w3-round-large" onclick="location.href='/'">
+            <spring:message code="on.main.page"/>
             </button>
     </div>
 </body>
