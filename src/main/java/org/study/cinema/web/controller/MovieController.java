@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.study.cinema.dto.MovieDto;
 import org.study.cinema.services.MovieService;
 import org.study.cinema.utils.AttributesNames;
-import org.study.cinema.utils.StringParser;
 
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 public class MovieController {
@@ -46,13 +44,9 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/admin/cancelmovie", method = RequestMethod.POST)
-    public String cancelMovie(@RequestParam(name = AttributesNames.MOVIE_ID) String id,
+    public String cancelMovie(@RequestParam(name = AttributesNames.MOVIE_ID) int movieId,
                               Model model) {
-        if (Objects.isNull(id)) {
-            return "404";
-        }
-
-        MovieDto cancelMovie = movieService.cancelMovieById(Integer.parseInt(id));
+        MovieDto cancelMovie = movieService.cancelMovieById(movieId);
         LOGGER.info("Cancelled Movie Dto was created added");
 
         model.addAttribute(AttributesNames.SCHEDULES, cancelMovie.getScheduleList());
@@ -64,18 +58,5 @@ public class MovieController {
         List<MovieDto> movieDtoList = movieService.viewAllAvailableMovies();
         LOGGER.info("List MovieDTO for main page was obtained" + movieDtoList.toString());
         model.addAttribute(AttributesNames.MOVIES, movieDtoList);
-    }
-
-    private boolean isNulls(String movieName, String movieDescription) {
-        return Objects.isNull(movieName) || Objects.isNull(movieDescription);
-    }
-
-    private boolean wrongInputParameters(MovieDto movieDto) {
-        boolean name = StringParser.checkMovieNameDescription(movieDto.getMovieName());
-        boolean description = StringParser.checkMovieNameDescription(movieDto.getMovieDescription());
-        boolean duration = StringParser.checkMovieDuration(String.valueOf(movieDto.getMovieDuration()));
-        boolean age = StringParser.checkMovieAge(String.valueOf(movieDto.getAgeLimit()));
-
-        return name && description && duration && age;
     }
 }
