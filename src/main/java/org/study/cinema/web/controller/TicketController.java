@@ -34,13 +34,13 @@ public class TicketController {
 
 //    TODO button background in jsp
     @GetMapping(value = {"/admin/tickets", "/admin/tickets/{page}"})
-    public String viewAllAvailableTickets(@RequestParam(name = AttributesNames.PAGE, defaultValue = "1") String page,
+    public String viewAllAvailableTickets(@RequestParam(name = AttributesNames.PAGE, defaultValue = "1") int page,
                                           Model model) {
         int pageQuantities = ticketService.countPagesQuantity();
         model.addAttribute(AttributesNames.PAGES, pageQuantities);
         LOGGER.info("Total pages quantity for 5 entry is " + pageQuantities);
 
-        List<TicketDto> ticketDtoListOnPage = ticketService.allTicketsWithPagination(Integer.parseInt(page));
+        List<TicketDto> ticketDtoListOnPage = ticketService.allTicketsWithPagination(page);
         LOGGER.info("List of tickets for page " + page + " was selected");
 
         model.addAttribute(AttributesNames.TICKETS, ticketDtoListOnPage);

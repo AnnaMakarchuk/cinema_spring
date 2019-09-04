@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.study.cinema.dto.MovieDto;
+import org.study.cinema.exceptions.IncorrectInputData;
 import org.study.cinema.services.MovieService;
 import org.study.cinema.utils.StringParser;
-
 
 @RestController
 public class MovieRestController {
@@ -27,12 +27,8 @@ public class MovieRestController {
     @ResponseStatus(HttpStatus.OK)
     public void getAddNewMovie(MovieDto movieDto) {
         if (wrongInputParameters(movieDto)) {
-            LOGGER.info("Movie parameters is incorrect");
-            try {
-                throw new Exception("Incorrect input parameters");
-            } catch (Exception e) {
-                LOGGER.error("Incorrect input parameters", e);
-            }
+            LOGGER.info("Data for new movie is incorrect");
+            throw new IncorrectInputData("Incorrect input parameters");
         }
         LOGGER.info("New movie is " + movieDto.toString());
         movieService.addNewMovie(movieDto);

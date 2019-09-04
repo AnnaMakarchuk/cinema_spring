@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.study.cinema.dto.HallDto;
 import org.study.cinema.dto.MovieDto;
 import org.study.cinema.dto.ScheduleDto;
+import org.study.cinema.exceptions.DataNotFound;
 import org.study.cinema.services.MovieService;
 import org.study.cinema.services.ScheduleService;
 import org.study.cinema.utils.AttributesNames;
 
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 public class ScheduleController {
@@ -43,24 +43,18 @@ public class ScheduleController {
     }
 
     @GetMapping("/hallscheme")
-    public String getHallScheme(@RequestParam(name = AttributesNames.SCHEDULE_ID) String id,
+    public String getHallScheme(@RequestParam(name = AttributesNames.SCHEDULE_ID) int scheduleId,
                                 Model model) {
-        if (Objects.isNull(id)) {
-            return "404";
-        }
-        int scheduleId = Integer.parseInt(id);
-
         HallDto hallDto = null;
         try {
             hallDto = scheduleService.getHallWithPriceAndOccupiedPlacesBySchedule(scheduleId);
         } catch (Exception e) {
-            LOGGER.error("Schedule with id " + id + " not found ", e);
-            return "404";
+            LOGGER.error("Schedule with id = " + scheduleId + " not found in database ");
+            throw new DataNotFound("Data not found in database");
         }
         LOGGER.info("Hall scheme for schedule id " + scheduleId + "was get");
         model.addAttribute(AttributesNames.HALL, hallDto);
         model.addAttribute(AttributesNames.SCHEDULE, hallDto.getSchedule());
-
 
         ObjectMapper mapper = new ObjectMapper();
         try {

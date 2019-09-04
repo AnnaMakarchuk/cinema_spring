@@ -12,7 +12,7 @@ import org.study.cinema.entity.enums.Gender;
 @Controller
 public class RegisteredUserController {
 
-    @GetMapping
+    @GetMapping("/cabinet")
     public String showUserCabinet(Model model) {
         UserRole userRole = UserRole.builder()
                 .userRole("administrator")
