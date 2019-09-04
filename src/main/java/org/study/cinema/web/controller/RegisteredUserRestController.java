@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.study.cinema.dto.RegisteredUserDto;
 import org.study.cinema.entity.enums.Gender;
+import org.study.cinema.exceptions.IncorrectInputData;
 import org.study.cinema.services.UserService;
 import org.study.cinema.utils.StringParser;
 
@@ -25,8 +26,8 @@ public class RegisteredUserRestController {
     @ResponseStatus(HttpStatus.OK)
     public void updateUserInformation(RegisteredUserDto registeredUserDto) throws Exception {
         if (wrongInputParameters(registeredUserDto)) {
-            LOGGER.info("User parameters is incorrect");
-            throw new Exception("Incorrect input parameters");
+            LOGGER.info("Data for user updating is incorrect");
+            throw new IncorrectInputData("Incorrect input parameters");
         }
         userService.updateUser(registeredUserDto);
         LOGGER.info("User with define parameters was updated");
@@ -38,12 +39,8 @@ public class RegisteredUserRestController {
                               String userEMailAddress, String userPassword) {
         if (wrongInputParametersForNewUser(userName, userSurname, userLogin,
                 userEMailAddress, userPassword)) {
-            LOGGER.info("User parameters is incorrect");
-            try {
-                throw new Exception("Incorrect input parameters");
-            } catch (Exception e) {
-                LOGGER.error("Incorrect input parameters", e);
-            }
+            LOGGER.info("Data for new user is incorrect");
+            throw new IncorrectInputData("Incorrect input parameters");
         }
         RegisteredUserDto newRegisteredUser = RegisteredUserDto.builder()
                 .userName(userName)

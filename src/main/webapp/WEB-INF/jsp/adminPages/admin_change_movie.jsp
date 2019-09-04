@@ -38,11 +38,11 @@
     <div class="w3-bar w3-padding-large w3-padding-24">
 
             <button class="w3-btn w3-white w3-border w3-border-teal w3-round-large w3-left" onclick="location.href='/cabinet'">
-                            <fmt:message key="back.cabinet"/>
+                            <spring:message code="back.cabinet"/>
             </button>
 
              <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-teal w3-round-large w3-right-align">
-                   <fmt:message key="adminadd.movie"/>
+                   <spring:message code="adminadd.movie"/>
                         </button>
                              <div id="id01" class="w3-modal">
                                 <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
@@ -52,29 +52,29 @@
                                     </div>
                                     <form class="w3-container" id="addMovie" method="post" action="/admin/addmovie">
                                         <div class="w3-section w3-left-align">
-                                            <label><b><fmt:message key="movie.name"/></b></label>
-                                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.movie.name"/>" name="movieName" required>
+                                            <label><b><spring:message code="movie.name"/></b></label>
+                                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<spring:message code="enter.movie.name"/>" name="movieName" required>
 
-                                            <label><b><fmt:message key="duration"/></b></label>
-                                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.movie.duration"/>" name="movieDuration" required>
+                                            <label><b><spring:message code="duration"/></b></label>
+                                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<spring:message code="enter.movie.duration"/>" name="movieDuration" required>
 
-                                            <label><b><fmt:message key="movie.age"/></b></label>
-                                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.age"/>" name="ageLimit" required>
+                                            <label><b><spring:message code="movie.age"/></b></label>
+                                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<spring:message code="enter.age"/>" name="ageLimit" required>
 
-                                            <label><b><fmt:message key="movie.description"/></b></label>
-                                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<fmt:message key="enter.description"/>" name="movieDescription" required>
+                                            <label><b><spring:message code="movie.description"/></b></label>
+                                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<spring:message code="enter.description"/>" name="movieDescription" required>
 
                                             <form action="">
-                                               <input type="radio" name="movieGenre" value="comedy"><fmt:message key="comedy"/><br>
-                                               <input type="radio" name="movieGenre" value="fantasy"><fmt:message key="fantasy"/><br>
-                                               <input type="radio" name="movieGenre" value="action"><fmt:message key="action.genre"/><br>
-                                               <input type="radio" name="movieGenre" value="thriller"><fmt:message key="thriller"/><br>
-                                               <input type="radio" name="movieGenre" value="melodrama"><fmt:message key="melodrama"/><br>
-                                               <input type="radio" name="movieGenre" value="cartoon"><fmt:message key="cartoon"/><br>
+                                               <input type="radio" name="movieGenre" value="comedy"><spring:message code="comedy"/><br>
+                                               <input type="radio" name="movieGenre" value="fantasy"><spring:message code="fantasy"/><br>
+                                               <input type="radio" name="movieGenre" value="action"><spring:message code="action.genre"/><br>
+                                               <input type="radio" name="movieGenre" value="thriller"><spring:message code="thriller"/><br>
+                                               <input type="radio" name="movieGenre" value="melodrama"><spring:message code="melodrama"/><br>
+                                               <input type="radio" name="movieGenre" value="cartoon"><spring:message code="cartoon"/><br>
                                             </form>
 
                                             <button class="w3-button w3-block w3-teal w3-round-large w3-section w3-padding" type="submit">
-                                                <fmt:message key="adminadd.movie"/></button>
+                                                <spring:message code="adminadd.movie"/></button>
                                         </div>
                                     </form>
                                 </div>
@@ -83,19 +83,19 @@
 </div>
 <div class="w3-container w3-center">
     <footer class="w3-container w3-teal w3-round-large" style="width:100% ">
-        <h4><b><fmt:message key="movie.list"/></b></h4>
+        <h4><b><spring:message code="movie.list"/></b></h4>
     </footer>
 </div>
 <div><p></p></div>
 <div class="w3-container w3-text-teal">
         <table class="w3-table w3-small w3-bordered w3-centered">
             <tr>
-                <th><fmt:message key="movie.name"/></th>
-                <th><fmt:message key="movie.genre"/></th>
-                <th><fmt:message key="duration"/></th>
-                <th><fmt:message key="movie.age"/></th>
-                <th><fmt:message key="movie.description"/></th>
-                <th><fmt:message key="action"/></th>
+                <th><spring:message code="movie.name"/></th>
+                <th><spring:message code="movie.genre"/></th>
+                <th><spring:message code="duration"/></th>
+                <th><spring:message code="movie.age"/></th>
+                <th><spring:message code="movie.description"/></th>
+                <th><spring:message code="action"/></th>
             </tr>
             <tr>
                 <c:forEach var="movie" items="${movies}" varStatus = "loopStatus">
@@ -107,7 +107,7 @@
                     <td class="w3-left">
                         <form action="/admin/cancelmovie?movie_id=${movie.movieId}" method="post">
                             <button class="w3-button w3-border w3-padding-small" type = "submit">
-                                 <fmt:message key="cancel.movie"/>
+                                 <spring:message code="cancel.movie"/>
                             </button>
                         </form>
 
