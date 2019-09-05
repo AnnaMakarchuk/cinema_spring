@@ -33,7 +33,7 @@ public class RegisteredUserRestController {
     @RequestMapping(value = "/register", method = RequestMethod.POST,
             headers = "Accept=application/x-www-form-urlencoded")
     @ResponseStatus(HttpStatus.OK)
-    public void createNewUser(RegisteredUserDto registeredUserDto) {
+    public void createNewUser(@RequestBody RegisteredUserDto registeredUserDto) {
         if (wrongInputParametersForNewUser(registeredUserDto)) {
             LOGGER.info("Data for new user is incorrect");
             throw new IncorrectInputData("Incorrect input parameters");
