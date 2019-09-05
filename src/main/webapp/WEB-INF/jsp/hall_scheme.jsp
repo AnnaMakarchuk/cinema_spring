@@ -69,19 +69,19 @@
                                             <div class="w3-container">
 											 <div class="w3-section w3-left-align">
                                                   <label><b><spring:message code="name"/></b></label>
-                                                  <input class="w3-input w3-border w3-margin-bottom" id = "test" type="text" placeholder="<spring:message code="enter.name"/>" name="userName" required>
+                                                  <input class="w3-input w3-border w3-margin-bottom" id = "name" type="text" placeholder="<spring:message code="enter.name"/>" name="userName" required>
 
                                                   <label><b><spring:message code="surname"/></b></label>
-                                                  <input class="w3-input w3-border w3-margin-bottom" id = "test1"  type="text" placeholder="<spring:message code="enter.surname"/>" name="userSurname" required>
+                                                  <input class="w3-input w3-border w3-margin-bottom" id = "surname"  type="text" placeholder="<spring:message code="enter.surname"/>" name="userSurname" required>
 
                                                   <label><b><spring:message code="login"/></b></label>
-                                                  <input class="w3-input w3-border w3-margin-bottom" id = "test2" type="text" placeholder="<spring:message code="enter.login"/>" name="userLogin" required>
+                                                  <input class="w3-input w3-border w3-margin-bottom" id = "login" type="text" placeholder="<spring:message code="enter.login"/>" name="userLogin" required>
 
                                                   <label><b><spring:message code="email"/></b></label>
-                                                  <input class="w3-input w3-border w3-margin-bottom" id = "test3" type="text" placeholder="<spring:message code="enter.email"/>" name="userEMailAddress" required>
+                                                  <input class="w3-input w3-border w3-margin-bottom" id = "email" type="text" placeholder="<spring:message code="enter.email"/>" name="userEMailAddress" required>
 
                                                   <label><b><spring:message code="password"/></b></label>
-                                                  <input class="w3-input w3-border w3-margin-bottom" id = "test4" type="password" placeholder="<spring:message code="enter.password"/>" name="userPassword" required>
+                                                  <input class="w3-input w3-border w3-margin-bottom" id = "password" type="password" placeholder="<spring:message code="enter.password"/>" name="userPassword" required>
 
 
                                                        <input type="radio" name="gender" value="MALE"><spring:message code="male"/><br>
@@ -167,11 +167,11 @@
         xhr.open("POST", url);
         xhr.setRequestHeader('Content-Type', 'application/json');
         var body = new Object();
-            body["userName"]=document.getElementById("test").value;
-            body["userSurname"]=document.getElementById("test1").value;
-            body["userLogin"]=document.getElementById("test2").value;
-            body["userEMailAddress"]=document.getElementById("test3").value;
-            body["userPassword"]=document.getElementById("test4").value;
+                body["userName"]=document.getElementById("name").value;
+                body["userSurname"]=document.getElementById("surname").value;
+                body["userLogin"]=document.getElementById("login").value;
+                body["userEMailAddress"]=document.getElementById("email").value;
+                body["userPassword"]=document.getElementById("password").value;
             var radios = document.getElementsByName('gender');
             for (var i = 0, length = radios.length; i < length; i++)
             {

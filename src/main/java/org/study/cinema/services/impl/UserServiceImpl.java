@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.study.cinema.dto.RegisteredUserDto;
 import org.study.cinema.entity.RegisteredUser;
 import org.study.cinema.entity.UserRole;
@@ -16,6 +17,7 @@ import org.study.cinema.utils.UserDtoConverter;
 
 //TODO add spring Security in the end
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);

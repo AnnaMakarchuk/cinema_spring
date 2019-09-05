@@ -27,4 +27,10 @@ public class RegisteredUserDto {
     private String userLogin;
     private String userEMailAddress;
     private String userPassword;
+
+    public RegisteredUserDto(int userId, String userLogin, String userPassword) {
+        this.userId = userId;
+        this.userLogin = userLogin;
+        this.userPassword = userPassword;
+    }
 }
