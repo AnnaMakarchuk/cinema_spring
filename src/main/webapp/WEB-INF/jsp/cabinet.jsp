@@ -10,6 +10,7 @@
     <title>Cinema</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body class="w3-light-grey">
@@ -67,7 +68,7 @@
 <div class="w3-container w3-right-align">
     <p> <div class="w3-bar w3-padding w3-padding-12">
     <c:choose>
-           <c:when test="${user.userRole.userRole == 'user'}">
+           <c:when test="${user.userRole.userRole == 'client'}">
                <div class="w3-container w3-center">
                    <footer class="w3-container w3-teal w3-round-large" style="width:100% ">
                        <h3><b><spring:message code="client.cabinet"/></b></h3>
@@ -107,7 +108,7 @@
 <div class="w3-container w3-right-align">
     <p> <div class="w3-bar w3-padding w3-padding-12">
     <c:choose>
-           <c:when test="${user.userRole.userRole == 'user'}">
+           <c:when test="${user.userRole.userRole == 'client'}">
                    <div class="w3-row w3-section w3-center">
                             <button class="w3-btn w3-white w3-border w3-border-teal w3-round-large w3-left-align" onclick="location.href='/client/tickets'">
                                     <spring:message code="show.ticket"/>

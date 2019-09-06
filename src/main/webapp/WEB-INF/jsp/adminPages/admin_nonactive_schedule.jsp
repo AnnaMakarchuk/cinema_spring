@@ -38,21 +38,21 @@
     <div class="w3-bar w3-padding-large w3-padding-24">
 
             <button class="w3-btn w3-white w3-border w3-border-teal w3-round-large w3-left" onclick="location.href='/cabinet'">
-                            <fmt:message key="back.cabinet"/>
+                            <spring:message code="back.cabinet"/>
             </button>
      </div>
 </div>
 <div class="w3-container w3-center">
     <footer class="w3-container w3-teal w3-round-large" style="width:100% ">
-        <h4><b><fmt:message key="non.active.schedule"/></b></h4>
+        <h4><b><spring:message code="non.active.schedule"/></b></h4>
     </footer>
 </div>
 <div><p></p></div>
 <div class="w3-container w3-text-teal">
     <table class="w3-table w3-small w3-bordered">
         <tr>
-            <th><fmt:message key="week.day"/></th>
-            <th><fmt:message key="movie.time"/></th>
+            <th><spring:message code="week.day"/></th>
+            <th><spring:message code="movie.time"/></th>
         </tr>
         <tr>
             <c:forEach var="schedule" items="${schedules}" varStatus = "loopStatus">

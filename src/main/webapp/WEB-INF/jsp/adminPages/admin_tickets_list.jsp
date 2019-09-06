@@ -37,13 +37,13 @@
 <div class="w3-container w3-left-align">
     <div class="w3-bar w3-padding-large w3-padding-24">
          <button class="w3-btn w3-white w3-border w3-border-teal w3-round-large w3-left-align" onclick="location.href='/cabinet'">
-                <fmt:message key="back.adminPage"/>
+                <spring:message code="back.adminPage"/>
          </button>
      </div>
 </div>
 <div class="w3-container w3-center">
     <footer class="w3-container w3-teal w3-round-large" style="width:100% ">
-        <h4><b><fmt:message key="all.available.list"/></b></h4>
+        <h4><b><spring:message code="all.available.list"/></b></h4>
     </footer>
 </div>
 <div><p></p></div>
@@ -60,14 +60,14 @@
 <form class="w3-container w3-padding">
     <table class="w3-table w3-small w3-bordered  ">
         <tr>
-            <th><fmt:message key="ticket.number"/></th>
-            <th><fmt:message key="movie.name"/></th>
-            <th><fmt:message key="week.day"/></th>
-            <th><fmt:message key="movie.time"/></th>
-            <th><fmt:message key="hall"/></th>
-            <th><fmt:message key="hall.row"/></th>
-            <th><fmt:message key="hall.place"/></th>
-            <th><fmt:message key="price"/></th>
+            <th><spring:message code="ticket.number"/></th>
+            <th><spring:message code="movie.name"/></th>
+            <th><spring:message code="week.day"/></th>
+            <th><spring:message code="movie.time"/></th>
+            <th><spring:message code="hall"/></th>
+            <th><spring:message code="hall.row"/></th>
+            <th><spring:message code="hall.place"/></th>
+            <th><spring:message code="price"/></th>
         </tr>
         <tr>
             <c:forEach var="ticket" items="${tickets}" varStatus = "loopStatus">

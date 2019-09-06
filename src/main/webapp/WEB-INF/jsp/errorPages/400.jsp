@@ -42,7 +42,7 @@
     <div class="w3-container w3-center">
         <div class="w3-bar w3-padding-large w3-padding-24 w3-center front-size:50px">
             <h1>401  </h1>
-            <p> <spring:message code="error.401"/> </p>
+            <p> <spring:message code="error.400"/> </p>
         </div>
     </div>
     <div class="w3-container w3-right">
