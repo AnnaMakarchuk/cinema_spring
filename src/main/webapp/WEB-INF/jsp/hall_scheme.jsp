@@ -32,7 +32,7 @@
             </button>
 
             <c:choose>
-                <c:when test="${user == null}">
+                <c:when test="${user != null}">
                         <button onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-teal w3-round-large w3-right-align">
                             <spring:message code="login.button"/>
                         </button>
@@ -96,7 +96,7 @@
                             </div>
                 </c:when>
                 <c:otherwise>
-                        <button class="w3-btn w3-border w3-teal w3-round-large" onclick="submitTickets('boughttickets')">
+                        <button class="w3-btn w3-border w3-teal w3-round-large" onclick="submitTickets('client/boughttickets')">
                             <spring:message code="buy.selected.tickets"/>
                         </button>
                 
@@ -123,11 +123,11 @@
         <c:forEach var = "r" begin = "1" end = "${hall.maxRow}">
                 ${r}
                 <c:forEach var = "c" begin = "1" end = "${hall.maxPlacesInRow}">
-                        <button id="${r}-${c}" class="w3-btn w3-center w3-border w3-border-teal w3-round-large chair" onclick="submitButtonStyle(this, ${r}, ${c})" >
+                        <button id="${r}-${c}" class="w3-btn w3-center w3-border w3-border-teal w3-round-large chair" onclick="submitButtonStyle(this, ${r}, ${c}, ${hall.prices[r-1].price})" >
                                 <div class="button_text">
                                         ${c}
                                 </div>
-                                <div class="button_price"> <c:out value="${hall.prices[r].price}" /> </div>
+                                <div class="button_price"> <c:out value="${hall.prices[r-1].price}" /> </div>
                         </button>
                 </c:forEach>
             </p>
@@ -206,29 +206,34 @@
 
     places = [];
 
-    function submitButtonStyle(_this, row, place) {
+    function submitButtonStyle(_this, row, place, price) {
         var color_one = "#009688";
         var bgcolor = _this.style.backgroundColor;
         _this.style.backgroundColor = color_one;
         console.log(places);
         if(bgcolor == _this.style.backgroundColor) {
             _this.style.backgroundColor = "#f1f1f1";
-            places = places.filter(place => (place["row"] != row && place["place"] != place));
+            places = places.filter(place => (place["row"] != row && place["place"] != place && place["price"] != price));
         } else {
-            places.push({"row": row, "place": place});
+            places.push({"row": row, "place": place, "price": price});
         }
         console.log(places);
     }
 
     function submitTickets(url) {
         console.log(places);
+
+        var sc = JSON.parse('${schedule}');
+
+        console.log(sc);
         if (places.length > 0) {
             console.log("sending post");
             var xhr = new XMLHttpRequest();
             xhr.open("POST", url);
             xhr.setRequestHeader('Content-Type', 'application/json');
             var body = new Object();
-            body["scheduleId"]="${schedule.id}";
+            body["schedule"]="${schedule}";
+
             body["places"]=Object.values(places);
 
             xhr.send(JSON.stringify(body));

@@ -17,4 +17,5 @@ public class PlaceDto {
 
     private Integer row;
     private Integer place;
+    private Double price;
 }

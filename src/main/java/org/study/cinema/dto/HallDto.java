@@ -18,7 +18,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@ToString
 public class HallDto {
 
     private int hallId;
@@ -28,4 +27,6 @@ public class HallDto {
     private Schedule schedule;
     private List<Price> prices;
     private List<PlaceDto> occupiedPlaces;
+
+
 }

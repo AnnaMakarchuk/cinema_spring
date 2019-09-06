@@ -1,11 +1,7 @@
 package org.study.cinema.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.study.cinema.entity.Schedule;
 
 import java.util.List;
 
@@ -15,8 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class PositionDto {
 
-    private Integer scheduleId;
+    private Schedule schedule;
     private List<PlaceDto> places;
 }
