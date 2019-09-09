@@ -3,6 +3,7 @@ package org.study.cinema.unit.utils;
 import org.junit.Test;
 import org.study.cinema.dto.HallDto;
 import org.study.cinema.dto.PlaceDto;
+import org.study.cinema.dto.ScheduleDto;
 import org.study.cinema.entity.Hall;
 import org.study.cinema.entity.Movie;
 import org.study.cinema.entity.Price;
@@ -91,6 +92,16 @@ public class HallDtoConverterTest {
                 .build();
     }
 
+    private ScheduleDto createTestScheduleDtoWithoutTickets() {
+        return ScheduleDto.builder()
+                .scheduleId(1)
+                .movieName(createTestMovie().getMovieName())
+                .weekDay(WeekDay.MONDAY)
+                .ticketList(Collections.emptyList())
+                .time(LocalTime.of(9, 0))
+                .build();
+    }
+
     private Schedule createTestScheduleWithTickets() {
         return Schedule.builder()
                 .id(1)
@@ -102,13 +113,23 @@ public class HallDtoConverterTest {
                 .build();
     }
 
+    private ScheduleDto createTestScheduleDtoWithTickets() {
+        return ScheduleDto.builder()
+                .scheduleId(1)
+                .weekDay(WeekDay.MONDAY)
+                .movieName(createTestMovie().getMovieName())
+                .ticketList(createTestTicketList())
+                .time(LocalTime.of(9, 0))
+                .build();
+    }
+
     private HallDto createTestHallDtoWithoutTickets() {
         return HallDto.builder()
                 .hallId(1)
                 .maxRow(3)
                 .maxPlacesInRow(4)
                 .hallName("Gold")
-                .schedule(createTestScheduleWithoutTickets())
+                .schedule(createTestScheduleDtoWithoutTickets())
                 .occupiedPlaces(Collections.emptyList())
                 .prices(Collections.singletonList(createTestPrice()))
                 .build();
@@ -120,8 +141,8 @@ public class HallDtoConverterTest {
                 .maxRow(3)
                 .maxPlacesInRow(4)
                 .hallName("Gold")
-                .schedule(createTestScheduleWithTickets())
-                .occupiedPlaces(Arrays.asList(new PlaceDto(2, 1, 50.00), new PlaceDto(2, 2, 50.00)))
+                .schedule(createTestScheduleDtoWithTickets())
+                .occupiedPlaces(Arrays.asList(new PlaceDto(2, 1), new PlaceDto(2, 2)))
                 .prices(Collections.singletonList(createTestPrice()))
                 .build();
     }

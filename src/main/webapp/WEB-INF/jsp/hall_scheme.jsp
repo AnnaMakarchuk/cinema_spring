@@ -112,7 +112,7 @@
 </div>
 
 <div class="w3-container w3-center w3-text-teal">
-    <p class="w3-left"><h1><b><c:out value="${schedule.movie.movieName}"/></b></h1></p>
+    <p class="w3-left"><h1><b><c:out value="${schedule.movieName}"/></b></h1></p>
     <i class="fa fa-calendar" style="font-size:24px"><c:out value="${schedule.weekDay}"/> </i>
     <i class="fa fa-clock-o" style="font-size:24px"><c:out value="${schedule.time}"/> </i>
 </div>
@@ -123,7 +123,7 @@
         <c:forEach var = "r" begin = "1" end = "${hall.maxRow}">
                 ${r}
                 <c:forEach var = "c" begin = "1" end = "${hall.maxPlacesInRow}">
-                        <button id="${r}-${c}" class="w3-btn w3-center w3-border w3-border-teal w3-round-large chair" onclick="submitButtonStyle(this, ${r}, ${c}, ${hall.prices[r-1].price})" >
+                        <button id="${r}-${c}" class="w3-btn w3-center w3-border w3-border-teal w3-round-large chair" onclick="submitButtonStyle(this, ${r}, ${c})" >
                                 <div class="button_text">
                                         ${c}
                                 </div>
@@ -189,60 +189,55 @@
         };
     }
 
-    var occupied = JSON.parse('${occupiedPlaces}');
+     var occupied = JSON.parse('${occupiedPlaces}');
 
-    document.addEventListener('DOMContentLoaded', changePlaces());
+        document.addEventListener('DOMContentLoaded', changePlaces());
 
-    function changePlaces() {
-        Object.keys(occupied).forEach(function(key) {
-            var tmp = occupied[key];
-            var btn = document.getElementById(tmp.row+"-"+tmp.place);
-            if (btn != NaN) {
-                btn.disabled = true;
+        function changePlaces() {
+            Object.keys(occupied).forEach(function(key) {
+                var tmp = occupied[key];
+                var btn = document.getElementById(tmp.row+"-"+tmp.place);
+                if (btn != NaN) {
+                    btn.disabled = true;
+                }
+            });
+
+        }
+
+        places = [];
+
+        function submitButtonStyle(_this, row, place) {
+            var color_one = "#009688";
+            var bgcolor = _this.style.backgroundColor;
+            _this.style.backgroundColor = color_one;
+            console.log(places);
+            if(bgcolor == _this.style.backgroundColor) {
+                _this.style.backgroundColor = "#f1f1f1";
+                places = places.filter(place => (place["row"] != row && place["place"] != place));
+            } else {
+                places.push({"row": row, "place": place});
             }
-        });
-
-    }
-
-    places = [];
-
-    function submitButtonStyle(_this, row, place, price) {
-        var color_one = "#009688";
-        var bgcolor = _this.style.backgroundColor;
-        _this.style.backgroundColor = color_one;
-        console.log(places);
-        if(bgcolor == _this.style.backgroundColor) {
-            _this.style.backgroundColor = "#f1f1f1";
-            places = places.filter(place => (place["row"] != row && place["place"] != place && place["price"] != price));
-        } else {
-            places.push({"row": row, "place": place, "price": price});
+            console.log(places);
         }
-        console.log(places);
-    }
 
-    function submitTickets(url) {
-        console.log(places);
+        function submitTickets(url) {
+            console.log(places);
+            if (places.length > 0) {
+                console.log("sending post");
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", url);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                var body = new Object();
+                body["scheduleId"]="${schedule.scheduleId}";
+                body["places"]=Object.values(places);
 
-        var sc = JSON.parse('${schedule}');
-
-        console.log(sc);
-        if (places.length > 0) {
-            console.log("sending post");
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", url);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            var body = new Object();
-            body["schedule"]="${schedule}";
-
-            body["places"]=Object.values(places);
-
-            xhr.send(JSON.stringify(body));
-            xhr.onload = function() {
-                confirm("Ticket was bought");
-                window.location.reload();
-            };
+                xhr.send(JSON.stringify(body));
+                xhr.onload = function() {
+                    confirm("Ticket was bought");
+                    window.location.reload();
+                };
+            }
         }
-    }
 
 </script>
 

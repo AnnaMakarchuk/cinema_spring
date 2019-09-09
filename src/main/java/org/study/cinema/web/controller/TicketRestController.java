@@ -43,12 +43,16 @@ public class TicketRestController {
 
         LOGGER.info("Position's is" + positionDto.toString());
 
-        if (Objects.isNull(positionDto.getPlaces()) || Objects.isNull(positionDto.getSchedule())) {
+        if (Objects.isNull(positionDto.getPlaces()) || Objects.isNull(positionDto.getScheduleId())) {
             LOGGER.error("Position's data is null");
             throw new DataNotFound("Data not found");
         }
-
-        ticketService.addNewTickets(user, positionDto);
+        try {
+            ticketService.addNewTickets(user, positionDto);
+        } catch (Exception e) {
+            LOGGER.error("Price in hall not found in database", e);
+            throw new DataNotFound("Data not found in database");
+        }
         LOGGER.info("New tickets was added");
     }
 }

@@ -24,7 +24,7 @@ public class HallDto {
     private String hallName;
     private int maxRow;
     private int maxPlacesInRow;
-    private Schedule schedule;
+    private ScheduleDto schedule;
     private List<Price> prices;
     private List<PlaceDto> occupiedPlaces;
 

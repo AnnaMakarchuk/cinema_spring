@@ -14,5 +14,5 @@ public interface TicketService {
 
     List<TicketDto> getAllTicketsByUser(int userId);
 
-    void addNewTickets(RegisteredUserDto registeredUserDto, PositionDto positionDto);
+    void addNewTickets(RegisteredUserDto registeredUserDto, PositionDto positionDto) throws Exception;
 }

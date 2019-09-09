@@ -253,8 +253,8 @@ public class ScheduleServiceImplTest {
                 .maxRow(3)
                 .maxPlacesInRow(4)
                 .hallName("Gold")
-                .schedule(createTestScheduleList().get(0))
-                .occupiedPlaces(Arrays.asList(new PlaceDto(2, 1, 50.00), new PlaceDto(2, 2, 50.00)))
+                .schedule(createTestScheduleDtoListWithTime().get(0))
+                .occupiedPlaces(Arrays.asList(new PlaceDto(2, 1), new PlaceDto(2, 2)))
                 .prices(Collections.singletonList(price))
                 .build();
     }

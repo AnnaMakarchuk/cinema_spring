@@ -2,16 +2,24 @@ package org.study.cinema.integration.services;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.study.cinema.CinemaApplicationTests;
+import org.study.cinema.dto.PlaceDto;
+import org.study.cinema.dto.PositionDto;
+import org.study.cinema.dto.RegisteredUserDto;
 import org.study.cinema.dto.TicketDto;
+import org.study.cinema.entity.Ticket;
+import org.study.cinema.entity.UserRole;
+import org.study.cinema.entity.enums.Gender;
 import org.study.cinema.services.impl.TicketServiceImpl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 
+@Transactional
 public class TicketServiceImplIntegrationTest extends CinemaApplicationTests {
 
     @Autowired
@@ -43,4 +51,37 @@ public class TicketServiceImplIntegrationTest extends CinemaApplicationTests {
         assertThat(resultTicketDtoList.get(0).getTicketId(), equalTo(1));
         assertThat(resultTicketDtoList.get(2).getTicketId(), equalTo(20));
     }
+
+    @Test
+    public void shouldAddTicketsInDatabase() {
+        ticketService.addNewTickets(createTestRegisteredUserDto(), createTestPositionDto());
+        List<TicketDto> tickets = ticketService.getAllTicketsByUser(4);
+        assertThat(tickets, hasSize(9));
+    }
+
+    private RegisteredUserDto createTestRegisteredUserDto() {
+        UserRole userRole = UserRole.builder()
+                .userRole("client")
+                .build();
+        return RegisteredUserDto.builder()
+                .userId(4)
+                .userName("Ivan")
+                .userSurname("Ivanov")
+                .gender(Gender.MALE)
+                .userRole(userRole)
+                .userLogin("IIva")
+                .userEMailAddress("ivanov@gmail.com")
+                .build();
+    }
+
+    private PositionDto createTestPositionDto() {
+        List<PlaceDto> placeDtos = Arrays.asList
+                (new PlaceDto(1, 3), new PlaceDto(4, 6), new PlaceDto(6, 1));
+        return PositionDto.builder()
+                .scheduleId(5)
+                .places(placeDtos)
+                .build();
+    }
+
+
 }

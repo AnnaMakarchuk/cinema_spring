@@ -40,7 +40,6 @@ public class ScheduleServiceImplIntegrationTest extends CinemaApplicationTests {
         HallDto resultHall = scheduleService.getHallWithPriceAndOccupiedPlacesBySchedule(scheduleId);
 
         assertThat("Occupied 4 places", resultHall.getOccupiedPlaces(), hasSize(4));
-        assertThat(resultHall.getSchedule().getMovie().getId(), equalTo(1));
         assertThat(resultHall.getHallName(), equalTo("Blue"));
     }
 

@@ -54,15 +54,12 @@ public class ScheduleController {
         }
         LOGGER.info("Hall scheme for schedule id " + scheduleId + "was get");
         model.addAttribute(AttributesNames.HALL, hallDto);
-//        model.addAttribute(AttributesNames.SCHEDULE, hallDto.getSchedule());
+        model.addAttribute(AttributesNames.SCHEDULE, hallDto.getSchedule());
 
         ObjectMapper mapper = new ObjectMapper();
         try {
             model.addAttribute(AttributesNames.OCCUPIED_PLACES,
                     mapper.writeValueAsString(hallDto.getOccupiedPlaces()));
-            model.addAttribute(AttributesNames.SCHEDULE,
-                    mapper.writeValueAsString(hallDto.getSchedule()));
-
         } catch (JsonProcessingException e) {
             LOGGER.error(" Cannot convert JSON to String, Json exception: ", e);
         }
