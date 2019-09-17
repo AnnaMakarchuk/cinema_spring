@@ -224,6 +224,7 @@ public class ScheduleServiceImplTest {
                 .scheduleId(1)
                 .weekDay(WeekDay.MONDAY)
                 .movieName(createTestMovieList().get(0).getMovieName())
+                .ticketList(createTestTicketList())
                 .time(createTestScheduleList().get(0).getTime())
                 .build());
         scheduleDtoList.add(ScheduleDto.builder()

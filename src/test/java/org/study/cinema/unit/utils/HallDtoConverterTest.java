@@ -35,7 +35,7 @@ public class HallDtoConverterTest {
 
     @Test
     public void shouldConvertHallDtoFromScheduleWithTickets() {
-        HallDto expectedHallDto = createTestHallDtoWitTickets();
+        HallDto expectedHallDto = createTestHallDtoWithTickets();
 
         HallDto resultHallDto = HallDtoConverter
                 .convertHallDtoWithOccupiedPlacesAndPriceFromSchedule(createTestScheduleWithTickets());
@@ -135,7 +135,7 @@ public class HallDtoConverterTest {
                 .build();
     }
 
-    private HallDto createTestHallDtoWitTickets() {
+    private HallDto createTestHallDtoWithTickets() {
         return HallDto.builder()
                 .hallId(1)
                 .maxRow(3)
