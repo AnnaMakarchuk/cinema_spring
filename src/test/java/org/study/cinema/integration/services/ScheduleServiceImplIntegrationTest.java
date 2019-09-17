@@ -1,8 +1,11 @@
 package org.study.cinema.integration.services;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.study.cinema.CinemaApplicationTests;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.study.cinema.dto.HallDto;
 import org.study.cinema.dto.ScheduleDto;
 import org.study.cinema.services.impl.ScheduleServiceImpl;
@@ -13,7 +16,10 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 
-public class ScheduleServiceImplIntegrationTest extends CinemaApplicationTests {
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@TestPropertySource(locations = "classpath:application-test.properties")
+public class ScheduleServiceImplIntegrationTest {
 
     @Autowired
     private ScheduleServiceImpl scheduleService;

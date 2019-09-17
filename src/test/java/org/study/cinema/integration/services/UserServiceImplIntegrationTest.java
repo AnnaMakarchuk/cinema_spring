@@ -1,9 +1,12 @@
 package org.study.cinema.integration.services;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-import org.study.cinema.CinemaApplicationTests;
 import org.study.cinema.dto.RegisteredUserDto;
 import org.study.cinema.entity.RegisteredUser;
 import org.study.cinema.entity.UserRole;
@@ -14,9 +17,11 @@ import org.study.cinema.services.impl.UserServiceImpl;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@TestPropertySource(locations = "classpath:application-test.properties")
 @Transactional
-public class UserServiceImplIntegrationTest extends CinemaApplicationTests {
+public class UserServiceImplIntegrationTest {
 
     @Autowired
     private UserServiceImpl userService;

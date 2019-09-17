@@ -35,6 +35,7 @@ public class ScheduleDtoConverter {
                 .scheduleId(schedule.getId())
                 .movieName(schedule.getMovie().getMovieName())
                 .weekDay(schedule.getWeekDay())
+                .ticketList(schedule.getTicketsList())
                 .time(schedule.getTime())
                 .build();
     }
