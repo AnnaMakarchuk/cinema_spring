@@ -16,6 +16,7 @@ import org.study.cinema.entity.Price;
 import org.study.cinema.entity.RegisteredUser;
 import org.study.cinema.entity.Schedule;
 import org.study.cinema.entity.Ticket;
+import org.study.cinema.exceptions.DataNotFound;
 import org.study.cinema.repositories.PriceRepository;
 import org.study.cinema.repositories.ScheduleRepository;
 import org.study.cinema.repositories.TicketRepository;
@@ -37,7 +38,8 @@ public class TicketServiceImpl implements TicketService {
     private PriceRepository priceRepository;
 
     @Autowired
-    public TicketServiceImpl(TicketRepository ticketRepository, ScheduleRepository scheduleRepository, PriceRepository priceRepository) {
+    public TicketServiceImpl(TicketRepository ticketRepository, ScheduleRepository scheduleRepository,
+                             PriceRepository priceRepository) {
         this.ticketRepository = ticketRepository;
         this.scheduleRepository = scheduleRepository;
         this.priceRepository = priceRepository;
@@ -86,13 +88,8 @@ public class TicketServiceImpl implements TicketService {
     }
 
     private Price getPriceForRow(Schedule schedule, PlaceDto p) {
-        Price price = null;
-        try {
-            price = priceRepository.findAllByRowAndHallId(p.getRow(), schedule.getHall().getId())
-                    .orElseThrow(() -> new Exception("price not found in database"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Price price = priceRepository.findAllByRowAndHallId(p.getRow(), schedule.getHall().getId())
+                .orElseThrow(() -> new DataNotFound("price not found in database"));
         return price;
     }
 }

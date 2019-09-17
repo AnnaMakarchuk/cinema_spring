@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.study.cinema.dto.RegisteredUserDto;
 import org.study.cinema.entity.RegisteredUser;
 import org.study.cinema.entity.UserRole;
+import org.study.cinema.exceptions.DataNotFound;
 import org.study.cinema.repositories.UserRepository;
 import org.study.cinema.repositories.UserRoleRepository;
 import org.study.cinema.services.UserService;
@@ -40,11 +41,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createNewUser(RegisteredUserDto registeredUserDto) throws Exception {
+    public void createNewUser(RegisteredUserDto registeredUserDto) {
         RegisteredUser newRegisteredUser = UserDtoConverter.convertUserDtoInRegisteredUser(registeredUserDto);
         LOGGER.info("User was prepared for saving in database");
         UserRole userRole = userRoleRepository.findByUserRole(NEW_USER_ROLE)
-                .orElseThrow(() -> new Exception("UserRole not found in database"));
+                .orElseThrow(() -> new DataNotFound("UserRole not found in database"));
         newRegisteredUser.setUserRole(userRole);
         userRepository.save(newRegisteredUser);
         LOGGER.info("User was saved in database");

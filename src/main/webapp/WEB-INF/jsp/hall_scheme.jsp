@@ -30,71 +30,83 @@
             <button class="w3-btn w3-border w3-teal w3-round-large w3-left" onclick="location.href='/schedule'">
                 <spring:message code="schedule"/>
             </button>
+           <c:choose>
+                           <c:when test="${user == null}">
+                                   <button onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-teal w3-round-large w3-right-align">
+                                       <spring:message code="login.button"/>
+                                   </button>
+                                   <div id="id02" class="w3-modal">
+                                           <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+                                               <div class="w3-center"><br>
+                                                   <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+                                               </div>
+                                               <form class="w3-container" method="POST" action="/cinema/login">
+                                                   <div class="w3-section w3-left-align">
+                                                       <label><b><fmt:message key="login"/></b></label>
+                                                       <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<spring:message code="enter.login"/>" name="login" required>
 
-            <c:choose>
-                <c:when test="${user != null}">
-                        <button onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-teal w3-round-large w3-right-align">
-                            <spring:message code="login.button"/>
-                        </button>
-                        <div id="id02" class="w3-modal">
-                                <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
-                                    <div class="w3-center"><br>
-                                        <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
-                                    </div>
-                                    <form class="w3-container" method="POST" action="/cinema/login">
-                                        <div class="w3-section w3-left-align">
-                                            <label><b><fmt:message key="login"/></b></label>
-                                            <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="<spring:message code="enter.login"/>" name="login" required>
+                                                       <label><b><fmt:message key="password"/></b></label>
+                                                       <input class="w3-input w3-border" type="password" placeholder="<spring:message code="enter.password"/>" name="password" required>
 
-                                            <label><b><fmt:message key="password"/></b></label>
-                                            <input class="w3-input w3-border" type="password" placeholder="<spring:message code="enter.password"/>" name="password" required>
+                                                       <button class="w3-button w3-block w3-teal w3-round-large w3-section w3-padding" type="submit">
+                                                           <spring:message code="login.button"/>
+                                                       </button>
+                                                   </div>
+                                               </form>
+                                           </div>
+                                   </div>
 
-                                            <button class="w3-button w3-block w3-teal w3-round-large w3-section w3-padding" type="submit">
-                                                <spring:message code="login.button"/>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                        </div>
+                                   <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-teal w3-round-large w3-right-align">
+                                           <spring:message code="register.button"/>
+                                   </button>
+                                       <div id="id01" class="w3-modal">
+                                             <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+                                                    <div class="w3-center"><br>
+                                                         <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright"
+                                                         title="Close Modal">&times;</span>
+                                                    </div>
+                                                       <div class="w3-container">
+           											 <div class="w3-section w3-left-align">
+                                                             <label><b><spring:message code="name"/></b></label>
+                                                             <input class="w3-input w3-border w3-margin-bottom" id = "name" type="text" placeholder="<spring:message code="enter.name"/>" name="userName" required>
 
-                        <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-teal w3-round-large w3-right-align">
-                                <spring:message code="register.button"/>
-                        </button>
-                            <div id="id01" class="w3-modal">
-                                  <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
-                                         <div class="w3-center"><br>
-                                              <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-hover-red w3-display-topright"
-                                              title="Close Modal">&times;</span>
-                                         </div>
-                                            <div class="w3-container">
-											 <div class="w3-section w3-left-align">
-                                                  <label><b><spring:message code="name"/></b></label>
-                                                  <input class="w3-input w3-border w3-margin-bottom" id = "name" type="text" placeholder="<spring:message code="enter.name"/>" name="userName" required>
+                                                             <label><b><spring:message code="surname"/></b></label>
+                                                             <input class="w3-input w3-border w3-margin-bottom" id = "surname"  type="text" placeholder="<spring:message code="enter.surname"/>" name="userSurname" required>
 
-                                                  <label><b><spring:message code="surname"/></b></label>
-                                                  <input class="w3-input w3-border w3-margin-bottom" id = "surname"  type="text" placeholder="<spring:message code="enter.surname"/>" name="userSurname" required>
+                                                             <label><b><spring:message code="login"/></b></label>
+                                                             <input class="w3-input w3-border w3-margin-bottom" id = "login" type="text" placeholder="<spring:message code="enter.login"/>" name="userLogin" required>
 
-                                                  <label><b><spring:message code="login"/></b></label>
-                                                  <input class="w3-input w3-border w3-margin-bottom" id = "login" type="text" placeholder="<spring:message code="enter.login"/>" name="userLogin" required>
+                                                             <label><b><spring:message code="email"/></b></label>
+                                                             <input class="w3-input w3-border w3-margin-bottom" id = "email" type="text" placeholder="<spring:message code="enter.email"/>" name="userEMailAddress" required>
 
-                                                  <label><b><spring:message code="email"/></b></label>
-                                                  <input class="w3-input w3-border w3-margin-bottom" id = "email" type="text" placeholder="<spring:message code="enter.email"/>" name="userEMailAddress" required>
-
-                                                  <label><b><spring:message code="password"/></b></label>
-                                                  <input class="w3-input w3-border w3-margin-bottom" id = "password" type="password" placeholder="<spring:message code="enter.password"/>" name="userPassword" required>
-
-
-                                                       <input type="radio" name="gender" value="MALE"><spring:message code="male"/><br>
-                                                       <input type="radio" name="gender" value="FEMALE"><spring:message code="female"/><br>
+                                                             <label><b><spring:message code="password"/></b></label>
+                                                             <input class="w3-input w3-border w3-margin-bottom" id = "password" type="password" placeholder="<spring:message code="enter.password"/>" name="userPassword" required>
 
 
-                                                  <button class="w3-button w3-block w3-teal w3-round-large w3-section w3-padding" onclick="submitUser('register')">
-                                                        <spring:message code="register.button"/></button>
+                                                                  <input type="radio" name="gender" value="MALE"><spring:message code="male"/><br>
+                                                                  <input type="radio" name="gender" value="FEMALE"><spring:message code="female"/><br>
+
+
+                                                             <button class="w3-button w3-block w3-teal w3-round-large w3-section w3-padding" onclick="submitUser('register')">
+                                                                   <spring:message code="register.button"/></button>
+                                                        </div>
+           											</div>
+                                             </div> <div id="error" class="w3-modal">
+                                                    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+                                                         <div class="w3-center"><br>
+                                                               <span onclick="document.getElementById('error').style.display='none'"
+                                                                class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+                                                         </div>
+                                                         <div class="w3-container">
+                                                              <div id="responseHere" class="w3-section w3-left-align">
+                                                                  <button class="w3-button w3-block w3-teal w3-round-large w3-section w3-padding" onclick="submitMovie('addmovie')">
+                                                                  <spring:message code="adminadd.movie"/></button>
+                                                              </div>
+                                                         </div>
+                                                    </div>
                                              </div>
-											</div>
-                                  </div>
-                            </div>
-                </c:when>
+                                       </div>
+                           </c:when>
                 <c:otherwise>
                         <button class="w3-btn w3-border w3-teal w3-round-large" onclick="submitTickets('client/boughttickets')">
                             <spring:message code="buy.selected.tickets"/>
@@ -182,10 +194,18 @@
              }
             }
 
+
         xhr.send(JSON.stringify(body));
         xhr.onload = function() {
+             if (xhr.status == 200) {
              confirm("User was registered in system");
-             window.location.reload();
+                 window.location.reload();
+             }
+            if (xhr.status == 400) {
+                document.getElementById("error").style.display = "block";
+                document.getElementById("responseHere").innerHTML = xhr.response;
+                console.log(xhr.status);
+            }
         };
     }
 

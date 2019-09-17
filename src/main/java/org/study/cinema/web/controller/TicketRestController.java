@@ -26,7 +26,7 @@ public class TicketRestController {
     @RequestMapping(value = "/client/boughttickets", method = RequestMethod.POST,
             headers = "Accept=application/x-www-form-urlencoded")
     @ResponseStatus(HttpStatus.OK)
-    public void boughtTickets(@RequestBody PositionDto positionDto) {
+    public void boughtTickets(@RequestBody PositionDto positionDto) throws Exception {
 
         UserRole userRole = UserRole.builder()
                 .userRole("client")
@@ -47,12 +47,7 @@ public class TicketRestController {
             LOGGER.error("Position's data is null");
             throw new DataNotFound("Data not found");
         }
-        try {
-            ticketService.addNewTickets(user, positionDto);
-        } catch (Exception e) {
-            LOGGER.error("Price in hall not found in database", e);
-            throw new DataNotFound("Data not found in database");
-        }
+        ticketService.addNewTickets(user, positionDto);
         LOGGER.info("New tickets was added");
     }
 }

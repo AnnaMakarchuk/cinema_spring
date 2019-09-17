@@ -8,6 +8,7 @@ import org.study.cinema.dto.HallDto;
 import org.study.cinema.dto.ScheduleDto;
 import org.study.cinema.entity.Schedule;
 import org.study.cinema.entity.enums.WeekDay;
+import org.study.cinema.exceptions.DataNotFound;
 import org.study.cinema.repositories.ScheduleRepository;
 import org.study.cinema.services.ScheduleService;
 import org.study.cinema.utils.HallDtoConverter;
@@ -54,9 +55,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public HallDto getHallWithPriceAndOccupiedPlacesBySchedule(int scheduleId) throws Exception {
+    public HallDto getHallWithPriceAndOccupiedPlacesBySchedule(int scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId)
-                .orElseThrow(() -> new Exception("Schedule not found in database"));
+                .orElseThrow(() -> new DataNotFound("Schedule not found in database"));
 
         LOGGER.info("ScheduleService return schedule by id " + scheduleId);
         return HallDtoConverter.convertHallDtoWithOccupiedPlacesAndPriceFromSchedule(schedule);

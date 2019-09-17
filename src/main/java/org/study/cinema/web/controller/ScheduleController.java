@@ -44,14 +44,8 @@ public class ScheduleController {
 
     @GetMapping("/hallscheme")
     public String getHallScheme(@RequestParam(name = AttributesNames.SCHEDULE_ID) int scheduleId,
-                                Model model) {
-        HallDto hallDto = null;
-        try {
-            hallDto = scheduleService.getHallWithPriceAndOccupiedPlacesBySchedule(scheduleId);
-        } catch (Exception e) {
-            LOGGER.error("Schedule with id = " + scheduleId + " not found in database ");
-            throw new DataNotFound("Data not found in database");
-        }
+                                Model model) throws Exception {
+        HallDto hallDto = scheduleService.getHallWithPriceAndOccupiedPlacesBySchedule(scheduleId);
         LOGGER.info("Hall scheme for schedule id " + scheduleId + "was get");
         model.addAttribute(AttributesNames.HALL, hallDto);
         model.addAttribute(AttributesNames.SCHEDULE, hallDto.getSchedule());

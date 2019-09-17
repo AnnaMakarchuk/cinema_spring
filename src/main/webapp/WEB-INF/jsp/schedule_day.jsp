@@ -89,6 +89,19 @@
                                                                    <spring:message code="register.button"/></button>
                                                         </div>
            											</div>
+                                             </div> <div id="error" class="w3-modal">
+                                                    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+                                                         <div class="w3-center"><br>
+                                                               <span onclick="document.getElementById('error').style.display='none'"
+                                                                class="w3-button w3-xlarge w3-hover-red w3-display-topright" title="Close Modal">&times;</span>
+                                                         </div>
+                                                         <div class="w3-container">
+                                                              <div id="responseHere" class="w3-section w3-left-align">
+                                                                  <button class="w3-button w3-block w3-teal w3-round-large w3-section w3-padding" onclick="submitMovie('addmovie')">
+                                                                  <spring:message code="adminadd.movie"/></button>
+                                                              </div>
+                                                         </div>
+                                                    </div>
                                              </div>
                                        </div>
                            </c:when>
@@ -176,12 +189,19 @@
                  }
                 }
 
-            xhr.send(JSON.stringify(body));
-            xhr.onload = function() {
-                 confirm("User was registered in system");
+        xhr.send(JSON.stringify(body));
+        xhr.onload = function() {
+             if (xhr.status == 200) {
+             confirm("User was registered in system");
                  window.location.reload();
-            };
-        }
+             }
+            if (xhr.status == 400) {
+                document.getElementById("error").style.display = "block";
+                document.getElementById("responseHere").innerHTML = xhr.response;
+                console.log(xhr.status);
+            }
+        };
+    }
 </script>
 </body>
 </html>
