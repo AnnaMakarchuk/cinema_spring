@@ -19,12 +19,12 @@ public class RegisteredUserController {
                 .build();
         RegisteredUserDto user = RegisteredUserDto.builder()
                 .userId(1)
-                .userName("Alisa")
-                .userSurname("Alisenko")
+                .userName("Anna")
+                .userSurname("Makarchuk")
                 .gender(Gender.FEMALE)
                 .userRole(userRole)
-                .userLogin("ali")
-                .userEMailAddress("a@i.ua")
+                .userLogin("anna")
+                .userEMailAddress("aniki.das@gmail.com")
                 .build();
 
 

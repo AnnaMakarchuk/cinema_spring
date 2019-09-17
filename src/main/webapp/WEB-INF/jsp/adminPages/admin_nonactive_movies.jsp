@@ -38,14 +38,14 @@
     <div class="w3-bar w3-padding-large w3-padding-24">
 
             <button class="w3-btn w3-white w3-border w3-border-teal w3-round-large w3-left" onclick="location.href='/cabinet'">
-                            <fmt:message key="back.cabinet"/>
+                            <spring:message code="back.cabinet"/>
             </button>
     </div>
 </div>
 
 <div class="w3-container w3-center">
     <footer class="w3-container w3-teal w3-round-large" style="width:100% ">
-        <h4><b><fmt:message key="movie.noactive.list"/></b></h4>
+        <h4><b><spring:message code="movie.noactive.list"/></b></h4>
     </footer>
 </div>
 <div><p></p></div>
@@ -53,11 +53,11 @@
 <form class="w3-container w3-padding">
     <table class="w3-table w3-small w3-bordered w3-centered">
         <tr>
-            <th><fmt:message key="movie.name"/></th>
-            <th><fmt:message key="movie.genre"/></th>
-            <th><fmt:message key="duration"/></th>
-            <th><fmt:message key="movie.age"/></th>
-            <th><fmt:message key="movie.description"/></th>
+            <th><spring:message code="movie.name"/></th>
+            <th><spring:message code="movie.genre"/></th>
+            <th><spring:message code="duration"/></th>
+            <th><spring:message code="movie.age"/></th>
+            <th><spring:message code="movie.description"/></th>
         </tr>
         <tr>
             <c:forEach var="movie" items="${movies}" varStatus = "loopStatus">

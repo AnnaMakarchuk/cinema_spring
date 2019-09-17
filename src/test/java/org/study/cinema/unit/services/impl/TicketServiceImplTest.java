@@ -10,31 +10,38 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.study.cinema.dto.PlaceDto;
+import org.study.cinema.dto.PositionDto;
+import org.study.cinema.dto.RegisteredUserDto;
 import org.study.cinema.dto.TicketDto;
-import org.study.cinema.entity.Hall;
-import org.study.cinema.entity.Movie;
-import org.study.cinema.entity.Price;
-import org.study.cinema.entity.Schedule;
-import org.study.cinema.entity.Ticket;
+import org.study.cinema.entity.*;
+import org.study.cinema.entity.enums.Gender;
 import org.study.cinema.entity.enums.WeekDay;
+import org.study.cinema.repositories.PriceRepository;
+import org.study.cinema.repositories.ScheduleRepository;
 import org.study.cinema.repositories.TicketRepository;
 import org.study.cinema.services.impl.TicketServiceImpl;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TicketServiceImplTest {
 
     @Mock
     private TicketRepository ticketRepository;
+
+    @Mock
+    private PriceRepository priceRepository;
+
+    @Mock
+    private ScheduleRepository scheduleRepository;
 
     @InjectMocks
     private TicketServiceImpl ticketService;
@@ -75,6 +82,25 @@ public class TicketServiceImplTest {
         assertThat(resultTicketsDtoList, equalTo(expectedTicketsDtoList));
     }
 
+    @Test
+    public void shouldAddNewTickets() {
+        when(scheduleRepository.getOne(1)).thenReturn(createTestSchedule());
+        when(priceRepository.findAllByRowAndHallId(1, 1))
+                .thenReturn(Optional.ofNullable(createTestPriceList().get(0)));
+        when(priceRepository.findAllByRowAndHallId(4, 1))
+                .thenReturn(Optional.ofNullable(createTestPriceList().get(1)));
+        when(priceRepository.findAllByRowAndHallId(6, 1))
+                .thenReturn(Optional.ofNullable(createTestPriceList().get(2)));
+
+        ticketService.addNewTickets(createTestRegisteredUserDto(), createTestPositionDto());
+
+        verify(scheduleRepository).getOne(1);
+        verify(priceRepository).findAllByRowAndHallId(1, 1);
+        verify(priceRepository).findAllByRowAndHallId(4, 1);
+        verify(priceRepository).findAllByRowAndHallId(6, 1);
+        verify(ticketRepository).saveAll(anyIterable());
+    }
+
     private Movie createTestMovie() {
         return Movie.builder()
                 .id(0)
@@ -88,6 +114,23 @@ public class TicketServiceImplTest {
                 .row(2)
                 .price(50.00)
                 .build();
+    }
+
+    private List<Price> createTestPriceList() {
+        List<Price> prices = new ArrayList<>();
+        prices.add(Price.builder()
+                .row(1)
+                .price(50.00)
+                .build());
+        prices.add(Price.builder()
+                .row(4)
+                .price(75.00)
+                .build());
+        prices.add(Price.builder()
+                .row(6)
+                .price(150.00)
+                .build());
+        return prices;
     }
 
     private Hall createTestHall() {
@@ -176,5 +219,29 @@ public class TicketServiceImplTest {
                 .ticketPrice(50.00)
                 .build());
         return ticketDtoList;
+    }
+
+    private RegisteredUserDto createTestRegisteredUserDto() {
+        UserRole userRole = UserRole.builder()
+                .userRole("client")
+                .build();
+        return RegisteredUserDto.builder()
+                .userId(4)
+                .userName("Ivan")
+                .userSurname("Ivanov")
+                .gender(Gender.MALE)
+                .userRole(userRole)
+                .userLogin("IIva")
+                .userEMailAddress("ivanov@gmail.com")
+                .build();
+    }
+
+    private PositionDto createTestPositionDto() {
+        List<PlaceDto> placeDtos = Arrays.asList
+                (new PlaceDto(1, 3), new PlaceDto(4, 6), new PlaceDto(6, 1));
+        return PositionDto.builder()
+                .scheduleId(1)
+                .places(placeDtos)
+                .build();
     }
 }

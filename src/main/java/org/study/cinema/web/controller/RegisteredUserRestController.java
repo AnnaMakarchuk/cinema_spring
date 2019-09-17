@@ -21,8 +21,10 @@ public class RegisteredUserRestController {
 
     @RequestMapping(value = "/cabinet/update", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public void updateUserInformation(RegisteredUserDto registeredUserDto) throws Exception {
-        if (wrongInputParameters(registeredUserDto)) {
+    public void updateUserInformation(@RequestBody RegisteredUserDto registeredUserDto) {
+        LOGGER.info("User with define parameters was updated" +registeredUserDto);
+
+        if (wrongInputParametersForUpdate(registeredUserDto)) {
             LOGGER.info("Data for user updating is incorrect");
             throw new IncorrectInputData("Incorrect input parameters");
         }
@@ -33,7 +35,7 @@ public class RegisteredUserRestController {
     @RequestMapping(value = "/register", method = RequestMethod.POST,
             headers = "Accept=application/x-www-form-urlencoded")
     @ResponseStatus(HttpStatus.OK)
-    public void createNewUser(RegisteredUserDto registeredUserDto) {
+    public void createNewUser(@RequestBody RegisteredUserDto registeredUserDto) {
         if (wrongInputParametersForNewUser(registeredUserDto)) {
             LOGGER.info("Data for new user is incorrect");
             throw new IncorrectInputData("Incorrect input parameters");
@@ -48,7 +50,7 @@ public class RegisteredUserRestController {
         LOGGER.info("User with define parameters was created" + registeredUserDto);
     }
 
-    private boolean wrongInputParameters(RegisteredUserDto registeredUserDto) {
+    private boolean wrongInputParametersForUpdate(RegisteredUserDto registeredUserDto) {
         boolean login = StringParser.checkLoginPassword(registeredUserDto.getUserLogin());
         boolean password = StringParser.checkLoginPassword(registeredUserDto.getUserPassword());
 

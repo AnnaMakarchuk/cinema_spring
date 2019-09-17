@@ -4,10 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.study.cinema.dto.MovieDto;
 import org.study.cinema.exceptions.IncorrectInputData;
 import org.study.cinema.services.MovieService;
@@ -21,11 +18,10 @@ public class MovieRestController {
     @Autowired
     private MovieService movieService;
 
-    //TODO check work
     @RequestMapping(value = "/admin/addmovie", method = RequestMethod.POST,
             headers = "Accept=application/x-www-form-urlencoded")
     @ResponseStatus(HttpStatus.OK)
-    public void getAddNewMovie(MovieDto movieDto) {
+    public void getAddNewMovie(@RequestBody MovieDto movieDto) {
         if (wrongInputParameters(movieDto)) {
             LOGGER.info("Data for new movie is incorrect");
             throw new IncorrectInputData("Incorrect input parameters");

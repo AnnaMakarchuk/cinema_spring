@@ -40,14 +40,14 @@
     <div class="w3-bar w3-padding-large w3-padding-24">
 
             <button class="w3-btn w3-white w3-border w3-border-teal w3-round-large w3-left" onclick="location.href='/cabinet'">
-                            <fmt:message key="back.cabinet"/>
+                            <spring:message code="back.cabinet"/>
             </button>
      </div>
 </div>
 
 <div class="w3-container w3-center">
     <footer class="w3-container w3-teal w3-round-large" style="width:100% ">
-        <h4><b><fmt:message key="cancel.schedule" /></b></h4>
+        <h4><b><spring:message code="cancel.schedule" /></b></h4>
     </footer>
 </div>
 
@@ -55,9 +55,9 @@
         <form class="w3-container w3-padding">
             <table class="w3-table w3-small w3-bordered  ">
                 <tr>
-                    <th><fmt:message key="week.day"/></th>
-                    <th><fmt:message key="movie.time"/></th>
-                    <th><fmt:message key="movie.name"/></th>
+                    <th><spring:message code="week.day"/></th>
+                    <th><spring:message code="movie.time"/></th>
+                    <th><spring:message code="movie.name"/></th>
                 </tr>
                 <tr>
                     <c:forEach var="schedule" items="${schedules}" varStatus = "loopStatus">
@@ -73,7 +73,7 @@
 
 <div class="w3-container w3-left-align">
     <div class="w3-container w3-center w3-text-teal">
-        <h1><b><fmt:message key="user.notification"/> </b></h1>
+        <h1><b><spring:message code="user.notification"/> </b></h1>
     </div>
 </div>
 
@@ -81,10 +81,10 @@
         <form class="w3-container w3-padding">
             <table class="w3-table w3-small w3-bordered  ">
                 <tr>
-                    <th><fmt:message key="name"/></th>
-                    <th><fmt:message key="surname"/></th>
-                    <th><fmt:message key="email"/></th>
-                    <th><fmt:message key="login"/></th>
+                    <th><spring:message code="name"/></th>
+                    <th><spring:message code="surname"/></th>
+                    <th><spring:message code="email"/></th>
+                    <th><spring:message code="login"/></th>
                 </tr>
                 <tr>
                     <c:forEach var="client" items="${clients}" varStatus = "loopStatus">

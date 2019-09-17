@@ -36,4 +36,11 @@ public class MovieDto {
     private List<Schedule> scheduleList;
     private Set<RegisteredUser> registeredUsers;
 
+    public MovieDto(String movieName, String movieGenre, int movieDuration, int ageLimit, String movieDescription) {
+        this.movieName = movieName;
+        this.movieGenre = movieGenre;
+        this.movieDuration = movieDuration;
+        this.ageLimit = ageLimit;
+        this.movieDescription = movieDescription;
+    }
 }
